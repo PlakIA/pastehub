@@ -10,7 +10,7 @@ flake8:
   image: registry.gitlab.com/pipeline-components/flake8:latest
   script:
     - pip install -r requirements/test.txt
-    - flake8 --verbose --config=setup.cfg .
+    - flake8 --verbose .
 
 black:
   only:
