@@ -1,9 +1,12 @@
+import os
 from pathlib import Path
 
 import environ
 
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env(
+    os.path.join(os.path.dirname(__file__), "..", "..", ".env"),
+)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,7 +14,7 @@ SECRET_KEY = env("DJANGO_SECRET_KEY", default="SECRET_KEY")
 
 DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["*"])
 
 INSTALLED_APPS = [
     "django.contrib.admin",
