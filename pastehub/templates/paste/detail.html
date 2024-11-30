@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card p-4 shadow-lg w-75">
+      
+      <div class="mb-3">
+        <h3 class="text-center">{{ paste.title }}</h3>
+        {% if paste.category %}<p class="text-muted text-center">{{ paste.category }}</p>{% endif %}
+      </div>
+      
+      <textarea class="form-control" type="text" rows="10" readonly>{{ content }}</textarea>
+      <button type="button" class="btn btn-danger mt-3 col-2" data-bs-toggle="modal"
+              data-bs-target="#confirmDeleteModal">Удалить
+      </button>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmDeleteModalLabel">Подтверждение удаления</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Вы уверены, что хотите удалить эту пасту?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+          <a type="button" class="btn btn-danger" id="confirmDeleteButton"
+             href="{% url 'paste:delete' paste.short_link %}">Удалить</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+      document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+          const modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+          modal.hide();
+      });
+  </script>
+
+{% endblock %}

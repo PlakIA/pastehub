@@ -1,0 +1,17 @@
+{% for field in form %}
+  <div class="mb-3">
+    {{ field }}
+    {% if field.help_text %}
+      <div class="form-text help mt-0">{{ field.help_text | safe }}</div>
+    {% endif %}
+    {% for error in field.errors %}
+      <p class="text-danger form-text">{{ error | escape }}</p>
+    {% endfor %}
+  </div>
+{% endfor %}
+
+{% for error in form.non_field_errors %}
+  <div class="alert alert-danger" role="alert">
+    {{ error | escape }}
+  </div>
+{% endfor %}
