@@ -30,5 +30,5 @@ django-test:
   image: python:latest
   script:
     - pip install -r ./requirements/test_flake8.txt
-    - cd lyceum
+    - cd pastehub
     - python3 manage.py test
