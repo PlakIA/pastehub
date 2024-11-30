@@ -19,7 +19,7 @@ black:
   stage: linting
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - black -S --check --verbose --config=.black .
+    - black --check --verbose --line-length 79 .
 
 django-test:
   only:
