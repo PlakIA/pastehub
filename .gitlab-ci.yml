@@ -3,7 +3,7 @@ stages:
   - test
 
 flake8:
-  only: 
+  only:
     - pushes
     - merge_requests
   stage: linting
@@ -13,22 +13,23 @@ flake8:
     - flake8 --verbose --config=setup.cfg .
 
 black:
-  only: 
+  only:
     - pushes
     - merge_requests
   stage: linting
   image: registry.gitlab.com/pipeline-components/black:latest
   script:
-    - pip install -r requirements/dev.txt
-    - black -S --check --verbose --config=.black .  
+    - black -S --check --verbose --config=.black .
 
 django-test:
-  only: 
+  only:
     - pushes
     - merge_requests
   stage: test
-  image: python:latest
+  image: python:3.12-slim
+  before_script:
+    - pip install -r requirements/test.txt
   script:
-    - pip install -r ./requirements/test_flake8.txt
-    - cd pastehub
-    - python3 manage.py test
+    - cd lyceum
+    - python manage.py migrate
+    - python manage.py test
