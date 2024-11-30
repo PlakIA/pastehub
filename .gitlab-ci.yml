@@ -1,0 +1,34 @@
+stages:
+  - linting
+  - test
+
+flake8:
+  only: 
+    - pushes
+    - merge_requests
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/flake8:latest
+  script:
+    - pip install -r requirements/test.txt
+    - flake8 --verbose --config=setup.cfg .
+
+black:
+  only: 
+    - pushes
+    - merge_requests
+  stage: linting
+  image: registry.gitlab.com/pipeline-components/black:latest
+  script:
+    - pip install -r requirements/dev.txt
+    - black -S --check --verbose --config=.black .  
+
+django-test:
+  only: 
+    - pushes
+    - merge_requests
+  stage: test
+  image: python:latest
+  script:
+    - pip install -r ./requirements/test_flake8.txt
+    - cd lyceum
+    - python3 manage.py test
