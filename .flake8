@@ -1,0 +1,7 @@
+[flake8]
+
+exclude = .git,__pycache__,.env,venv,*/migrations/,*.html,manage.py,.venv
+max-line-length = 79
+application-import-names = pastehub
+import-order-style = google
+inline-quotes = double
