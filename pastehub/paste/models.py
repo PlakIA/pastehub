@@ -11,6 +11,7 @@ class Category(models.Model):
         max_length=150,
         unique=True,
         verbose_name="категория",
+        help_text="Максимальная длинна 150 символов",
     )
 
     class Meta:
@@ -23,7 +24,11 @@ class Category(models.Model):
 
 class Paste(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(max_length=150, verbose_name="заголовок")
+    title = models.CharField(
+        max_length=150,
+        verbose_name="заголовок",
+        help_text="Максимальная длинна 150 символов",
+    )
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
@@ -52,7 +57,7 @@ class Paste(models.Model):
     )
     is_protected = models.BooleanField(
         default=False,
-        verbose_name="Зашифровать?",
+        verbose_name="Зашифровано?",
     )
     created = models.DateTimeField(auto_now_add=True, verbose_name="создан")
     updated = models.DateTimeField(auto_now=True, verbose_name="обновлён")

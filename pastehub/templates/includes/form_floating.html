@@ -1,6 +1,7 @@
 {% for field in form %}
-  <div class="mb-3">
-      {{ field }}
+  <div class="mb-3 form-floating">
+    {{ field }}
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
     {% if field.help_text %}
       <div class="form-text help mt-0">{{ field.help_text | safe }}</div>
     {% endif %}

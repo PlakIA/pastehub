@@ -8,7 +8,14 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(),
         label="Содержимое",
+        help_text="Максимальный объём текста 10 МБ",
         required=True,
+    )
+    password = forms.CharField(
+        required=False,
+        label="Ключ шифрования",
+        help_text="Если вы не хотите шифровать пасту, оставьте поле пустым",
+        widget=forms.PasswordInput(),
     )
 
     class Meta:
@@ -26,29 +33,6 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
         return content
 
 
-class ProtectForm(forms.ModelForm):
-    password = forms.CharField(
-        required=False,
-        widget=forms.PasswordInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "Пароль",
-                "disabled": "disabled",
-            },
-        ),
-    )
-
-    class Meta:
-        model = Paste
-        fields = [model.is_protected.field.name]
-
-        widgets = {
-            model.is_protected.field.name: forms.CheckboxInput(
-                attrs={"class": "form-check-input"},
-            ),
-        }
-
-
 class GetPasswordForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(
@@ -57,4 +41,4 @@ class GetPasswordForm(forms.Form):
     )
 
 
-__all__ = ["GetPasswordForm", "PasteForm", "ProtectForm"]
+__all__ = ["GetPasswordForm", "PasteForm"]

@@ -6,32 +6,9 @@
       <h3 class="text-center mb-4">Создать пасту</h3>
       <form method="post">
         {% csrf_token %}
-        {% for form in forms %}
-          {% include "includes/form.html" %}
-          <hr>
-        {% endfor %}
+        {% include "includes/form_floating.html" %}
         <button type="submit" class="btn btn-primary w-100">Создать</button>
       </form>
     </div>
   </div>
-
-  <script>
-      document.addEventListener("DOMContentLoaded", function () {
-          const checkbox = document.querySelector("#id_is_protected");
-          const passwordField = document.querySelector("#id_password");
-
-          function togglePasswordField() {
-              if (checkbox.checked) {
-                  passwordField.removeAttribute("disabled");
-              } else {
-                  passwordField.setAttribute("disabled", "true");
-                  passwordField.value = "";
-              }
-          }
-
-          checkbox.addEventListener("change", togglePasswordField);
-          togglePasswordField();
-      });
-  </script>
-
 {% endblock %}

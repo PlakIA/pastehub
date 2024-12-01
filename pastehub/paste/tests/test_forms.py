@@ -39,7 +39,6 @@ class TestForms(TestCase):
 
         self.assertEqual(Paste.objects.count(), pastes_count + 1)
         self.assertIn("messages", response.context)
-        print(response.context["messages"])
 
     def test_create_forms_errors(self):
         data = {
@@ -54,9 +53,9 @@ class TestForms(TestCase):
             follow=True,
         )
 
-        self.assertTrue(response.context["forms"][0].has_error("title"))
-        self.assertTrue(response.context["forms"][0].has_error("content"))
-        self.assertTrue(response.context["forms"][0].has_error("category"))
+        self.assertTrue(response.context["form"].has_error("title"))
+        self.assertTrue(response.context["form"].has_error("content"))
+        self.assertTrue(response.context["form"].has_error("category"))
 
 
 __all__ = []

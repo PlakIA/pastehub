@@ -7,7 +7,7 @@ from Crypto.Util.Padding import pad, unpad
 
 def aes256_encrypt(key, plaintext):
     key = pad(key.encode("utf-8"), 32)[:32]
-    plaintext = pad(plaintext.encode("utf-8"), 16)[:16]
+    plaintext = pad(plaintext.encode("utf-8"), 16)
     iv = get_random_bytes(16)
     cipher = AES.new(key, AES.MODE_CBC, iv)
     ciphertext = iv + cipher.encrypt(plaintext)

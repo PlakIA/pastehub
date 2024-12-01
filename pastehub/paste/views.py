@@ -2,29 +2,23 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import aes256_decrypt, aes256_encrypt
 from core.utils import delete_from_storage, get_from_storage, upload_to_storage
-from paste.forms import GetPasswordForm, PasteForm, ProtectForm
+from paste.forms import GetPasswordForm, PasteForm
 from paste.models import Paste
 
 
 def create(request):
-    paste_form = PasteForm(request.POST or None)
-    protect_form = ProtectForm(request.POST or None)
+    form = PasteForm(request.POST or None)
 
-    if (
-        request.method == "POST"
-        and paste_form.is_valid()
-        and protect_form.is_valid()
-    ):
-        instance = paste_form.save(commit=False)
-        instance.is_protected = protect_form.cleaned_data.get("is_protected")
-        instance.save()
+    if request.method == "POST" and form.is_valid():
+        instance = form.save(commit=False)
+        content = form.cleaned_data.get("content")
 
-        content = paste_form.cleaned_data.get("content")
-
-        password = protect_form.cleaned_data.get("password")
+        password = form.cleaned_data.get("password")
         if password:
+            instance.is_protected = True
             content = aes256_encrypt(password, content)
 
+        instance.save()
         upload_to_storage(f"pastes/{instance.id}", content)
 
         return redirect("paste:detail", short_link=instance.short_link)
@@ -32,7 +26,7 @@ def create(request):
     return render(
         request=request,
         template_name="paste/create.html",
-        context={"forms": [paste_form, protect_form]},
+        context={"form": form},
     )
 
 
@@ -40,22 +34,26 @@ def detail(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
     content = get_from_storage(f"pastes/{paste.id}")
 
+    context = {"paste": paste, "content": content}
+
     if paste.is_protected:
         form = GetPasswordForm(request.POST or None)
         if request.method == "POST" and form.is_valid():
             password = form.cleaned_data.get("password")
-            print(password)
 
+            # Проверка на валидность пароля
+            # Если пароль неверный - редирект на страницу создания пасты
             try:
-                content = aes256_decrypt(password, content)
+                decrypted_content = aes256_decrypt(password, content)
+            except ValueError:
+                return redirect("paste:create")
+            else:
+                context["content"] = decrypted_content
                 return render(
                     request=request,
                     template_name="paste/detail.html",
-                    context={"paste": paste, "content": content},
+                    context=context,
                 )
-
-            except ValueError:
-                return redirect("paste:create")
 
         return render(
             request=request,
@@ -66,7 +64,7 @@ def detail(request, short_link):
     return render(
         request=request,
         template_name="paste/detail.html",
-        context={"paste": paste, "content": content},
+        context=context,
     )
 
 
