@@ -1,6 +1,6 @@
 from django import forms
 
-from core.froms import BootstrapFormMixin
+from core.forms import BootstrapFormMixin
 from paste.models import Paste
 
 
