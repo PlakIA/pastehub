@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.utils import delete_from_storage, get_from_storage, upload_to_storage
-from paste.froms import PasteForm
+from paste.forms import PasteForm
 from paste.models import Paste
 
 
