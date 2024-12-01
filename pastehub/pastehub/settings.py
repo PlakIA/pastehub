@@ -23,8 +23,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "core.apps.CoreConfig",
     "paste.apps.PasteConfig",
+    "users.apps.UsersConfig",
 ]
 
 MIDDLEWARE = [
@@ -89,6 +91,8 @@ AUTH_PASSWORD_VALIDATORS = [
         ),
     },
 ]
+
+AUTH_USER_MODEL = "users.User"
 
 LANGUAGE_CODE = "ru-ru"
 
