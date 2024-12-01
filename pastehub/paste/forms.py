@@ -13,7 +13,10 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
 
     class Meta:
         model = Paste
-        fields = [model.title.field.name, model.category.field.name]
+        fields = [
+            model.title.field.name,
+            model.category.field.name,
+        ]
 
     def clean_content(self):
         content = self.cleaned_data.get("content")
@@ -23,4 +26,35 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
         return content
 
 
-__all__ = ["PasteForm"]
+class ProtectForm(forms.ModelForm):
+    password = forms.CharField(
+        required=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Пароль",
+                "disabled": "disabled",
+            },
+        ),
+    )
+
+    class Meta:
+        model = Paste
+        fields = [model.is_protected.field.name]
+
+        widgets = {
+            model.is_protected.field.name: forms.CheckboxInput(
+                attrs={"class": "form-check-input"},
+            ),
+        }
+
+
+class GetPasswordForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Ключ"},
+        ),
+    )
+
+
+__all__ = ["GetPasswordForm", "PasteForm", "ProtectForm"]

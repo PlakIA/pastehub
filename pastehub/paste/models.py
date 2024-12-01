@@ -31,7 +31,6 @@ class Paste(models.Model):
         related_query_name="paste",
         verbose_name="категория",
         null=True,
-        blank=True,
     )
     author = models.ForeignKey(
         User,
@@ -50,6 +49,10 @@ class Paste(models.Model):
     is_published = models.BooleanField(
         default=True,
         verbose_name="опубликовано?",
+    )
+    is_protected = models.BooleanField(
+        default=False,
+        verbose_name="Зашифровать?",
     )
     created = models.DateTimeField(auto_now_add=True, verbose_name="создан")
     updated = models.DateTimeField(auto_now=True, verbose_name="обновлён")
