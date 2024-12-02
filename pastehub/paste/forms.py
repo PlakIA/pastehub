@@ -8,12 +8,22 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(),
         label="Содержимое",
+        help_text="Максимальный объём текста 10 МБ",
         required=True,
+    )
+    password = forms.CharField(
+        required=False,
+        label="Ключ шифрования",
+        help_text="Если вы не хотите шифровать пасту, оставьте поле пустым",
+        widget=forms.PasswordInput(),
     )
 
     class Meta:
         model = Paste
-        fields = [model.title.field.name, model.category.field.name]
+        fields = [
+            model.title.field.name,
+            model.category.field.name,
+        ]
 
     def clean_content(self):
         content = self.cleaned_data.get("content")
@@ -23,4 +33,12 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
         return content
 
 
-__all__ = ["PasteForm"]
+class GetPasswordForm(forms.Form):
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Ключ"},
+        ),
+    )
+
+
+__all__ = ["GetPasswordForm", "PasteForm"]

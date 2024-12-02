@@ -39,7 +39,6 @@ class TestForms(TestCase):
 
         self.assertEqual(Paste.objects.count(), pastes_count + 1)
         self.assertIn("messages", response.context)
-        print(response.context["messages"])
 
     def test_create_forms_errors(self):
         data = {
