@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "core.apps.CoreConfig",
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
@@ -75,7 +74,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         "NAME": (
-            "django.contrib.auth.password_validation.MinimumLengthValidator"
+            "django.contrib.auth.password_validation" ".MinimumLengthValidator"
         ),
     },
     {
@@ -92,7 +91,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.CustomUser"
+
+DEFAULT_USER_IS_ACTIVE = env.bool(
+    "DJANGO_DEFAULT_USER_IS_ACTIVE",
+    default=False,
+)
 
 LANGUAGE_CODE = "ru-ru"
 
@@ -110,6 +114,16 @@ STATIC_ROOT = BASE_DIR / "static"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+LOGIN_REDIRECT_URL = "/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SHORT_LINK_LENGTH = 8
+
+
+# Email settings
+MAIL = env.str("DJANGO_MAIL", default="default@yandex.ru")
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+EMAIL_FILE_PATH = BASE_DIR / "send_mail"

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<div class="w-50 p-3 mx-auto">
+    <h2>Список активных пользователей</h2>
+</div>
+<div class="w-75 p-3 mx-auto">
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Имя</th>
+        <th scope="col">День+Месяц даты рождения</th>
+        <th scope="col">Изображение</th>
+        <th scope="col">Статистика</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row"><a href="{% url "users:user-detail" user.id %}">{{ user.id }}</a></th>
+                <td>{{ user.username }}</td>
+                <td>{{ user.profile.birthday|date:"d+m" }}</td>
+                {% if user.profile.image %}
+                    <td><img src="{{ user.profile.image.url }}"
+                        class="rounded border"
+                        alt="{{ user.profile.image.name }}"
+                        width="60px"
+                        height="60px" />
+                    </td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td>
+                  <a href={% url "stats:user-stats-detail" user.id %}>Посмотреть статистику</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock content %}
