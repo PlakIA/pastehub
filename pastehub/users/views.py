@@ -3,7 +3,7 @@ from datetime import timedelta
 import django.conf
 import django.contrib.auth.mixins
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 
 
@@ -63,5 +63,11 @@ def activate(request, username):
         {"title": "Ссылка просрочена"},
     )
 
+
+def user_detail(request, pk):
+    user = get_object_or_404(users.models.CustomUser, pk=pk)
+    profile_form = users.forms.ProfileForm(instance=user)
+
+    return render(request, "users/profile.html", {"profile_form": profile_form})
 
 __all__ = ()

@@ -32,6 +32,7 @@ urlpatterns = [
         ),
         name="logout",
     ),
+    path("user/<int:pk>/", users.views.user_detail, name="user-detail"),
 ]
 
 urlpatterns_password_reset = [
