@@ -3,8 +3,10 @@ from datetime import timedelta
 import django.conf
 import django.contrib.auth.mixins
 from django.core.mail import send_mail
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 import users.forms
@@ -64,10 +66,26 @@ def activate(request, username):
     )
 
 
-def user_detail(request, pk):
-    user = get_object_or_404(users.models.CustomUser, pk=pk)
-    profile_form = users.forms.ProfileForm(instance=user)
+def user_detail(request, username):
+    return render(request, "users/user_detail.html")
 
-    return render(request, "users/profile.html", {"profile_form": profile_form})
+
+@login_required
+def profile_edit(request):
+    profile_form = users.forms.ProfileForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=request.user,
+    )
+    if request.method == "POST" and profile_form.is_valid():
+        profile_form.save()
+        messages.success(request, "Все прошло успешно")
+
+    return render(
+        request,
+        "users/profile.html",
+        {"profile_form": profile_form, "user": request.user},
+    )
+
 
 __all__ = ()

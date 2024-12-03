@@ -1,31 +1,7 @@
 {% extends "base.html" %}
-{% load static%}
 
+{% load static %}
 
 {% block content %}
-<div class="container col-xxl-8 px-4 py-5">
-    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
-        <div class="col-10 col-sm-8 col-lg-6">
-        <img
-            {% if user.profile.image %}
-            src="{{ user.profile.image.url }}"
-            {% else %}
-            src=""
-            {% endif  %}
-            class="d-block mx-lg-auto img-fluid rounded-circle border border-dark border-5"
-            alt="Аватарка"
-            width="250"
-            height="250"
-            loading="lazy"
-        />
-        </div>
-        <div class="col-lg-6">
-            <p class="display-6 lh-3 mb-3">Почта: {{ user.email }}</p>
-            {% if user.first_name %}<p class="lead">Имя: {{ user.first_name|capfirst }}</p>{% else %}<p class="lead">Имя: <i>не указано</i></p>{% endif %}
-            {% if user.last_name %}<p class="lead">Фамилия: {{ user.last_name|capfirst }}</p>{% else %}<p class="lead">Фамилия: <i>не указано</i></p>{% endif %}
-            <p class="lead">День рождения: {{ user.profile.birthday|date:"d.m.Y" }}</p>
-            <p class="lead">Сколько пытался выпить кофе: {{ user.profile.coffee_count }}</p>
-        </div>
-    </div>
-</div>
+
 {% endblock %}

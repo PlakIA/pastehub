@@ -5,7 +5,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     image = models.ImageField(
         "Аватарка",
-        upload_to="media/profile_images/",
+        upload_to="uploads/profile_images/",
         help_text="Ваша аватарка",
         null=True,
         blank=True,

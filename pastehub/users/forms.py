@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 
 import users.models
@@ -20,7 +20,9 @@ class SignUpForm(UserCreationForm):
         }
 
 
-class ProfileForm(forms.ModelForm):
+class ProfileForm(UserChangeForm):
+    password = None
+
     class Meta:
         model = users.models.CustomUser
         fields = (
@@ -30,6 +32,8 @@ class ProfileForm(forms.ModelForm):
             model.first_name.field.name,
             model.last_name.field.name,
         )
+
+        widgets = {model.image.field.name: forms.ClearableFileInput()}
 
 
 __all__ = ()

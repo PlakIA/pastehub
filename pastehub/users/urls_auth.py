@@ -5,7 +5,7 @@ from django.urls import path
 import users.views
 
 
-app_name = "users"
+app_name = "auth"
 
 urlpatterns = [
     path(
@@ -32,7 +32,6 @@ urlpatterns = [
         ),
         name="logout",
     ),
-    path("user/<int:pk>/", users.views.user_detail, name="user-detail"),
 ]
 
 urlpatterns_password_reset = [
