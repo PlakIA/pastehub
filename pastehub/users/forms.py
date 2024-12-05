@@ -5,7 +5,7 @@ import users.models
 
 
 class SignUpForm(UserCreationForm):
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = users.models.CustomUser
         fields = (
             model.email.field.name,
@@ -23,7 +23,7 @@ class SignUpForm(UserCreationForm):
 class ProfileForm(UserChangeForm):
     password = None
 
-    class Meta:
+    class Meta(UserChangeForm.Meta):
         model = users.models.CustomUser
         fields = (
             model.email.field.name,
