@@ -5,9 +5,6 @@
     {% if field.help_text %}
       <div class="form-text help mt-0">{{ field.help_text | safe }}</div>
     {% endif %}
-    {% if field.label %}
-      <div class="form-text help mt-0">{{ field.label | safe }}</div>
-    {% endif %}
     {% for error in field.errors %}
       <p class="text-danger form-text">{{ error | escape }}</p>
     {% endfor %}
