@@ -1,10 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
+from core.forms import BootstrapFormMixin
 import users.models
 
 
-class SignUpForm(UserCreationForm):
+class SignUpForm(BootstrapFormMixin, UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = users.models.CustomUser
         fields = (
@@ -20,7 +21,7 @@ class SignUpForm(UserCreationForm):
         }
 
 
-class ProfileForm(UserChangeForm):
+class ProfileForm(BootstrapFormMixin, UserChangeForm):
     password = None
 
     class Meta(UserChangeForm.Meta):
