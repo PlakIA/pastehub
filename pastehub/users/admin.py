@@ -17,3 +17,6 @@ class MyUserAdmin(UserAdmin):
 
 
 admin.site.register(users.models.CustomUser, MyUserAdmin)
+
+
+__all__ = ()

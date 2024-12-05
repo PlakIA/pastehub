@@ -1,12 +1,11 @@
 from datetime import timedelta
 
 import django.conf
-import django.contrib.auth.mixins
-from django.core.mail import send_mail
-from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.shortcuts import render
+from django.utils import timezone
 
 
 import users.forms
@@ -67,7 +66,7 @@ def activate(request, username):
 
 
 def user_detail(request, username):
-    return render(request, "users/user_detail.html")
+    pass  # TODO
 
 
 @login_required
