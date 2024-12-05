@@ -11,6 +11,10 @@ def create(request):
 
     if request.method == "POST" and form.is_valid():
         instance = form.save(commit=False)
+
+        if request.user.is_authenticated:
+            instance.author = request.user
+
         content = form.cleaned_data.get("content")
 
         password = form.cleaned_data.get("password")
