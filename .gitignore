@@ -7,6 +7,7 @@ __pycache__/
 send_mail
 send_mail/
 local_settings.py
+media/
 
 # Backup files # 
 *.bak 
