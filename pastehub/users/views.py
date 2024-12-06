@@ -1,11 +1,11 @@
 from datetime import timedelta
 
 import django.conf
-import django.contrib.auth.mixins
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
-
 
 import users.forms
 import users.models
@@ -34,11 +34,11 @@ def signup(request):
 
             return render(
                 request,
-                "users/activation_sent.html",
+                "auth/activation_sent.html",
                 {"title": "Активация аккаунта"},
             )
 
-    return render(request, "users/signup.html", {"form": form})
+    return render(request, "auth/signup.html", {"form": form})
 
 
 def activate(request, username):
@@ -53,14 +53,42 @@ def activate(request, username):
 
         return render(
             request,
-            "users/activation_success.html",
+            "auth/activation_success.html",
             {"title": "Успешная активация"},
         )
 
     return render(
         request,
-        "users/activation_expired.html",
+        "auth/activation_expired.html",
         {"title": "Ссылка просрочена"},
+    )
+
+
+def user_detail(request, username):
+    user = get_object_or_404(users.models.CustomUser, username=username)
+    user_pastes = user.pastes.select_related("category").all()
+    return render(
+        request,
+        "users/user_detail.html",
+        {"pastes": user_pastes, "user": user},
+    )
+
+
+@login_required
+def profile_edit(request):
+    profile_form = users.forms.ProfileForm(
+        request.POST or None,
+        request.FILES or None,
+        instance=request.user,
+    )
+    if request.method == "POST" and profile_form.is_valid():
+        profile_form.save()
+        messages.success(request, "Все прошло успешно")
+
+    return render(
+        request,
+        "users/profile.html",
+        {"profile_form": profile_form, "user": request.user},
     )
 
 

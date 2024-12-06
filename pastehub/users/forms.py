@@ -1,10 +1,12 @@
-from django.contrib.auth.forms import UserCreationForm
+from django import forms
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 
+from core.forms import BootstrapFormMixin
 import users.models
 
 
-class SignUpForm(UserCreationForm):
-    class Meta:
+class SignUpForm(BootstrapFormMixin, UserCreationForm):
+    class Meta(UserCreationForm.Meta):
         model = users.models.CustomUser
         fields = (
             model.email.field.name,
@@ -17,6 +19,22 @@ class SignUpForm(UserCreationForm):
             model.email.field.name: "Введите вашу почту",
             model.username.field.name: "Введите имя пользователя",
         }
+
+
+class ProfileForm(BootstrapFormMixin, UserChangeForm):
+    password = None
+
+    class Meta(UserChangeForm.Meta):
+        model = users.models.CustomUser
+        fields = (
+            model.email.field.name,
+            model.username.field.name,
+            model.image.field.name,
+            model.first_name.field.name,
+            model.last_name.field.name,
+        )
+
+        widgets = {model.image.field.name: forms.ClearableFileInput()}
 
 
 __all__ = ()
