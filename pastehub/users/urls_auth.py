@@ -1,7 +1,7 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
 
-
+import users.forms
 import users.views
 
 
@@ -22,6 +22,7 @@ urlpatterns = [
         "login/",
         auth_views.LoginView.as_view(
             template_name="auth/login.html",
+            form_class=users.forms.BootstrapAuthenticationForm,
         ),
         name="login",
     ),
@@ -40,6 +41,7 @@ urlpatterns_password_reset = [
         auth_views.PasswordChangeView.as_view(
             success_url="done",
             template_name="auth/password_change.html",
+            form_class=users.forms.BootstrapPasswordChangeForm,
         ),
         name="password_change",
     ),
@@ -55,6 +57,7 @@ urlpatterns_password_reset = [
         auth_views.PasswordResetView.as_view(
             success_url="done",
             template_name="auth/password_reset.html",
+            form_class=users.forms.BootstrapPasswordResetForm,
         ),
         name="password_reset",
     ),
@@ -69,6 +72,7 @@ urlpatterns_password_reset = [
         "reset/<uidb64>/<token>/",
         auth_views.PasswordResetConfirmView.as_view(
             template_name="auth/password_reset_confirm.html",
+            form_class=users.forms.BootstrapSetPasswordForm,
         ),
         name="password_reset_confirm",
     ),

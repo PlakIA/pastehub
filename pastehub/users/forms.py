@@ -1,5 +1,12 @@
 from django import forms
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm,
+    PasswordResetForm,
+    SetPasswordForm,
+    UserChangeForm,
+    UserCreationForm,
+)
 
 from core.forms import BootstrapFormMixin
 import users.models
@@ -35,6 +42,22 @@ class ProfileForm(BootstrapFormMixin, UserChangeForm):
         )
 
         widgets = {model.image.field.name: forms.ClearableFileInput()}
+
+
+class BootstrapPasswordChangeForm(BootstrapFormMixin, PasswordChangeForm):
+    pass
+
+
+class BootstrapAuthenticationForm(BootstrapFormMixin, AuthenticationForm):
+    pass
+
+
+class BootstrapPasswordResetForm(BootstrapFormMixin, PasswordResetForm):
+    pass
+
+
+class BootstrapSetPasswordForm(BootstrapFormMixin, SetPasswordForm):
+    pass
 
 
 __all__ = ()

@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 
+from paste.models import Paste
 import users.forms
 import users.models
 
@@ -66,7 +67,18 @@ def activate(request, username):
 
 def user_detail(request, username):
     user = get_object_or_404(users.models.CustomUser, username=username)
-    user_pastes = user.pastes.select_related("category").all()
+
+    user_pastes = (
+        user.pastes.select_related("category")
+        .only(
+            Paste.title.field.name,
+            Paste.created.field.name,
+            Paste.category.field.name,
+            Paste.author.field.name,
+        )
+        .all()
+    )
+
     return render(
         request,
         "users/user_detail.html",
@@ -85,10 +97,16 @@ def profile_edit(request):
         profile_form.save()
         messages.success(request, "Все прошло успешно")
 
+    user_info = {
+        "image": request.user.image,
+        "username": request.user.username,
+        "email": request.user.email,
+    }
+
     return render(
         request,
         "users/profile.html",
-        {"profile_form": profile_form, "user": request.user},
+        {"profile_form": profile_form, "user": user_info},
     )
 
 
