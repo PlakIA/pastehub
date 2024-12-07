@@ -1,7 +1,11 @@
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import aes256_decrypt, aes256_encrypt
-from core.utils import delete_from_storage, get_from_storage, upload_to_storage
+from core.storage import (
+    delete_from_storage,
+    get_from_storage,
+    upload_to_storage,
+)
 from paste.forms import GetPasswordForm, PasteForm
 from paste.models import Paste
 
@@ -23,7 +27,9 @@ def create(request):
             content = aes256_encrypt(password, content)
 
         instance.save()
-        upload_to_storage(f"pastes/{instance.id}", content)
+
+        clear_content = content.replace("\r\n", "\n").strip()
+        upload_to_storage(f"pastes/{instance.id}", clear_content)
 
         return redirect("paste:detail", short_link=instance.short_link)
 

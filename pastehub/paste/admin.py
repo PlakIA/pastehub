@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.utils import delete_from_storage
+from core.storage import delete_from_storage
 from paste.models import Category, Paste
 
 

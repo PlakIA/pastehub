@@ -1,7 +1,7 @@
 from django.http import FileResponse, HttpResponse, JsonResponse
 from docx import Document
 
-from core.utils import get_from_storage
+from core.storage import get_from_storage
 from paste.models import Paste
 
 
