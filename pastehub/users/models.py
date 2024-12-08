@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from sorl.thumbnail import get_thumbnail
 
 
 class CustomUser(AbstractUser):
@@ -10,6 +11,20 @@ class CustomUser(AbstractUser):
         null=True,
         blank=True,
     )
+
+    def _get_avatar(self, geometry):
+        return get_thumbnail(
+            self.image,
+            geometry,
+            crop="center",
+            quality=51,
+        )
+
+    def get_avatar_32x32(self):
+        if self.image:
+            return self._get_avatar("32x32")
+
+        return None
 
 
 __all__ = ()

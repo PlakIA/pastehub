@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "sorl.thumbnail",
+    "django_cleanup.apps.CleanupConfig",
     "core.apps.CoreConfig",
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
@@ -132,8 +134,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SHORT_LINK_LENGTH = 8
 
-
-# Email settings
 MAIL = env.str("DJANGO_MAIL", default="default@yandex.ru")
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
