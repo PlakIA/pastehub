@@ -45,6 +45,11 @@ def edit(request, short_link):
     )
 
     if form.is_valid() and request.POST:
+        content = form.cleaned_data.get("content")
+        clear_content = content.replace("\r\n", "\n").strip()
+        delete_from_storage(f"pastes/{paste.id}")
+        upload_to_storage(f"pastes/{paste.id}", clear_content)
+
         form.save()
 
         return redirect("paste:detail", short_link=short_link)
