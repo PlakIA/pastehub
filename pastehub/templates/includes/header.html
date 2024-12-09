@@ -11,8 +11,10 @@
         <ul class="nav nav-pills">
 
           <li class="nav-item">
-            <a href="{% url 'paste:create' %}" class="nav-link {% if view_name == 'paste:create' %}active disabled{% endif %}" aria-current="page">Создать
-              пасту</a>
+            <a href="{% url 'paste:create' %}" class="nav-link {% if view_name == 'paste:create' %}active disabled{% endif %}" aria-current="page">Создать пасту</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'paste:create_protected' %}" class="nav-link {% if view_name == 'paste:create_protected' %}active disabled{% endif %}" aria-current="page">Создать защищённую пасту</a>
           </li>
 
 
@@ -29,8 +31,7 @@
               <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle mt-2" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="{{ request.user.get_avatar_32x32.url }}" alt="" class="rounded-circle me-2">
                 <strong>
-                  {% if request.user.first_name %}{{ request.user.first_name }}{% else %}
-                    {{ request.user.username }}{% endif %}
+                  {{ request.user.username }}
                 </strong>
               </a>
               <ul class="dropdown-menu dropdown-menu-end text-small shadow border-0 rounded" style="min-width: 180px;">
@@ -38,8 +39,7 @@
                   <a class="dropdown-item {% if view_name == 'users:user_detail' %}active disabled{% endif %}" href="{% url 'users:profile-edit' %}">Профиль</a>
                 </li>
                 <li>
-                  <a class="dropdown-item {% if view_name == 'users:profile' %}active disabled{% endif %}" href="{% url 'users:user-detail' request.user.username %}">Список
-                    паст</a>
+                  <a class="dropdown-item {% if view_name == 'users:profile' %}active disabled{% endif %}" href="{% url 'users:user-detail' request.user.username %}">Список паст</a>
                 </li>
                 <li>
                   <hr class="dropdown-divider">

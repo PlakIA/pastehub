@@ -18,10 +18,6 @@ class PasteAdmin(admin.ModelAdmin):
         Paste.created.field.name,
     ]
 
-    readonly_fields = [
-        Paste.is_protected.field.name,
-    ]
-
     def delete_model(self, request, obj):
         delete_from_storage(f"pastes/{obj.pk}")
         super().delete_model(request, obj)
