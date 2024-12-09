@@ -13,24 +13,6 @@
         <small class="text-muted">Дата создания: <strong>{{ paste.created }}</strong>{% if paste.expired_duration %} |
           Срок существования: <strong>{{ paste.expired_duration }}</strong>{% endif %}</small>
 
-        <div>
-
-          <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Экспорт
-          </button>
-          <ul class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'export:source' paste.short_link %}" download role="button">
-              Исходный формат
-            </a>
-            <a class="dropdown-item" href="{% url 'export:json' paste.short_link %}" download role="button">
-              JSON
-            </a>
-            <a class="dropdown-item" href="{% url 'export:docx' paste.short_link %}" download role="button">
-              DOCX
-            </a>
-          </ul>
-        </div>
-
       </div>
 
 
