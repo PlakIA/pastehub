@@ -15,20 +15,20 @@
 
         <div>
           {% if paste.author == request.user %}
-            <a class="btn btn-sm btn-primary">Редактировать</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">Редактировать</a>
           {% endif %}
 
           <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Экспорт
           </button>
           <ul class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'export:source' paste.id %}" download role="button">
+            <a class="dropdown-item" href="{% url 'export:source' paste.short_link %}" download role="button">
               Исходный формат
             </a>
-            <a class="dropdown-item" href="{% url 'export:json' paste.id %}" download role="button">
+            <a class="dropdown-item" href="{% url 'export:json' paste.short_link %}" download role="button">
               JSON
             </a>
-            <a class="dropdown-item" href="{% url 'export:docx' paste.id %}" download role="button">
+            <a class="dropdown-item" href="{% url 'export:docx' paste.short_link %}" download role="button">
               DOCX
             </a>
           </ul>
