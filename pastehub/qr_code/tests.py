@@ -46,7 +46,7 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertEqual(
             response.get("Content-Disposition"),
-            str(("attachment; filename='qr_code.png'",)),
+            "attachment; filename=qr_code.png",
         )
         self.assertEqual(
             response.get("content-type"),

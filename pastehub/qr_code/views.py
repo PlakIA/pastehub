@@ -26,7 +26,7 @@ def qr_code_preview(request, url):
 
 
 def qr_code_download(request, format_image, url):
-    if format_image.lower() in ("png"):
+    if format_image.lower() == "png":
         qr = QRCode(
             version=1,
             error_correction=constants.ERROR_CORRECT_L,
@@ -45,8 +45,11 @@ def qr_code_download(request, format_image, url):
             content_type=f"image/{format_image}",
         )
         response["Content-Disposition"] = (
-            f"attachment; filename='qr_code.{format_image.lower()}'",
+            f"attachment; filename=qr_code.{format_image.lower()}"
         )
+        response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response["Pragma"] = "no-cache"
+        response["Expires"] = "0"
         return response
 
     return HttpResponseNotFound()
