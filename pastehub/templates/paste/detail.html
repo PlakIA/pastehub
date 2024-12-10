@@ -23,6 +23,10 @@
         <input type="text" id="linkInput" class="form-control" value="{{ request.build_absolute_uri }}" readonly>
       </div>
 
+      <div class="mt-3">
+        <label for="linkInput" class="form-label mb-1">Qr-код:</label>
+        <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded img-thumbnail" alt="qr-code image" width="50px" data-bs-toggle="modal" data-bs-target="#qrcodeModal">
+      </div>
     </div>
   </div>
 
@@ -66,6 +70,32 @@
           <a class="btn btn-outline-info" href="{% url 'export:docx' paste.id %}" download role="button">
             DOCX
           </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="qrcodeModal" tabindex="-1" aria-labelledby="qrcodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="qrcodeModalLabel">QR-код</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="text-center">
+            <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded" alt="qr-code image">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <div class="row">
+              <div class="d-grid gap-2 d-md-block text-center">
+                <a class="btn btn-outline-dark" href="{% url 'qr_code:download' 'png' request.build_absolute_uri %}" download role="button">
+                  PNG
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
