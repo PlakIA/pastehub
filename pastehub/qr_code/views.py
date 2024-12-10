@@ -1,9 +1,11 @@
 from io import BytesIO
 
-from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
-
 from qrcode import constants, QRCode
+
+
+__all__ = ["qr_code_download", "qr_code_preview"]
+
 
 def qr_code_preview(request, url):
     qr = QRCode(
@@ -46,5 +48,5 @@ def qr_code_download(request, format_image, url):
             f"attachment; filename='qr_code.{format_image.lower()}'",
         )
         return response
-    else:
-        return HttpResponseNotFound()
+
+    return HttpResponseNotFound()

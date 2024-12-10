@@ -23,20 +23,25 @@ class TestViews(TestCase):
         self.paste.save()
 
     def test_endpoint_qr_code_preview(self):
-        response = self.client.get(reverse(
-            "qr_code:preview",
-            args=("test_qr_code_text",),
-        ))
+        response = self.client.get(
+            reverse(
+                "qr_code:preview",
+                args=("test_qr_code_text",),
+            ),
+        )
 
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
 
     def test_positive_endpoint_qr_code_download(self):
-        response = self.client.get(reverse(
-            "qr_code:download",
-            args=(
-                "PNG", "test_qr_code_text",
+        response = self.client.get(
+            reverse(
+                "qr_code:download",
+                args=(
+                    "PNG",
+                    "test_qr_code_text",
+                ),
             ),
-        ))
+        )
 
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertEqual(
@@ -49,12 +54,15 @@ class TestViews(TestCase):
         )
 
     def test_negative_endpoint_qr_code_download_format(self):
-        response = self.client.get(reverse(
-            "qr_code:download",
-            args=(
-                "ABC", f"http://127.0.0.1/{self.paste.short_link}",
+        response = self.client.get(
+            reverse(
+                "qr_code:download",
+                args=(
+                    "ABC",
+                    f"http://127.0.0.1/{self.paste.short_link}",
+                ),
             ),
-        ))
+        )
 
         self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
 
