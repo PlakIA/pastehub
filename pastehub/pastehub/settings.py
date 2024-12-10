@@ -118,6 +118,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
+
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static_dev"]
 

@@ -7,8 +7,8 @@ def upload_to_storage(key, content):
 
 
 def get_from_storage(key):
-    with default_storage.open(key, "r") as f:
-        return f.read()
+    with default_storage.open(key, "rb") as f:
+        return f.read().decode("utf-8")
 
 
 def delete_from_storage(key):

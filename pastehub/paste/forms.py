@@ -8,7 +8,7 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(),
         label="Содержимое",
-        help_text="Максимальный объём текста 10 МБ",
+        help_text="Максимальный объём текста 5 МБ",
         required=True,
     )
 
@@ -23,8 +23,8 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
 
     def clean_content(self):
         content = self.cleaned_data.get("content")
-        if content and len(content.encode("utf-8")) > 10 * 1024 * 1024:
-            raise forms.ValidationError("Содержимое не должно превышать 10 МБ")
+        if content and len(content.encode("utf-8")) > 5 * 1024 * 1024:
+            raise forms.ValidationError("Содержимое не должно превышать 5 МБ")
 
         return content
 
@@ -33,7 +33,7 @@ class ProtectedPasteForm(BootstrapFormMixin, forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(),
         label="Содержимое",
-        help_text="Максимальный объём текста 10 МБ",
+        help_text="Максимальный объём текста 5 МБ",
         required=True,
     )
     password = forms.CharField(
@@ -51,8 +51,8 @@ class ProtectedPasteForm(BootstrapFormMixin, forms.ModelForm):
 
     def clean_content(self):
         content = self.cleaned_data.get("content")
-        if content and len(content.encode("utf-8")) > 10 * 1024 * 1024:
-            raise forms.ValidationError("Содержимое не должно превышать 10 МБ")
+        if content and len(content.encode("utf-8")) > 5 * 1024 * 1024:
+            raise forms.ValidationError("Содержимое не должно превышать 5 МБ")
 
         return content
 
