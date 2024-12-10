@@ -45,7 +45,10 @@ class TestViews(TestCase):
         )
 
         self.assertEqual(response.status_code, http.HTTPStatus.FOUND)
-        self.assertRedirects(response, reverse("paste:create"))
+        self.assertRedirects(
+            response,
+            reverse("paste:detail", args=(self.test_paste.short_link,)),
+        )
 
 
 __all__ = []
