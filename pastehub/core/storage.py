@@ -1,25 +1,18 @@
-import os
-
-from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 
 
 def upload_to_storage(key, content):
-    directory = settings.MEDIA_ROOT / os.path.dirname(key)
-
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    with open(settings.MEDIA_ROOT / key, "w", encoding="utf-8") as f:
-        f.writelines(content)
+    return default_storage.save(key, ContentFile(content.encode("utf8")))
 
 
 def get_from_storage(key):
-    with open(settings.MEDIA_ROOT / key, "r", encoding="utf-8") as f:
+    with default_storage.open(key, "r") as f:
         return f.read()
 
 
 def delete_from_storage(key):
-    os.remove(settings.MEDIA_ROOT / key)
+    default_storage.delete(key)
 
 
 __all__ = [
