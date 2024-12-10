@@ -57,7 +57,7 @@ def edit(request, short_link):
     return render(
         request=request,
         template_name="paste/create.html",
-        context={"form": form},
+        context={"form": form, "is_edit_page": True},
     )
 
 
