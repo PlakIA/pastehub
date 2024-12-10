@@ -22,8 +22,9 @@ def create(request):
         content = form.cleaned_data.get("content")
         clear_content = content.replace("\r\n", "\n").strip()
 
-        upload_to_storage(f"pastes/{instance.id}", clear_content)
-        instance.save()
+        uploaded = upload_to_storage(f"pastes/{instance.id}", clear_content)
+        if uploaded:
+            instance.save()
 
         return redirect("paste:detail", short_link=instance.short_link)
 
@@ -106,8 +107,9 @@ def create_protected(request):
         instance.salt = salt
         instance.nonce = nonce
 
-        upload_to_storage(f"pastes/{instance.id}", ciphertext)
-        instance.save()
+        uploaded = upload_to_storage(f"pastes/{instance.id}", ciphertext)
+        if uploaded:
+            instance.save()
 
         return redirect(
             "paste:detail_protected",
