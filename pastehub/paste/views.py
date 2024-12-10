@@ -75,6 +75,9 @@ def detail(request, short_link):
 def delete(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
 
+    if request.user != paste.author:
+        return redirect("paste:detail", short_link=short_link)
+
     delete_from_storage(f"pastes/{paste.id}")
     paste.delete()
 

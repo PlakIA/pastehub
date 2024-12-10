@@ -6,7 +6,7 @@
 
       <div class="mb-3">
         <h3 class="text-center">{{ paste.title }}</h3>
-        {% if paste.category %}<p class="text-muted text-center">{{ paste.category }}</p>{% endif %}
+        <p class="text-muted text-center">{{ paste.category }}</p>
       </div>
 
       <div class="mb-2 d-flex justify-content-between align-items-center">
@@ -43,9 +43,11 @@
 
       <textarea class="form-control" type="text" rows="10" readonly>{{ content }}</textarea>
 
-      <button type="button" class="btn btn-outline-danger mt-3 col-2" data-bs-toggle="modal"
-              data-bs-target="#confirmDeleteModal">Удалить
-      </button>
+      {% if paste.author == request.user %}
+        <button type="button" class="btn btn-outline-danger mt-3 col-2" data-bs-toggle="modal"
+                data-bs-target="#confirmDeleteModal">Удалить
+        </button>
+      {% endif %}
 
       <div class="mt-3">
         <label for="linkInput" class="form-label mb-1">Короткая ссылка:</label>
