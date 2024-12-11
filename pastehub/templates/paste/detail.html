@@ -1,18 +1,31 @@
 {% extends "base.html" %}
 
+{% block title %}{{ paste.title }}{% endblock %}
+
 {% block content %}
   <div class="container d-flex justify-content-center  ">
     <div class="   p-4 w-75">
 
       <div class="mb-3">
         <h3 class="text-center">{{ paste.title }}</h3>
-        {% if paste.category %}<p class="text-muted text-center">{{ paste.category }}</p>{% endif %}
+        <p class="text-muted text-center">{{ paste.category }}</p>
       </div>
+      <small class="text-muted">Автор: <strong>{{ paste.author.username }}</strong> | Дата создания:
+          <strong>{{ paste.created }}</strong>{% if paste.expired_duration %} | Срок существования:
+            <strong>{{ paste.expired_duration }}</strong>{% endif %}</small>
 
       <textarea class="form-control" type="text" rows="10" readonly>{{ content }}</textarea>
-      <button type="button" class="btn btn-outline-danger mt-3 col-2" data-bs-toggle="modal"
-              data-bs-target="#confirmDeleteModal">Удалить
-      </button>
+      
+      {% if paste.author == request.user %}
+        <button type="button" class="btn btn-outline-danger mt-3 col-2" data-bs-toggle="modal"
+                data-bs-target="#confirmDeleteModal">Удалить
+        </button>
+      {% endif %}
+      <br>
+      <a class="btn btn-sm btn-outline-danger" href="">Нарушение</a>
+      {% if paste.author == request.user %}
+        <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">Редактировать</a>
+      {% endif %}
       <br>
       <button type="button" class="btn btn-success mt-3 col-3" data-bs-toggle="modal" data-bs-target="#downloadModal">
         Экспортировать пасту
@@ -39,9 +52,9 @@
         <label for="linkInput" class="form-label mb-1">QR-код:</label>
         <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded img-thumbnail" alt="qr-code image" width="50px" data-bs-toggle="modal" data-bs-target="#qrcodeModal">
       </div>
+    
     </div>
   </div>
-
 
   <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
        aria-hidden="true">
@@ -56,36 +69,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <a type="button" class="btn btn-danger" id="confirmDeleteButton"
-             href="{% url 'paste:delete' paste.short_link %}">Удалить</a>
+          <a type="button" class="btn btn-danger" id="confirmDeleteButton" href="{% url 'paste:delete' paste.short_link %}">Удалить</a>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="downloadModal" tabindex="-1" aria-labelledby="downloadModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="downloadModalLabel">Экспорт пасты</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          Выберите формат файла
-        </div>
-        <div class="modal-footer">
-          <a class="btn btn-outline-primary" href="{% url 'export:source' paste.id %}" download role="button">
-            Исходный формат
-          </a>
-          <a class="btn btn-outline-warning" href="{% url 'export:json' paste.id %}" download role="button">
-            JSON
-          </a>
-          <a class="btn btn-outline-info" href="{% url 'export:docx' paste.id %}" download role="button">
-            DOCX
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+
   <div class="modal fade" id="qrcodeModal" tabindex="-1" aria-labelledby="qrcodeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -103,7 +92,7 @@
             <div class="row">
               <div class="d-grid gap-2 d-md-block text-center">
                 <a class="btn btn-outline-dark" href="{% url 'qr_code:download' 'png' request.build_absolute_uri %}" download role="button">
-                  PNG
+                  Скачать
                 </a>
               </div>
             </div>

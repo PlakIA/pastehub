@@ -10,6 +10,10 @@
         {% with request.resolver_match.view_name as view_name %}
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href={% url 'paste:create' %} class="nav-link px-2 {% if view_name == 'paste:create' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">Создать заметку</a></li>
+            <li><a href={% url 'paste:create_protected' %} class="nav-link px-2 {% if view_name == 'paste:create_protected' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">Создать защищенную заметку</a></li>
+            {% if request.user.is_superuser %}
+            <li><a href={% url 'admin:index' %} class="nav-link px-2 {% if view_name == 'admin:index' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">В админку</a></li>
+            {% endif %}
             <li><a href="#" class="nav-link px-2 link-body-emphasis">API</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">Ответы на вопросы</a></li>
             </ul>

@@ -1,7 +1,16 @@
 {% for field in form %}
   <div class="mb-3 form-floating">
-    {{ field }}
-    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% if field.field.widget.input_type == "checkbox" %}
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
+      </div>
+    {% else %}
+      {{ field }}
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {% endif %}
     {% if field.help_text %}
       <div class="form-text help mt-0">{{ field.help_text | safe }}</div>
     {% endif %}
