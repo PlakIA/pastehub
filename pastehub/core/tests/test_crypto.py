@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.crypto import aes256_decrypt, aes256_encrypt
+from core.crypto import AESEncryption
 
 
 class TestCrypto(TestCase):
@@ -8,8 +8,8 @@ class TestCrypto(TestCase):
         key = "TeStKeY_123456!"
         input_text = "Test input text"
 
-        crypted_text = aes256_encrypt(key, input_text)
-        decrypted_text = aes256_decrypt(key, crypted_text)
+        salt, nonce, ciphertext = AESEncryption.encrypt(key, input_text)
+        decrypted_text = AESEncryption.decrypt(key, salt, nonce, ciphertext)
 
         self.assertEqual(input_text, decrypted_text)
 

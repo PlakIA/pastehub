@@ -1,48 +1,78 @@
 from django.http import FileResponse, HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 from docx import Document
 
-from core.utils import get_from_storage
+from core.storage import get_from_storage
 from paste.models import Paste
 
 
-def export_source(request, id_paste):
-    paste_text = get_from_storage(f"pastes/{id_paste}")
-    return FileResponse(
+def export_source(request, short_link):
+    paste = get_object_or_404(Paste, short_link=short_link)
+    paste_text = get_from_storage(f"pastes/{paste.id}")
+
+    response = FileResponse(
         paste_text,
-        content_type="application/octet-stream",
+        content_type="text/plain",
+        filename=f"{paste.short_link}.txt",
         as_attachment=True,
     )
+    response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
+
+    return response
 
 
-def export_json(request, id_paste):
-    paste = (
-        Paste.objects.prefetch_related("category").filter(id=id_paste).first()
-    )
-    paste_text = get_from_storage(f"pastes/{id_paste}")
-    json_dict = {
+def export_json(request, short_link):
+    paste = get_object_or_404(Paste, short_link=short_link)
+
+    data = {
+        "content": get_from_storage(f"pastes/{paste.id}"),
         "title": paste.title,
+        "author": str(paste.author),
         "category": str(paste.category),
-        "text": paste_text,
+        "created": paste.created,
+        "short_link": paste.short_link,
     }
-    return JsonResponse(json_dict)
-
-
-def export_docx(request, id_paste):
-    paste = (
-        Paste.objects.prefetch_related("category").filter(id=id_paste).first()
+    response = JsonResponse(
+        data,
+        json_dumps_params={
+            "indent": 4,
+            "ensure_ascii": False,
+        },
     )
-    paste_text = get_from_storage(f"pastes/{id_paste}")
+    response.charset = "utf-8"
+    response["Content-Disposition"] = (
+        f"attachment; filename={paste.short_link}.json"
+    )
+    response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
+
+    return response
+
+
+def export_docx(request, short_link):
+    paste = get_object_or_404(Paste, short_link=short_link)
+    paste_text = get_from_storage(f"pastes/{paste.id}")
 
     document = Document()
-    document.add_heading(paste.title, level=3)
+    document.add_heading(paste.title, level=1)
     document.add_paragraph(f"Категория: {paste.category}")
+    document.add_paragraph(f"Автор: {paste.author}")
+    document.add_paragraph(f"Создана: {paste.created}")
     document.add_paragraph(paste_text)
     response = HttpResponse(
         content_type="application/vnd."
         "openxmlformats-officedocument."
         "wordprocessingml.document",
     )
-    response["Content-Disposition"] = f"attachment; filename={id_paste}.docx"
+    response["Content-Disposition"] = (
+        f"attachment; filename={paste.short_link}.docx"
+    )
+    response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response["Pragma"] = "no-cache"
+    response["Expires"] = "0"
     document.save(response)
 
     return response

@@ -1,30 +1,29 @@
 from base64 import b64decode, b64encode
 
 from Crypto.Cipher import AES
+from Crypto.Protocol.KDF import PBKDF2
 from Crypto.Random import get_random_bytes
-from Crypto.Util.Padding import pad, unpad
 
 
-def aes256_encrypt(key, plaintext):
-    key = pad(key.encode("utf-8"), 32)[:32]
-    plaintext = pad(plaintext.encode("utf-8"), 16)
-    iv = get_random_bytes(16)
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    ciphertext = iv + cipher.encrypt(plaintext)
+class AESEncryption:
+    @staticmethod
+    def encrypt(password, text):
+        salt = get_random_bytes(16)
+        key = PBKDF2(password, salt, dkLen=32)
+        cipher = AES.new(key, AES.MODE_GCM)
+        ciphertext, tag = cipher.encrypt_and_digest(text.encode())
 
-    return b64encode(ciphertext).decode("utf-8")
+        ciphertext = b64encode(ciphertext).decode("utf-8")
+
+        return salt, cipher.nonce, ciphertext
+
+    @staticmethod
+    def decrypt(password, salt, nonce, ciphertext):
+        ciphertext = b64decode(ciphertext.encode("utf-8"))
+
+        key = PBKDF2(password, salt, dkLen=32)
+        cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
+        return cipher.decrypt(ciphertext).decode()
 
 
-def aes256_decrypt(key, ciphertext):
-    decoded_ciphertext = b64decode(ciphertext.encode("utf-8"))
-
-    key = pad(key.encode("utf-8"), 32)[:32]
-    iv = decoded_ciphertext[:16]
-
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    plaintext = cipher.decrypt(decoded_ciphertext[16:])
-
-    return unpad(plaintext, 16).decode("utf-8")
-
-
-__all__ = ["aes256_encrypt", "aes256_decrypt"]
+__all__ = ["AESEncryption"]

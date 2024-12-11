@@ -25,6 +25,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "sorl.thumbnail",
+    "django_cleanup.apps.CleanupConfig",
     "core.apps.CoreConfig",
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
@@ -116,6 +118,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
+
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static_dev"]
 
@@ -132,8 +136,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SHORT_LINK_LENGTH = 8
 
-
-# Email settings
 MAIL = env.str("DJANGO_MAIL", default="default@yandex.ru")
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
