@@ -9,7 +9,7 @@
         {% endfor %}
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% include 'includes/form.html' %}
             <button class="btn btn-primary" type="submit">Войти</button>
             <a href="{% url 'auth:password_reset' %}">Забыли пароль?</a>
             <p>Нет аккаунта? <a href="{% url 'auth:signup' %}">Зарегистрироваться</a></p>

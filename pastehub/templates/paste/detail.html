@@ -1,29 +1,43 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ paste.title }}{% endblock %}
 
 {% block content %}
-  <div class="container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="container d-flex align-items-center justify-content-center min-vh-100" xmlns="http://www.w3.org/1999/html">
     <div class="card p-4 shadow-lg w-75">
 
       <div class="mb-3">
         <h3 class="text-center">{{ paste.title }}</h3>
-        <p class="text-muted text-center">{{ paste.category }}</p>
+        {% if paste.is_blocked %}
+          <p class="text-danger text-center"><strong>Заблокировано</strong></p>
+        {% else %}
+          <p class="text-muted text-center">{{ paste.category }}</p>
+        {% endif %}
       </div>
 
       <div class="mb-2 d-flex justify-content-between align-items-center">
         <small class="text-muted">Автор: <strong>{{ paste.author.username }}</strong> | Дата создания:
           <strong>{{ paste.created }}</strong>{% if paste.expired_duration %} | Срок существования:
             <strong>{{ paste.expired_duration }}</strong>{% endif %}</small>
-
         <div>
-          <a class="btn btn-sm btn-outline-danger" href="{% url 'report:create' paste.short_link %}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
-              <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"></path>
-              <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
-            </svg>
-            Нарушение
-          </a>
+          {% if paste.is_blocked %}
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirmReviewModal">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-slash-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708"/>
+              </svg>
+              Пересмотр блокировки
+            </button>
+          {% else %}
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'report:create' paste.short_link %}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle" viewBox="0 0 16 16">
+                <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"></path>
+                <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
+              </svg>
+              Нарушение
+            </a>
+          {% endif %}
 
           {% if paste.author == request.user %}
             <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">
@@ -71,21 +85,36 @@
       {% endif %}
 
 
-
-      <div class="form-outline w-50 mt-3">
-        <label for="linkInput1" class="form-label mb-1">Короткая ссылка:</label>
-        <div class="d-flex align-items-center">
-          <input type="text" id="linkInput1" class="form-control me-2" value="{{ request.build_absolute_uri }}" readonly>
-          <button class="btn btn-secondary" data-clipboard-target="#linkInput1">
-            Скопировать
-          </button>
+      {% if not paste.is_blocked %}
+        <div class="form-outline w-50 mt-3">
+          <label for="linkInput1" class="form-label mb-1">Короткая ссылка:</label>
+          <div class="d-flex align-items-center">
+            <input type="text" id="linkInput1" class="form-control me-2" value="{{ request.build_absolute_uri }}" readonly>
+            <button class="btn btn-secondary col-auto" data-clipboard-target="#linkInput1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+              </svg>
+              Скопировать
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="mt-3">
-        <label for="linkInput" class="form-label mb-1">QR-код:</label>
-        <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded img-thumbnail" alt="qr-code image" width="50px" data-bs-toggle="modal" data-bs-target="#qrcodeModal">
-      </div>
+        <div class="mt-3">
+          <label for="linkInput" class="form-label mb-1">QR-код:</label>
+          <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded img-thumbnail" alt="qr-code image" width="50px" data-bs-toggle="modal" data-bs-target="#qrcodeModal">
+        </div>
+      {% endif %}
+
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == "success" %}
+            <div class="alert alert-success mt-3">
+              {{ message }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
 
     </div>
   </div>
@@ -162,7 +191,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+  <script src="{% static 'js/clipboard.min.js' %}"></script>
   <script>
       const target = document.getElementById('linkInput1');
       const button = target.nextElementSibling;
