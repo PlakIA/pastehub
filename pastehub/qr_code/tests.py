@@ -17,7 +17,6 @@ class TestViews(TestCase):
         self.paste = Paste.objects.create(
             title="Тестовая паста",
             category=self.category,
-            is_protected=False,
         )
         self.paste.full_clean()
         self.paste.save()
