@@ -97,7 +97,11 @@ class Paste(BasePasteModel):
     )
     is_published = models.BooleanField(
         default=True,
-        verbose_name="опубликовано?",
+        verbose_name="опубликовать",
+    )
+    is_blocked = models.BooleanField(
+        default=False,
+        verbose_name="заблокировать",
     )
     updated = models.DateTimeField(auto_now=True, verbose_name="обновлён")
 

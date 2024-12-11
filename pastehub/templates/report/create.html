@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Жалоба{% endblock %}
+
+{% block content %}
+  <div class="container mt-5 col-auto col-lg-6 align-items-center">
+    <div class="mb-5">
+      <h2 class="text-center">Сообщить о нарушении</h2>
+      <p class="text-muted text-center">Нарушение в
+        пасте <a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></p>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {% for form in forms %}
+        {% include 'includes/form.html' %}
+      {% endfor %}
+
+      <button type="submit" class="btn btn-primary mt-2 mb-4 col-12 col-md-3">Отправить</button>
+    </form>
+  </div>
+{% endblock %}
