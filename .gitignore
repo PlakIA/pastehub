@@ -8,6 +8,8 @@ send_mail
 send_mail/
 local_settings.py
 media/
+db.sqlite3/
+db.sqlite3
 
 # Backup files # 
 *.bak 

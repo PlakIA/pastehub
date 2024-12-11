@@ -2,6 +2,6 @@
 
 exclude = .git,__pycache__,.env,venv,*/migrations/,*.html,manage.py,.venv
 max-line-length = 79
-application-import-names = pastehub, paste, core, users, export
+application-import-names = pastehub, paste, core, users, export, qr_code
 import-order-style = google
 inline-quotes = double
