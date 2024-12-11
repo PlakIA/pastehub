@@ -11,6 +11,7 @@ urlpatterns = [
     path("auth/", include("users.urls_auth")),
     path("auth/", include("django.contrib.auth.urls")),
     path("export/", include("export.urls")),
+    path("qr_code/", include("qr_code.urls")),
 ]
 
 if settings.DEBUG:

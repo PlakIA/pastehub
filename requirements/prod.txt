@@ -7,5 +7,6 @@ pillow==11.0.0
 PyCryptodome==3.21.0
 python-docx==1.1.2
 python-dotenv==1.0.1
+qrcode==8.0
 sorl-thumbnail==12.11.0 
 transliterate==1.10.2
