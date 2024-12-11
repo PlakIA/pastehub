@@ -3,59 +3,51 @@
 {% block title %}{{ paste.title }}{% endblock %}
 
 {% block content %}
-  <div class="container d-flex align-items-center justify-content-center min-vh-100">
-    <div class="card p-4 shadow-lg w-75">
+  <div class="container d-flex justify-content-center  ">
+    <div class="   p-4 w-75">
 
       <div class="mb-3">
         <h3 class="text-center">{{ paste.title }}</h3>
         <p class="text-muted text-center">{{ paste.category }}</p>
       </div>
-
-      <div class="mb-2 d-flex justify-content-between align-items-center">
-        <small class="text-muted">Автор: <strong>{{ paste.author.username }}</strong> | Дата создания:
+      <small class="text-muted">Автор: <strong>{{ paste.author.username }}</strong> | Дата создания:
           <strong>{{ paste.created }}</strong>{% if paste.expired_duration %} | Срок существования:
             <strong>{{ paste.expired_duration }}</strong>{% endif %}</small>
 
-        <div>
-          <a class="btn btn-sm btn-outline-danger" href="">Нарушение</a>
-
-
-          {% if paste.author == request.user %}
-            <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">Редактировать</a>
-          {% endif %}
-
-          <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Экспорт
-          </button>
-          <ul class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'export:source' paste.short_link %}" download role="button">
-              Исходный формат
-            </a>
-            <a class="dropdown-item" href="{% url 'export:json' paste.short_link %}" download role="button">
-              JSON
-            </a>
-            <a class="dropdown-item" href="{% url 'export:docx' paste.short_link %}" download role="button">
-              DOCX
-            </a>
-          </ul>
-        </div>
-
-      </div>
-
-
       <textarea class="form-control" type="text" rows="10" readonly>{{ content }}</textarea>
-
+      
       {% if paste.author == request.user %}
         <button type="button" class="btn btn-outline-danger mt-3 col-2" data-bs-toggle="modal"
                 data-bs-target="#confirmDeleteModal">Удалить
         </button>
       {% endif %}
-
-      <div class="mt-3">
-        <label for="linkInput" class="form-label mb-1">Короткая ссылка:</label>
-        <input type="text" id="linkInput" class="form-control" value="{{ request.build_absolute_uri }}" readonly>
+      <br>
+      <a class="btn btn-sm btn-outline-danger" href="">Нарушение</a>
+      {% if paste.author == request.user %}
+        <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">Редактировать</a>
+      {% endif %}
+      <br>
+      <button type="button" class="btn btn-success mt-3 col-3" data-bs-toggle="modal" data-bs-target="#downloadModal">
+        Экспортировать пасту
+      </button>
+      <div class="form-outline w-50 mt-3">
+        <label for="linkInput1" class="form-label mb-1">Короткая ссылка:</label>
+        <div class="d-flex align-items-center">
+          <input type="text" id="linkInput1" class="form-control me-2" value="{{ request.build_absolute_uri }}" readonly>
+          <button class="btn btn-secondary" data-clipboard-target="#linkInput1">
+              Скопировать
+          </button>
+        </div>
+      </div>
+      {% comment %} <div class="form-outline w-50 mt-3">
+        <label for="linkInput1" class="form-label mb-1">Короткая ссылка:</label>
+        <input type="text" id="linkInput1" class="form-control" value="{{ request.build_absolute_uri }}" readonly>
       </div>
 
+      <button class="btn btn-secondary" data-clipboard-target="#linkInput1">
+        Скопировать
+      </button> {% endcomment %}
+      
       <div class="mt-3">
         <label for="linkInput" class="form-label mb-1">QR-код:</label>
         <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded img-thumbnail" alt="qr-code image" width="50px" data-bs-toggle="modal" data-bs-target="#qrcodeModal">
@@ -110,6 +102,30 @@
     </div>
   </div>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script>
+  const target = document.getElementById('linkInput1');
+  const button = target.nextElementSibling;
+  
+  var clipboard = new ClipboardJS(button, {
+      target: target,
+      text: function() {
+          return target.value;
+      }
+  });
+  
+  clipboard.on('success', function(e) {
+      const currentLabel = button.innerHTML;
+  
+      if(button.innerHTML === 'Скопировано!'){
+          return;
+      }
+  
+      button.innerHTML = 'Скопировано!';
+  
+      setTimeout(function(){
+          button.innerHTML = currentLabel;
+      }, 3000)
+  });
+</script>
 {% endblock %}

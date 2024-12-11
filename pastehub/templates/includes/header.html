@@ -1,56 +1,64 @@
-<header>
-  <div class="container">
-    <header class="d-flex flex-wrap py-3 mb-4 border-bottom justify-content-between align-items-center">
-
-      <a href="{% url 'paste:create' %}"
-         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <span class="fs-4">PasteHub</span>
-      </a>
-
-      {% with request.resolver_match.view_name as view_name %}
-        <ul class="nav nav-pills">
-
-          <li class="nav-item">
-            <a href="{% url 'paste:create' %}" class="nav-link {% if view_name == 'paste:create' %}active disabled{% endif %}" aria-current="page">Создать пасту</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'paste:create_protected' %}" class="nav-link {% if view_name == 'paste:create_protected' %}active disabled{% endif %}" aria-current="page">Создать защищённую пасту</a>
-          </li>
-
-
-          {% if request.user.is_superuser %}
-            <li class="ps-3">
-              <a href="/admin/" class="btn btn-success">В админку</a>
-            </li>
-          {% endif %}
-
-          {% if not request.user.is_authenticated %}
-            <a href="{% url 'auth:login' %}" class="btn btn-outline-primary ms-3">Войти</a>
-          {% else %}
-            <div class="dropdown ms-3">
-              <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle mt-2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ request.user.get_avatar_32x32.url }}" alt="" class="rounded-circle me-2">
-                <strong>
-                  {{ request.user.username }}
-                </strong>
+{% load static %}
+<div class="container">
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'paste:create' %}" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <img src="{% static 'img/icon.png' %}" class="bi me-2" width="40" height="32" alt="icon">
+        </a>
+        {% with request.resolver_match.view_name as view_name %}
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li>
+              <a href={% url 'paste:create' %} class="nav-link px-2 {% if view_name == 'paste:create' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">
+              Создать заметку
               </a>
-              <ul class="dropdown-menu dropdown-menu-end text-small shadow border-0 rounded" style="min-width: 180px;">
-                <li>
-                  <a class="dropdown-item {% if view_name == 'users:user_detail' %}active disabled{% endif %}" href="{% url 'users:profile-edit' %}">Профиль</a>
-                </li>
-                <li>
-                  <a class="dropdown-item {% if view_name == 'users:profile' %}active disabled{% endif %}" href="{% url 'users:user-detail' request.user.username %}">Список паст</a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Выход</a></li>
-              </ul>
-            </div>
-          {% endif %}
-        </ul>
-      {% endwith %}
-    </header>
-  </div>
-
-</header>
+            </li>
+            <li>
+              <a href={% url 'paste:create_protected' %} class="nav-link px-2 {% if view_name == 'paste:create_protected' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">
+              Создать защищенную заметку
+              </a>
+            </li>
+            {% if request.user.is_superuser %}
+              <li>
+                <a href={% url 'admin:index' %} class="nav-link px-2 {% if view_name == 'admin:index' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">
+                В админку
+                </a>
+              </li>
+            {% endif %}
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">API</a></li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">Ответы на вопросы</a></li>
+          </ul>
+        {% endwith %}
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control" placeholder="Поиск..." aria-label="Поиск">
+        </form>
+        {% if request.user.is_authenticated %}
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if request.user.image %}
+                <img src="{{ request.user.image.url }}" alt="profile_image" width="32" height="32" class="rounded-circle">
+              {% else %}
+                <img src="{% static 'img/anonymous-user.jpg' %}" alt="anonymous_image" width="32" height="32" class="rounded-circle">
+              {% endif %}
+              {{ request.user.username }}
+            </a>
+            <ul class="dropdown-menu text-small" style="">
+              <li><a class="dropdown-item" href="#">Мои пасты</a></li>
+              <li><a class="dropdown-item" href="#">Мои комментарии</a></li>
+              <li><a class="dropdown-item" href="{% url 'users:profile-edit' %}">Профиль</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Выйти</a></li>
+            </ul>
+          </div>
+        {% else %}
+          <div class="text-end">
+            <a href="{% url 'auth:login' %}" type="button" class="btn btn-outline-secondary me-2">Войти</a>
+            <a href="{% url 'auth:signup' %}" type="button" class="btn btn-primary">Зарегистрироваться</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+</div>
