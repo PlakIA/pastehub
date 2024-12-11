@@ -1,3 +1,46 @@
-<header>
-  
+{% load static %}
+
+<div class="container">
+<header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'paste:create' %}" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <img src="{% static 'img/icon.png' %}" class="bi me-2" width="40" height="32" alt="icon">
+        </a>
+        {% with request.resolver_match.view_name as view_name %}
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li><a href={% url 'paste:create' %} class="nav-link px-2 {% if view_name == 'paste:create' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">Создать заметку</a></li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">API</a></li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">Ответы на вопросы</a></li>
+            </ul>
+        {% endwith %}
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control" placeholder="Поиск..." aria-label="Поиск">
+        </form>
+        {% if request.user.is_authenticated %}
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.image %}
+                        <img src="{{ request.user.image.url }}" alt="profile_image" width="32" height="32" class="rounded-circle">
+                    {% else %}
+                        <img src="{% static 'img/anonymous-user.jpg' %}" alt="anonymous_image" width="32" height="32" class="rounded-circle">
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-small" style="">
+                    <li><a class="dropdown-item" href="#">Мои пасты</a></li>
+                    <li><a class="dropdown-item" href="#">Мои комментарии</a></li>
+                    <li><a class="dropdown-item" href="{% url 'users:profile-edit' %}">Профиль</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Выйти</a></li>
+                </ul>
+            </div>
+        {% else %}
+            <div class="text-end">
+                <a href="{% url 'auth:login' %}" type="button" class="btn btn-outline-secondary me-2">Войти</a>
+                <a href="{% url 'auth:signup' %}" type="button" class="btn btn-primary">Зарегистрироваться</a>
+            </div>
+        {% endif %}
+      </div>
+    </div>
+</div>
 </header>
