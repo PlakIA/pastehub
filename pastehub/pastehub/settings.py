@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "core.apps.CoreConfig",
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
+    "report.apps.ReportConfig",
 ]
 
 MIDDLEWARE = [

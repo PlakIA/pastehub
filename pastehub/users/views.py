@@ -49,9 +49,6 @@ def activate(request, username):
         user.is_active = True
         user.save()
 
-        print(user)
-        print(user.is_active)
-
         return render(
             request,
             "auth/activation_success.html",
