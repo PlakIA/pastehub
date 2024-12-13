@@ -66,6 +66,12 @@ def detail(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
     content = get_from_storage(f"pastes/{paste.id}")
 
+    if paste.is_blocked and request.user != paste.author:
+        return render(
+            request=request,
+            template_name="paste/blocked.html",
+        )
+
     return render(
         request=request,
         template_name="paste/detail.html",

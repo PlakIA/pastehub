@@ -27,4 +27,4 @@ class CustomUser(AbstractUser):
         return None
 
 
-__all__ = ()
+__all__ = ["CustomUser"]

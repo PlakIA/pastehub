@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container d-flex align-items-center justify-content-center min-vh-100">
-    <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px;">
+<div class="container d-flex align-items-center justify-content-center">
+    <div class="p-4" style="width: 100%; max-width: 400px;">
         {% for message in messages %}
             <div class="alert alert-success">
                 {{ message }}
@@ -9,7 +9,7 @@
         {% endfor %}
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% include 'includes/form.html' %}
             <button class="btn btn-primary" type="submit">Войти</button>
             <a href="{% url 'auth:password_reset' %}">Забыли пароль?</a>
             <p>Нет аккаунта? <a href="{% url 'auth:signup' %}">Зарегистрироваться</a></p>

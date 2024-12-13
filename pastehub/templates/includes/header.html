@@ -1,56 +1,91 @@
-<header>
-  <div class="container">
-    <header class="d-flex flex-wrap py-3 mb-4 border-bottom justify-content-between align-items-center">
-
-      <a href="{% url 'paste:create' %}"
-         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <span class="fs-4">PasteHub</span>
-      </a>
-
-      {% with request.resolver_match.view_name as view_name %}
-        <ul class="nav nav-pills">
-
-          <li class="nav-item">
-            <a href="{% url 'paste:create' %}" class="nav-link {% if view_name == 'paste:create' %}active disabled{% endif %}" aria-current="page">Создать пасту</a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'paste:create_protected' %}" class="nav-link {% if view_name == 'paste:create_protected' %}active disabled{% endif %}" aria-current="page">Создать защищённую пасту</a>
-          </li>
-
-
-          {% if request.user.is_superuser %}
-            <li class="ps-3">
-              <a href="/admin/" class="btn btn-success">В админку</a>
-            </li>
-          {% endif %}
-
-          {% if not request.user.is_authenticated %}
-            <a href="{% url 'auth:login' %}" class="btn btn-outline-primary ms-3">Войти</a>
-          {% else %}
-            <div class="dropdown ms-3">
-              <a href="#" class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle mt-2" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="{{ request.user.get_avatar_32x32.url }}" alt="" class="rounded-circle me-2">
-                <strong>
-                  {{ request.user.username }}
-                </strong>
+{% load static %}
+<div class="container">
+  <header class="p-3 mb-3 border-bottom">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="{% url 'paste:create' %}" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+          <img src="{% static 'img/icon.png' %}" class="bi me-2" width="40" height="32" alt="icon">
+        </a>
+        {% with request.resolver_match.view_name as view_name %}
+          <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <li>
+              <a href={% url 'paste:create' %} class="nav-link px-2 {% if view_name == 'paste:create' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">
+              Создать заметку
               </a>
-              <ul class="dropdown-menu dropdown-menu-end text-small shadow border-0 rounded" style="min-width: 180px;">
-                <li>
-                  <a class="dropdown-item {% if view_name == 'users:user_detail' %}active disabled{% endif %}" href="{% url 'users:profile-edit' %}">Профиль</a>
-                </li>
-                <li>
-                  <a class="dropdown-item {% if view_name == 'users:profile' %}active disabled{% endif %}" href="{% url 'users:user-detail' request.user.username %}">Список паст</a>
-                </li>
+            </li>
+            <li>
+              <a href={% url 'paste:create_protected' %} class="nav-link px-2 {% if view_name == 'paste:create_protected' %}link-secondary disabled{% else %}link-body-emphasis{% endif %}">
+              Создать защищенную заметку
+              </a>
+            </li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">API</a></li>
+            <li><a href="#" class="nav-link px-2 link-body-emphasis">Ответы на вопросы</a></li>
+          </ul>
+        {% endwith %}
+        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+          <input type="search" class="form-control" placeholder="Поиск..." aria-label="Поиск">
+        </form>
+        {% if request.user.is_authenticated %}
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              {% if request.user.image %}
+                <img src="{{ request.user.image.url }}" alt="profile_image" width="32" height="32" class="rounded-circle">
+              {% else %}
+                <img src="{% static 'img/anonymous-user.jpg' %}" alt="anonymous_image" width="32" height="32" class="rounded-circle">
+              {% endif %}
+              {{ request.user.username }}
+            </a>
+            <ul class="dropdown-menu text-small" style="">
+              <li><a class="dropdown-item" href="{% url 'users:user-detail' request.user.username %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+                Мои пасты
+              </a></li>
+              <li><a class="dropdown-item" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left-dots" viewBox="0 0 16 16">
+                  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                  <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                </svg>
+                Мои комментарии
+              </a></li>
+              <li><a class="dropdown-item" href="{% url 'users:profile-edit' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                  <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                </svg>
+                Профиль
+              </a></li>
+              {% if request.user.is_superuser %}
                 <li>
                   <hr class="dropdown-divider">
                 </li>
-                <li><a class="dropdown-item" href="{% url 'auth:logout' %}">Выход</a></li>
-              </ul>
-            </div>
-          {% endif %}
-        </ul>
-      {% endwith %}
-    </header>
-  </div>
-
-</header>
+                <li><a class="dropdown-item" href="{% url 'admin:index' %}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16">
+                    <path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+                    <path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492z"/>
+                  </svg>
+                  В админку
+                </a></li>
+              {% endif %}
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'auth:logout' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                </svg>
+                Выйти
+              </a></li>
+            </ul>
+          </div>
+        {% else %}
+          <div class="text-end">
+            <a href="{% url 'auth:login' %}" type="button" class="btn btn-outline-secondary me-2">Войти</a>
+            <a href="{% url 'auth:signup' %}" type="button" class="btn btn-primary">Зарегистрироваться</a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+</div>

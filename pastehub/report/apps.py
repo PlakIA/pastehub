@@ -1,10 +1,10 @@
 from django.apps import AppConfig
 
 
-class PasteConfig(AppConfig):
+class ReportConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "paste"
-    verbose_name = "Пасты"
+    name = "report"
+    verbose_name = "Нарушения"
 
 
 __all__ = []
