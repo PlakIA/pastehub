@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import AESEncryption
@@ -178,6 +179,18 @@ def delete_protected(request, short_link):
         request=request,
         template_name="paste/get_password.html",
         context={"form": form},
+    )
+
+
+def search(request):
+    query = request.GET.get('q')
+    object_list = Paste.objects.filter(
+        Q(title__icontains=query) | Q(category__name__icontains=query)
+    ).prefetch_related("category")
+    return render(
+        request=request,
+        template_name="paste/search_results.html",
+        context={"pastes": object_list},
     )
 
 

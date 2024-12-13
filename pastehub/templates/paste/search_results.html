@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container p-3">
+    <div class="container d-flex justify-content-center mt-5">
+            <h3>Результаты поиска</h3>
+        </div>
+    </div>
+    {% if pastes %}
+    <div class="container d-flex justify-content-center mt-5">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Название</th>
+                    <th>Создан</th>
+                    <th>Истекает</th>
+                    <th>Категория</th>
+                    <th>Просмотры</th>
+                    <th>Комментарии</th>
+                    <th>Syntax</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paste in pastes %}
+                <tr>
+                    <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
+                    <td>{{ paste.created }}</td>
+                    <td>TODO</td>
+                    <td>{{ paste.category }}</td>
+                    <td>TODO</td>
+                    <td>TODO</td>
+                    <td>TODO</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else%}
+    <div class="container d-flex justify-content-center mt-5">
+        <h5>Ничего не найдено...😞</h5>
+    </div>
+    {% endif %}
+</div>
+</div>
+{% endblock %}
