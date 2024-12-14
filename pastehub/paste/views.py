@@ -3,8 +3,8 @@ import os
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseNotFound
+from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import AESEncryption
 from core.storage import (
@@ -203,12 +203,16 @@ def search(request):
             if search_in_file(os.path.join(directory, id_paste), query):
                 pastes_list.append(id_paste)
 
-        object_list = Paste.objects.all().filter(
-            Q(title__icontains=query) |
-            Q(category__name__icontains=query) |
-            Q(id__in=pastes_list),
-            is_published=True,
-        ).prefetch_related("category")
+        object_list = (
+            Paste.objects.all()
+            .filter(
+                Q(title__icontains=query)
+                | Q(category__name__icontains=query)
+                | Q(id__in=pastes_list),
+                is_published=True,
+            )
+            .prefetch_related("category")
+        )
         order_by_object_list = object_list.order_by("created")
     else:
         order_by_object_list = []

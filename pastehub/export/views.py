@@ -42,7 +42,9 @@ def export_json(request, short_link):
         },
     )
     response.charset = "utf-8"
-    response["Content-Disposition"] = f"attachment; filename={paste.short_link}.json"
+    response["Content-Disposition"] = (
+        f"attachment; filename={paste.short_link}.json"
+    )
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response["Pragma"] = "no-cache"
     response["Expires"] = "0"
@@ -65,7 +67,9 @@ def export_docx(request, short_link):
         "openxmlformats-officedocument."
         "wordprocessingml.document",
     )
-    response["Content-Disposition"] = f"attachment; filename={paste.short_link}.docx"
+    response["Content-Disposition"] = (
+        f"attachment; filename={paste.short_link}.docx"
+    )
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response["Pragma"] = "no-cache"
     response["Expires"] = "0"

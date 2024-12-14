@@ -13,11 +13,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="paste",
             name="is_blocked",
-            field=models.BooleanField(default=False, verbose_name="заблокировать"),
+            field=models.BooleanField(
+                default=False, verbose_name="заблокировать"
+            ),
         ),
         migrations.AlterField(
             model_name="paste",
             name="is_published",
-            field=models.BooleanField(default=True, verbose_name="опубликовать"),
+            field=models.BooleanField(
+                default=True, verbose_name="опубликовать"
+            ),
         ),
     ]

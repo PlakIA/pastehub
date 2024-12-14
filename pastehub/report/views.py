@@ -14,7 +14,11 @@ def create(request, short_link):
     person_form = PersonForm(None or request.POST)
     report_form = ReportForm(None or request.POST)
 
-    if request.method == "POST" and report_form.is_valid() and person_form.is_valid():
+    if (
+        request.method == "POST"
+        and report_form.is_valid()
+        and person_form.is_valid()
+    ):
         personal_instance = person_form.save()
 
         report_instance = report_form.save(commit=False)

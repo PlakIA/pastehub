@@ -99,11 +99,15 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created",
-                    models.DateTimeField(auto_now_add=True, verbose_name="создана"),
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="создана"
+                    ),
                 ),
                 (
                     "password",
-                    models.CharField(max_length=255, verbose_name="ключ шифрования"),
+                    models.CharField(
+                        max_length=255, verbose_name="ключ шифрования"
+                    ),
                 ),
                 ("salt", models.BinaryField(verbose_name="соль")),
                 ("nonce", models.BinaryField(verbose_name="nonce")),
@@ -169,15 +173,21 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created",
-                    models.DateTimeField(auto_now_add=True, verbose_name="создана"),
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="создана"
+                    ),
                 ),
                 (
                     "is_published",
-                    models.BooleanField(default=True, verbose_name="опубликовано?"),
+                    models.BooleanField(
+                        default=True, verbose_name="опубликовано?"
+                    ),
                 ),
                 (
                     "updated",
-                    models.DateTimeField(auto_now=True, verbose_name="обновлён"),
+                    models.DateTimeField(
+                        auto_now=True, verbose_name="обновлён"
+                    ),
                 ),
                 (
                     "author",
