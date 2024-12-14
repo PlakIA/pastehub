@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils import timezone
 
 from paste.models import Paste
@@ -21,14 +22,14 @@ def signup(request):
         user.save()
 
         if not user.is_active:
-            activation_link = (
-                f"http://127.0.0.1:8000/auth/activate/{user.username}/"
+            activate_url = request.build_absolute_uri(
+                reverse("auth:activate", args=[user.username]),
             )
 
             send_mail(
                 subject="Активация",
-                message=activation_link,
-                from_email=django.conf.settings.MAIL,
+                message=activate_url,
+                from_email=django.conf.settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[user.email],
                 fail_silently=True,
             )
