@@ -269,8 +269,9 @@ def search(request):
         directory = settings.MEDIA_ROOT / "pastes/"
         pastes_list = []
         for id_paste in os.listdir(directory):
-            if search_in_file(os.path.join(directory, id_paste), query):
-                pastes_list.append(id_paste)
+            if os.path.isfile(id_paste):
+                if search_in_file(os.path.join(directory, id_paste), query):
+                    pastes_list.append(id_paste)
 
         object_list = (
             Paste.objects.all()
