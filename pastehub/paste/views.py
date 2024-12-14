@@ -291,9 +291,9 @@ def search(request):
             Paste.author.field.name,
         )
     else:
-        order_by_object_list = []
+        limited_object_list = []
 
-    paginator = Paginator(order_by_object_list, 25)
+    paginator = Paginator(limited_object_list, 25)
     page_obj = paginator.get_page(page)
     return render(
         request=request,

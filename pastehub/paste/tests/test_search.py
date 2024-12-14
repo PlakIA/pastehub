@@ -6,7 +6,7 @@ from django.test import override_settings, TestCase
 from django.urls import reverse
 
 from core.storage import upload_to_storage
-from paste.models import Paste, PasteVersion
+from paste.models import Paste
 
 
 @override_settings(
