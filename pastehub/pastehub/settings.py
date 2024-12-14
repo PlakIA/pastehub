@@ -27,10 +27,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "sorl.thumbnail",
     "django_cleanup.apps.CleanupConfig",
+    "rest_framework",
     "core.apps.CoreConfig",
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
     "report.apps.ReportConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
