@@ -8,7 +8,7 @@ from paste.models import Paste
 
 def export_source(request, short_link, version):
     paste = get_object_or_404(Paste, short_link=short_link)
-    paste_text = get_from_storage(f"pastes_version/{paste.id}_{version}")
+    paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
 
     response = FileResponse(
         paste_text,
@@ -27,7 +27,7 @@ def export_json(request, short_link, version):
     paste = get_object_or_404(Paste, short_link=short_link)
 
     data = {
-        "content": get_from_storage(f"pastes_version/{paste.id}_{version}"),
+        "content": get_from_storage(f"pastes/versions/{paste.id}_{version}"),
         "title": paste.title,
         "author": str(paste.author),
         "category": str(paste.category),
@@ -54,7 +54,7 @@ def export_json(request, short_link, version):
 
 def export_docx(request, short_link, version):
     paste = get_object_or_404(Paste, short_link=short_link)
-    paste_text = get_from_storage(f"pastes_version/{paste.id}_{version}")
+    paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
 
     document = Document()
     document.add_heading(paste.title, level=1)
