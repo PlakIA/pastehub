@@ -55,7 +55,7 @@
                 </svg>
                 Профиль
               </a></li>
-              {% if request.user.is_superuser %}
+              {% if request.user.is_staff %}
                 <li>
                   <hr class="dropdown-divider">
                 </li>

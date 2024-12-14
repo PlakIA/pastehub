@@ -47,6 +47,7 @@ def create(request):
 
 def edit(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
+    paste_title = paste.title
     content = get_from_storage(f"pastes/{paste.id}")
 
     form = PasteForm(
@@ -56,35 +57,35 @@ def edit(request, short_link):
     )
 
     if form.is_valid() and request.POST:
-        content = form.cleaned_data.get("content")
-        clear_content = content.replace("\r\n", "\n").strip()
+        form_title = form.cleaned_data.get("title")
+        form_content = form.cleaned_data.get("content")
+        clear_content = form_content.replace("\r\n", "\n").strip()
 
-        last_version = (
-            PasteVersion.objects.filter(paste=paste)
-            .order_by("-updated")
-            .first()
-        )
-
-        new_version = last_version.version + 1
-        PasteVersion.objects.create(
-            paste=paste,
-            version=new_version,
-            title=form.cleaned_data.get("title"),
-            short_link=paste.short_link,
-        )
-        upload_to_storage(
-            f"pastes/versions/{paste.id}_{new_version}",
-            clear_content,
-        )
-        delete_from_storage(f"pastes/{paste.id}")
-        upload_to_storage(f"pastes/{paste.id}", clear_content)
+        if clear_content != content or paste_title != form_title:
+            last_version = (
+                PasteVersion.objects.filter(paste=paste)
+                .order_by("-updated")
+                .first()
+            )
+            new_version = last_version.version + 1
+            PasteVersion.objects.create(
+                paste=paste,
+                version=new_version,
+                title=form_title,
+                short_link=paste.short_link,
+            )
+            upload_to_storage(
+                f"pastes/versions/{paste.id}_{new_version}",
+                clear_content,
+            )
+            delete_from_storage(f"pastes/{paste.id}")
+            upload_to_storage(f"pastes/{paste.id}", clear_content)
 
         form.save()
 
         return redirect(
-            "paste:version-detail",
+            "paste:detail",
             short_link=short_link,
-            version=new_version,
         )
 
     return render(
