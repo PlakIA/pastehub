@@ -269,7 +269,7 @@ def search(request):
         directory = settings.MEDIA_ROOT / "pastes/"
         pastes_list = []
         for id_paste in os.listdir(directory):
-            if os.path.isfile(id_paste):
+            if os.path.isfile(os.path.join(directory, id_paste)):
                 if search_in_file(os.path.join(directory, id_paste), query):
                     pastes_list.append(id_paste)
 
@@ -281,9 +281,15 @@ def search(request):
                 | Q(id__in=pastes_list),
                 is_published=True,
             )
-            .prefetch_related("category")
+            .prefetch_related(Paste.category.field.name)
         )
-        order_by_object_list = object_list.order_by("created")
+        order_by_object_list = object_list.order_by(Paste.created.field.name)
+        limited_object_list = order_by_object_list.only(
+            Paste.title.field.name,
+            Paste.created.field.name,
+            Paste.category.field.name,
+            Paste.author.field.name,
+        )
     else:
         order_by_object_list = []
 

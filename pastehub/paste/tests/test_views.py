@@ -46,10 +46,8 @@ class TestViews(TestCase):
             "content": "Test content",
             "category": 1,
         }
-        # Создаем новую пасту
         self.client.post(reverse("paste:create"), new_paste_data)
 
-        # Проверяем, что создалась паста в pastes/ и pastes_version/
         self.assertEqual(
             len(os.listdir(settings.MEDIA_ROOT / "pastes")),
             3,
@@ -63,7 +61,6 @@ class TestViews(TestCase):
         response = self.client.get(
             reverse("paste:detail", args=(self.test_paste.short_link,)),
         )
-        print(PasteVersion.objects.all())
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertTrue(response.context["paste"])
         self.assertTrue(response.context["content"])

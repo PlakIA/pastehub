@@ -6,7 +6,7 @@ from django.test import override_settings, TestCase
 from django.urls import reverse
 
 from core.storage import upload_to_storage
-from paste.models import Paste
+from paste.models import Paste, PasteVersion
 
 
 @override_settings(
@@ -27,9 +27,19 @@ class TestViews(TestCase):
         Paste.objects.all().delete()
         shutil.rmtree(settings.MEDIA_ROOT)
 
-    def test_search_positive(self):
+    def test_search_positive_text_paste(self):
         response = self.client.get(
-            f'{reverse("paste:search")}?q=ipsum&page=1',
+            f'{reverse("paste:search")}?q=dolor&page=1',
+        )
+        self.assertEqual(response.status_code, http.HTTPStatus.OK)
+        self.assertEqual(
+            response.context["page_obj"].object_list[0].title,
+            "Test Paste",
+        )
+
+    def test_search_positive_title_paste(self):
+        response = self.client.get(
+            f'{reverse("paste:search")}?q=Paste&page=1',
         )
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertEqual(
