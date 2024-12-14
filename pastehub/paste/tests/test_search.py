@@ -29,7 +29,7 @@ class TestViews(TestCase):
 
     def test_search_positive(self):
         response = self.client.get(
-            f"{reverse("paste:search")}?q=ipsum&page=1",
+            f'{reverse("paste:search")}?q=ipsum&page=1',
         )
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertEqual(
@@ -39,7 +39,7 @@ class TestViews(TestCase):
 
     def test_search_word_not_in_pastes_negative(self):
         response = self.client.get(
-            f"{reverse("paste:search")}?q=wordnotinpastes&page=1",
+            f'{reverse("paste:search")}?q=wordnotinpastes&page=1',
         )
         self.assertEqual(response.status_code, http.HTTPStatus.OK)
         self.assertEqual(
@@ -49,7 +49,7 @@ class TestViews(TestCase):
 
     def test_search_pages_not_integer_negative(self):
         response = self.client.get(
-            f"{reverse("paste:search")}?q=wordnotinpastes&page=1.5",
+            f'{reverse("paste:search")}?q=wordnotinpastes&page=1.5',
         )
         self.assertEqual(response.status_code, http.HTTPStatus.NOT_FOUND)
 
