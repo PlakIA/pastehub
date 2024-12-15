@@ -103,25 +103,21 @@ def user_detail(request, username):
 
 @login_required
 def profile_edit(request):
+    user = request.user
     profile_form = users.forms.ProfileForm(
         request.POST or None,
         request.FILES or None,
-        instance=request.user,
+        instance=user,
     )
+
     if request.method == "POST" and profile_form.is_valid():
         profile_form.save()
-        messages.success(request, "Все прошло успешно")
-
-    user_info = {
-        "image": request.user.image,
-        "username": request.user.username,
-        "email": request.user.email,
-    }
+        messages.success(request, "Профиль успешно сохранён")
 
     return render(
         request,
         "users/profile.html",
-        {"profile_form": profile_form, "user": user_info},
+        {"form": profile_form, "user": user},
     )
 
 
