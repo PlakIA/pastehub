@@ -260,7 +260,7 @@ def search(request):
 
     page = request.GET.get("page")
     if not str(page).isdigit():
-        HttpResponseBadRequest("Page is not integer")
+        return HttpResponseBadRequest("Page is not integer")
 
     page = int(page)
 
