@@ -47,8 +47,7 @@ class ReportAdmin(admin.ModelAdmin):
                 obj.paste.is_blocked = True
                 obj.paste.save()
                 mail.send_mail(
-                    subject=f"Резолюция по жалобе на пасту "
-                    f'"{obj.paste.title}"',
+                    subject=f"Резолюция по жалобе на пасту " f'"{obj.paste.title}"',
                     message=f'Ваша жалоба по пасте "{obj.paste.title}" '
                     f"({obj.paste.short_link}) удовлетворена, "
                     f"паста заблокирована",
@@ -58,8 +57,7 @@ class ReportAdmin(admin.ModelAdmin):
 
             elif new_status == "rejected":
                 mail.send_mail(
-                    subject=f"Резолюция по жалобе на пасту "
-                    f'"{obj.paste.title}"',
+                    subject=f"Резолюция по жалобе на пасту " f'"{obj.paste.title}"',
                     message=f'Ваша жалоба по пасте "{obj.paste.title}" '
                     f"({obj.paste.short_link}) не удовлетворена, "
                     f"нарушения не выявлены",

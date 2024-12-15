@@ -11,6 +11,7 @@ class PasteSerializer(serializers.ModelSerializer):
             model.category.field.name,
             model.author.field.name,
             model.is_published.field.name,
+            model.short_link.field.name,
         )
 
 
