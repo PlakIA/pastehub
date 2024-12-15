@@ -7,6 +7,9 @@ from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.crypto import get_random_string
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from paste.models import Paste
 import users.forms
@@ -22,8 +25,18 @@ def signup(request):
         user.save()
 
         if not user.is_active:
+            token = get_random_string(length=32)
+
+            user.confirmation_token = token
+            user.save()
+
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+
             activate_url = request.build_absolute_uri(
-                reverse("auth:activate", args=[user.username]),
+                reverse(
+                    "auth:activate",
+                    kwargs={"uidb64": uid, "token": token},
+                ),
             )
 
             send_mail(
@@ -43,10 +56,14 @@ def signup(request):
     return render(request, "auth/signup.html", {"form": form})
 
 
-def activate(request, username):
-    user = users.models.CustomUser.objects.get(username=username)
+def activate(request, uidb64, token):
+    uid = force_str(urlsafe_base64_decode(uidb64))
+    user = get_object_or_404(users.models.CustomUser, pk=uid)
 
-    if user.date_joined + timedelta(hours=12) > timezone.now():
+    if (
+        user.confirmation_token == token
+        and user.date_joined + timedelta(hours=12) > timezone.now()
+    ):
         user.is_active = True
         user.save()
 
