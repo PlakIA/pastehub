@@ -264,8 +264,8 @@ def search(request):
 
     page = int(page)
 
-    directory = "pastes/"
-    if query and default_storage.exists(directory):
+    if query:
+        directory = "pastes/"
         pastes_list = []
 
         directories, files = default_storage.listdir(directory)
