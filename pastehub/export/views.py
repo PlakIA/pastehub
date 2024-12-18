@@ -1,6 +1,5 @@
-from django.http import FileResponse, HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404
-from docx import Document
 
 from core.storage import get_from_storage
 from paste.models import Paste
@@ -10,11 +9,9 @@ def export_source(request, short_link, version):
     paste = get_object_or_404(Paste, short_link=short_link)
     paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
 
-    response = FileResponse(
-        paste_text,
-        content_type="text/plain",
-        filename=f"{paste.short_link}.txt",
-        as_attachment=True,
+    response = HttpResponse(paste_text, content_type="text/plain")
+    response["Content-Disposition"] = (
+        f"attachment; filename={short_link}_{version}.txt"
     )
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response["Pragma"] = "no-cache"
@@ -43,7 +40,7 @@ def export_json(request, short_link, version):
     )
     response.charset = "utf-8"
     response["Content-Disposition"] = (
-        f"attachment; filename={paste.short_link}.json"
+        f"attachment; filename={short_link}_{version}.json"
     )
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response["Pragma"] = "no-cache"
@@ -52,30 +49,26 @@ def export_json(request, short_link, version):
     return response
 
 
-def export_docx(request, short_link, version):
+def export_markdown(request, short_link, version):
     paste = get_object_or_404(Paste, short_link=short_link)
     paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
-
-    document = Document()
-    document.add_heading(paste.title, level=1)
-    document.add_paragraph(f"Категория: {paste.category}")
-    document.add_paragraph(f"Автор: {paste.author}")
-    document.add_paragraph(f"Создана: {paste.created}")
-    document.add_paragraph(paste_text)
-    response = HttpResponse(
-        content_type="application/vnd."
-        "openxmlformats-officedocument."
-        "wordprocessingml.document",
+    markdown_content = (
+        f"# Заметка с Pastehub: {paste.title}\n"
+        f"### Категория: {paste.category}\n"
+        f"### Автор: {paste.author}\n"
+        f"### Создана: {paste.created}\n"
+        f"#### Содержимое:\n{paste_text}"
     )
+
+    response = HttpResponse(markdown_content, content_type="text/markdown")
     response["Content-Disposition"] = (
-        f"attachment; filename={paste.short_link}.docx"
+        f"attachment; filename={short_link}_{version}.md"
     )
     response["Cache-Control"] = "no-cache, no-store, must-revalidate"
     response["Pragma"] = "no-cache"
     response["Expires"] = "0"
-    document.save(response)
 
     return response
 
 
-__all__ = ["export_docx", "export_json", "export_source"]
+__all__ = ["export_markdown", "export_json", "export_source"]
