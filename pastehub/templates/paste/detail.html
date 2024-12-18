@@ -28,13 +28,13 @@
       <div>
         <small class="text-muted">
           {% translate 'Автор' %}: <strong>{{ paste.author.username }}</strong> |
-          {% translate 'Дата создания' %}: <strong>{{ paste.created }}</strong> |
           {% translate 'Стиль' %}: <strong>{{ paste.language }}</strong>
+          <br>{% translate 'Дата создания' %}: <strong>{{ paste.created }}</strong> |
+          {% translate 'Дата обновления' %}: <strong>{{ paste.updated }}</strong>
           {% if paste.expired_duration %}
             <br>{% translate 'Срок существования' %}: <strong>{{ paste.expired_duration }}</strong>
           {% endif %}
         </small>
-
       </div>
 
       <pre><code class="language-{{ paste.language }}">{{ content }}</code></pre>

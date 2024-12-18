@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-19 01:15+0300\n"
+"POT-Creation-Date: 2024-12-19 01:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -485,17 +485,21 @@ msgstr ""
 msgid "Автор"
 msgstr ""
 
-#: .\templates\paste\detail.html:31 .\templates\paste\detail_protected.html:18
-msgid "Дата создания"
-msgstr ""
-
-#: .\templates\paste\detail.html:32 .\templates\paste\detail_protected.html:21
+#: .\templates\paste\detail.html:31 .\templates\paste\detail_protected.html:19
 #: .\templates\paste\search_results.html:22
 #: .\templates\users\user_detail.html:39
 msgid "Стиль"
 msgstr ""
 
-#: .\templates\paste\detail.html:34 .\templates\paste\detail_protected.html:19
+#: .\templates\paste\detail.html:32 .\templates\paste\detail_protected.html:20
+msgid "Дата создания"
+msgstr ""
+
+#: .\templates\paste\detail.html:33
+msgid "Дата обновления"
+msgstr ""
+
+#: .\templates\paste\detail.html:35 .\templates\paste\detail_protected.html:22
 msgid "Срок существования"
 msgstr ""
 
@@ -532,35 +536,35 @@ msgid "Markdown"
 msgstr ""
 
 #: .\templates\paste\detail.html:116 .\templates\paste\detail.html:170
-#: .\templates\paste\detail_protected.html:32
-#: .\templates\paste\detail_protected.html:70
+#: .\templates\paste\detail_protected.html:34
+#: .\templates\paste\detail_protected.html:72
 msgid "Удалить"
 msgstr ""
 
-#: .\templates\paste\detail.html:125 .\templates\paste\detail_protected.html:36
+#: .\templates\paste\detail.html:125 .\templates\paste\detail_protected.html:38
 msgid "Короткая ссылка"
 msgstr ""
 
-#: .\templates\paste\detail.html:133 .\templates\paste\detail_protected.html:44
+#: .\templates\paste\detail.html:133 .\templates\paste\detail_protected.html:46
 msgid "Скопировать"
 msgstr ""
 
 #: .\templates\paste\detail.html:139 .\templates\paste\detail.html:201
-#: .\templates\paste\detail_protected.html:50
-#: .\templates\paste\detail_protected.html:80
+#: .\templates\paste\detail_protected.html:52
+#: .\templates\paste\detail_protected.html:82
 msgid "QR-код"
 msgstr ""
 
-#: .\templates\paste\detail.html:163 .\templates\paste\detail_protected.html:62
+#: .\templates\paste\detail.html:163 .\templates\paste\detail_protected.html:64
 msgid "Подтверждение удаления"
 msgstr ""
 
-#: .\templates\paste\detail.html:167 .\templates\paste\detail_protected.html:66
+#: .\templates\paste\detail.html:167 .\templates\paste\detail_protected.html:68
 msgid "Вы уверены, что хотите удалить эту пасту?"
 msgstr ""
 
 #: .\templates\paste\detail.html:169 .\templates\paste\detail.html:189
-#: .\templates\paste\detail_protected.html:69
+#: .\templates\paste\detail_protected.html:71
 msgid "Отмена"
 msgstr ""
 
@@ -580,7 +584,7 @@ msgstr ""
 msgid "Отправить запрос"
 msgstr ""
 
-#: .\templates\paste\detail.html:218 .\templates\paste\detail_protected.html:97
+#: .\templates\paste\detail.html:218 .\templates\paste\detail_protected.html:99
 msgid "Скачать"
 msgstr ""
 
@@ -588,8 +592,8 @@ msgstr ""
 msgid "Защищено"
 msgstr ""
 
-#: .\templates\paste\detail_protected.html:123
-#: .\templates\paste\detail_protected.html:127
+#: .\templates\paste\detail_protected.html:125
+#: .\templates\paste\detail_protected.html:129
 msgid "Скопировано!"
 msgstr ""
 

@@ -1,10 +1,11 @@
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponseBadRequest, HttpResponseNotFound
+from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import AESEncryption
+import pastehub.views
 from core.storage import (
     delete_from_storage,
     get_from_storage,
@@ -106,7 +107,7 @@ def detail(request, short_link, version=None):
     if paste.is_expired():
         delete_from_storage(f"pastes/{paste.id}")
         paste.delete()
-        return HttpResponseNotFound()
+        return pastehub.views.handler404(request, "NotFound")
 
     content = get_from_storage(f"pastes/{paste.id}")
     selected_version = (
@@ -215,7 +216,7 @@ def detail_protected(request, short_link):
     if paste.is_expired():
         delete_from_storage(f"pastes/{paste.id}")
         paste.delete()
-        return HttpResponseNotFound()
+        return pastehub.views.handler404(request, "NotFound")
 
     encrypted_content = get_from_storage(f"pastes/{paste.id}")
 
