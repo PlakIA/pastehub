@@ -1,5 +1,5 @@
-from datetime import timedelta
 import uuid
+from datetime import timedelta
 
 from django.conf import settings
 from django.contrib.auth.hashers import check_password, make_password
@@ -7,7 +7,6 @@ from django.db import models
 from django.utils import timezone
 
 from core.utils import generate_short_link
-
 
 LANGUAGE_CHOICES = [
     ("markup", "Markup"),
@@ -108,7 +107,11 @@ class BasePasteModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.short_link:
-            self.short_link = generate_short_link()
+            while True:
+                short_link = generate_short_link()
+                if not Paste.objects.filter(short_link=short_link).exists():
+                    self.short_link = short_link
+                    break
 
         if self.expired_duration:
             self.expired_date = timezone.now() + self.expired_duration
