@@ -61,6 +61,7 @@ class Category(models.Model):
 class BasePasteModel(models.Model):
     EXPIRED_LIMIT = [
         (None, _("Бессрочно")),
+        (timedelta(seconds=10), _("10 секунд")),
         (timedelta(minutes=10), _("10 минут")),
         (timedelta(hours=1), _("1 час")),
         (timedelta(days=1), _("1 день")),
@@ -94,14 +95,13 @@ class BasePasteModel(models.Model):
         blank=True,
         verbose_name=_("срок существования пасты"),
     )
-    expired_date = models.DateTimeField(
-        null=True,
-        blank=True,
-        verbose_name=_("дата уничтожения пасты"),
-    )
     created = models.DateTimeField(
         auto_now_add=True,
         verbose_name=_("создана"),
+    )
+    updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_("обновлено"),
     )
 
     class Meta:
@@ -118,10 +118,13 @@ class BasePasteModel(models.Model):
                     self.short_link = short_link
                     break
 
-        if self.expired_duration:
-            self.expired_date = timezone.now() + self.expired_duration
-
         super().save(*args, **kwargs)
+
+    def is_expired(self):
+        if not self.expired_duration:
+            return False
+
+        return self.updated + self.expired_duration <= timezone.now()
 
 
 class Paste(BasePasteModel):

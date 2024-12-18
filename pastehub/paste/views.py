@@ -13,6 +13,7 @@ from core.storage import (
 from core.utils import search_in_file
 from paste.forms import GetPasswordForm, PasteForm, ProtectedPasteForm
 from paste.models import Paste, PasteVersion, ProtectedPaste
+import pastehub.views
 
 
 def create(request):
@@ -102,6 +103,12 @@ def edit(request, short_link):
 
 def detail(request, short_link, version=None):
     paste = get_object_or_404(Paste, short_link=short_link)
+
+    if paste.is_expired():
+        delete_from_storage(f"pastes/{paste.id}")
+        paste.delete()
+        return pastehub.views.handler404(request, "NotFound")
+
     content = get_from_storage(f"pastes/{paste.id}")
     selected_version = (
         PasteVersion.objects.filter(paste=paste).order_by("-updated").first()
@@ -205,6 +212,12 @@ def create_protected(request):
 
 def detail_protected(request, short_link):
     paste = get_object_or_404(ProtectedPaste, short_link=short_link)
+
+    if paste.is_expired():
+        delete_from_storage(f"pastes/{paste.id}")
+        paste.delete()
+        return pastehub.views.handler404(request, "NotFound")
+
     encrypted_content = get_from_storage(f"pastes/{paste.id}")
 
     form = GetPasswordForm(request.POST or None)
