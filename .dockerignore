@@ -2,7 +2,7 @@
 *.log
 *.pot
 *.pyc
-__pycache__/
+pastehub/__pycache__/
 pastehub/local_settings.py
 pastehub/db.sqlite3
 pastehub/db.sqlite3-journal
