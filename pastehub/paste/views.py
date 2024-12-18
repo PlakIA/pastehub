@@ -5,7 +5,6 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import AESEncryption
-import pastehub.views
 from core.storage import (
     delete_from_storage,
     get_from_storage,
@@ -14,6 +13,7 @@ from core.storage import (
 from core.utils import search_in_file
 from paste.forms import GetPasswordForm, PasteForm, ProtectedPasteForm
 from paste.models import Paste, PasteVersion, ProtectedPaste
+import pastehub.views
 
 
 def create(request):
