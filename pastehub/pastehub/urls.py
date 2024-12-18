@@ -3,7 +3,6 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("paste.urls")),
@@ -13,6 +12,7 @@ urlpatterns = [
     path("export/", include("export.urls")),
     path("qr_code/", include("qr_code.urls")),
     path("report/", include("report.urls")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
 
 if settings.DEBUG:

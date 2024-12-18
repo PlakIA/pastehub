@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+{% load i18n %}
 
 {% block title %}
   {% if is_edit_page %}
-    Редактирование пасты
+    {% translate 'Редактирование пасты' %}
   {% else %}
-    Создание пасты
+    {% translate 'Создание пасты' %}
   {% endif %}
 {% endblock %}
 
@@ -14,14 +15,14 @@
   <div class="container d-flex justify-content-center">
     <div class="pt-4 w-50">
       {% if is_edit_page %}
-        <h3 class="text-center mb-4">Редактировать пасту</h3>
+        <h3 class="text-center mb-4">{% translate 'Редактировать пасту' %}</h3>
       {% else %}
-        <h3 class="text-center mb-4">Создать пасту</h3>
+        <h3 class="text-center mb-4">{% translate 'Создать пасту' %}</h3>
       {% endif %}
       <form method="post">
         {% csrf_token %}
-        {% include "includes/form_floating.html" %}
-        <button type="submit" class="btn btn-primary w-100">Сохранить</button>
+        {% include "includes/form.html" %}
+        <button type="submit" class="btn btn-primary w-100">{% translate 'Сохранить' %}</button>
       </form>
     </div>
   </div>

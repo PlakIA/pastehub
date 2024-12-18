@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from core.forms import BootstrapFormMixin
 from paste.models import Paste, ProtectedPaste
@@ -7,8 +8,8 @@ from paste.models import Paste, ProtectedPaste
 class PasteForm(BootstrapFormMixin, forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(),
-        label="Содержимое",
-        help_text="Максимальный объём текста 5 МБ",
+        label=_("Содержимое"),
+        help_text=_("Максимальный объём текста 5 МБ"),
         required=True,
     )
 
@@ -37,13 +38,13 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
 class ProtectedPasteForm(BootstrapFormMixin, forms.ModelForm):
     content = forms.CharField(
         widget=forms.Textarea(),
-        label="Содержимое",
-        help_text="Максимальный объём текста 5 МБ",
+        label=_("Содержимое"),
+        help_text=_("Максимальный объём текста 5 МБ"),
         required=True,
     )
     password = forms.CharField(
         required=True,
-        label="Ключ шифрования",
+        label=_("Ключ шифрования"),
         widget=forms.PasswordInput(),
     )
 
@@ -66,7 +67,7 @@ class ProtectedPasteForm(BootstrapFormMixin, forms.ModelForm):
 class GetPasswordForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={"class": "form-control", "placeholder": "Ключ"},
+            attrs={"class": "form-control", "placeholder": _("Ключ")},
         ),
     )
 

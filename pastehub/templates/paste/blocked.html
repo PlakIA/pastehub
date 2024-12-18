@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Заблокировано{% endblock %}
+{% load i18n %}
+
+{% block title %}{% translate 'Заблокировано' %}{% endblock %}
 
 {% block content %}
   <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -10,10 +12,9 @@
         <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708"/>
       </svg>
 
-      <h1 class="display-4">Эта паста заблокирована</h1>
-      <p class="lead text-muted">Вы не можете просмотреть содержимое этой пасты, так как оно нарушает правила
-        сервиса</p>
-      <a href="/" class="">Вернуться на главную</a>
+      <h1 class="display-4">{% translate 'Эта паста заблокирована' %}</h1>
+      <p class="lead text-muted">{% translate 'Вы не можете просмотреть содержимое этой пасты, так как оно нарушает правила сервиса' %}</p>
+      <a href="/" class="text-muted">{% translate 'Вернуться на главную' %}</a>
     </div>
   </div>
 {% endblock %}

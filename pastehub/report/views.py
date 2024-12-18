@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core import mail
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import gettext_lazy as _
 
 from paste.models import Paste
 from report.forms import PersonForm, ReportForm
@@ -34,7 +35,7 @@ def create(request, short_link):
             recipient_list=[person_form.cleaned_data.get("email")],
         )
 
-        messages.success(request, "Жалоба успешно отправлена")
+        messages.success(request, _("Жалоба успешно отправлена"))
         return redirect("paste:detail", short_link=short_link)
 
     return render(
@@ -52,7 +53,7 @@ def review(request, short_link):
 
     ReportReview.objects.get_or_create(user=paste.author, paste=paste)
 
-    messages.success(request, "Запрос на пересмотр успешно отправлен")
+    messages.success(request, _("Запрос на пересмотр успешно отправлен"))
 
     return redirect("paste:detail", short_link=short_link)
 

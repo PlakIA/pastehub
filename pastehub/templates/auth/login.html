@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+
+{% load i18n %}
 {% load static %}
 
 
@@ -8,14 +10,15 @@
     <main class="form-signin">
       <form method="post">
         <img class="mb-4" src="{% static 'img/favicon/favicon.svg' %}" alt="" width="96" height="96">
-        <h1 class="h3 mb-3 fw-normal">Войти</h1>
+        <h1 class="h3 mb-3 fw-normal">{% translate 'Войти' %}</h1>
 
         {% csrf_token %}
         {% include 'includes/form_floating.html' %}
-        <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Войти</button>
+        <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">{% translate 'Войти' %}</button>
 
-        <a href="{% url 'auth:password_reset' %}">Забыли пароль?</a>
-        <p>Нет аккаунта? <a href="{% url 'auth:signup' %}">Зарегистрироваться</a></p>
+        <a href="{% url 'auth:password_reset' %}">{% translate 'Забыли пароль?' %}</a>
+        <p>{% translate 'Нет аккаунта?' %} <a href="{% url 'auth:signup' %}">{% translate 'Зарегистрироваться' %}</a>
+        </p>
         <p class="mt-5 mb-3 text-muted">© 2024 PasteHub</p>
       </form>
     </main>

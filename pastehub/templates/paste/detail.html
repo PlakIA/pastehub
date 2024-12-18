@@ -1,5 +1,6 @@
-
 {% extends "base.html" %}
+
+{% load i18n %}
 {% load static %}
 
 {% block title %}{{ selected_version.title }}{% endblock %}
@@ -11,12 +12,12 @@
       <div class="mb-3">
         <h3 class="text-center">{{ selected_version.title }}</h3>
         {% if paste.is_blocked %}
-          <p class="text-danger text-center"><strong>Заблокировано</strong></p>
+          <p class="text-danger text-center"><strong>{% translate 'Заблокировано' %}</strong></p>
         {% else %}
           {% if old_version != selected_version.version %}
             <p class="text-muted text-center">
-              Исторический режим<br>
-              Версия: {{ selected_version.version }}
+              {% translate 'Исторический режим' %}<br>
+              {% translate 'Версия' %}: {{ selected_version.version }}
             </p>
           {% else %}
             <p class="text-muted text-center">{{ paste.category }}</p>
@@ -25,10 +26,11 @@
       </div>
 
       <div>
-        <small class="text-muted">Автор: <strong>{{ paste.author.username }}</strong> | Дата создания:
-          <strong>{{ paste.created }}</strong>{% if paste.expired_duration %}<br>Срок существования:
-            <strong>{{ paste.expired_duration }}</strong>{% endif %}</small>
-        <small class="text-muted"> | Стиль: <strong>{{ paste.language }}</strong></small>
+        <small class="text-muted">Автор: <strong>{{ paste.author.username }}</strong> | {% translate 'Дата создания' %}:
+          <strong>{{ paste.created }}</strong>
+          {% if paste.expired_duration %}<br>Срок существования:
+            <strong>{{ paste.expired_duration }}</strong>{% endif %}
+        </small><small class="text-muted"> | {% translate 'Стиль' %}: <strong>{{ paste.language }}</strong></small>
       </div>
 
       <pre><code class="language-{{ paste.language }}">{{ content }}</code></pre>
@@ -41,7 +43,7 @@
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                 <path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708"/>
               </svg>
-              Пересмотр блокировки
+              {% translate 'Пересмотр блокировки' %}
             </button>
           {% else %}
             <a class="btn btn-sm btn-outline-danger" href="{% url 'report:create' paste.short_link %}">
@@ -49,21 +51,33 @@
                 <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.15.15 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.2.2 0 0 1-.054.06.1.1 0 0 1-.066.017H1.146a.1.1 0 0 1-.066-.017.2.2 0 0 1-.054-.06.18.18 0 0 1 .002-.183L7.884 2.073a.15.15 0 0 1 .054-.057m1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767z"></path>
                 <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z"></path>
               </svg>
-              Нарушение
+              {% translate 'Нарушение' %}
             </a>
           {% endif %}
 
           {% if paste.author == request.user %}
-            <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">Редактировать</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'paste:edit' paste.short_link %}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+              </svg>
+              {% translate 'Редактировать' %}
+            </a>
           {% endif %}
 
           <button class="btn btn-sm btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            История изменений
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+              <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z"/>
+              <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z"/>
+              <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5"/>
+            </svg>
+            {% translate 'История изменений' %}
           </button>
           <ul class="dropdown-menu">
             {% for el in paste.versions.all %}
               <a class="dropdown-item" href="{% url 'paste:version-detail' short_link=paste.short_link version=el.version %}">
-                {% if el.version == old_version %}Последняя {% endif %}#{{ el.version }} ({{ el.updated }})
+                {% if el.version == old_version %}{% translate 'Последняя' %} {% endif %}#{{ el.version }}
+                ({{ el.updated }})
               </a>
             {% endfor %}
           </ul>
@@ -74,17 +88,17 @@
               <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
               <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
             </svg>
-            Экспорт
+            {% translate 'Экспорт' %}
           </button>
           <ul class="dropdown-menu">
             <a class="dropdown-item" href="{% url 'export:source' paste.short_link selected_version.version %}" download role="button">
-              Исходный формат
+              {% translate 'Исходный формат' %}
             </a>
             <a class="dropdown-item" href="{% url 'export:json' paste.short_link selected_version.version %}" download role="button">
-              JSON
+              {% translate 'JSON' %}
             </a>
             <a class="dropdown-item" href="{% url 'export:markdown' paste.short_link selected_version.version %}" download role="button">
-              Markdown
+              {% translate 'Markdown' %}
             </a>
           </ul>
         </div>
@@ -95,7 +109,7 @@
               <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
               <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
             </svg>
-            Удалить
+            {% translate 'Удалить' %}
           </button>
         {% endif %}
 
@@ -104,7 +118,7 @@
 
       {% if not paste.is_blocked %}
         <div class="form-outline w-50 mt-3">
-          <label for="linkInput1" class="form-label mb-1">Короткая ссылка:</label>
+          <label for="linkInput1" class="form-label mb-1">{% translate 'Короткая ссылка' %}:</label>
           <div class="d-flex align-items-center">
             <input type="text" id="linkInput1" class="form-control me-2" value="{{ request.build_absolute_uri }}" readonly>
             <button class="btn btn-secondary col-auto" data-clipboard-target="#linkInput1">
@@ -112,13 +126,13 @@
                 <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
                 <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
               </svg>
-              Скопировать
+              {% translate 'Скопировать' %}
             </button>
           </div>
         </div>
 
         <div class="mt-3">
-          <label for="linkInput" class="form-label mb-1">QR-код:</label>
+          <label for="linkInput" class="form-label mb-1">{% translate 'QR-код' %}:</label>
           <img src="{% url 'qr_code:preview' request.build_absolute_uri %}" class="rounded img-thumbnail" alt="qr-code image" width="50px" data-bs-toggle="modal" data-bs-target="#qrcodeModal">
         </div>
       {% endif %}
@@ -142,18 +156,17 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="confirmDeleteModalLabel">Подтверждение удаления</h5>
+          <h5 class="modal-title" id="confirmDeleteModalLabel">{% translate 'Подтверждение удаления' %}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Вы уверены, что хотите удалить эту пасту?
+          {% translate 'Вы уверены, что хотите удалить эту пасту?' %}
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-          <a type="button" class="btn btn-danger" id="confirmDeleteButton" href="{% url 'paste:delete' paste.short_link %}">Удалить</a>
-        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate 'Отмена' %}</button>
+        <a type="button" class="btn btn-danger" id="confirmDeleteButton" href="{% url 'paste:delete' paste.short_link %}">{% translate 'Удалить' %}</a>
       </div>
     </div>
+  </div>
   </div>
 
   {% if paste.is_blocked %}
@@ -162,16 +175,15 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="confirmDeleteModalLabel">Подтверждение отправки</h5>
+            <h5 class="modal-title" id="confirmDeleteModalLabel">{% translate 'Подтверждение отправки' %}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <strong>Проверьте содержимое пасты</strong> перед отправкой запроса на пересмотр решения о блокировке
+            <strong>{% translate 'Проверьте содержимое пасты' %}</strong> {% translate 'перед отправкой запроса на пересмотр решения о блокировке' %}
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-            <a type="button" class="btn btn-primary" id="confirmDeleteButton" href="{% url 'report:review' paste.short_link %}">Отправить
-              запрос</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate 'Отмена' %}</button>
+            <a type="button" class="btn btn-primary" id="confirmDeleteButton" href="{% url 'report:review' paste.short_link %}">{% translate 'Отправить запрос' %}</a>
           </div>
         </div>
       </div>
@@ -182,7 +194,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="qrcodeModalLabel">QR-код</h5>
+          <h5 class="modal-title" id="qrcodeModalLabel">{% translate 'QR-код' %}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -199,7 +211,7 @@
                     <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
                     <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
                   </svg>
-                  Скачать
+                  {% translate 'Скачать' %}
                 </a>
               </div>
             </div>
