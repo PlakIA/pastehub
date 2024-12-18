@@ -28,35 +28,58 @@
                 <h3>Список паст пользователя {{ user.username }}</h3>
             </div>
         </div>
-
-        <table class="table table-bordered table-striped">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Название</th>
-                    <th>Создан</th>
-                    <th>Истекает</th>
-                    <th>Категория</th>
-                    <th>Просмотры</th>
-                    <th>Комментарии</th>
-                    <th>Syntax</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for paste in pastes %}
+        {% if pastes %}
+        {%if user == request.user %}
+        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
+                <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293z"/>
+            </svg>
+            Создать backup своих заметок
+        </button>
+        <ul class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'users:backup' user.username "source" %}" download role="button">
+                Исходный формат
+            </a>
+            <a class="dropdown-item" href="{% url 'users:backup' user.username "json" %}" download role="button">
+                JSON
+            </a>
+            <a class="dropdown-item" href="{% url 'users:backup' user.username "md" %}" download role="button">
+                Markdown
+            </a>
+        </ul>
+        {% endif %}
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
                     <tr>
-                    <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
-                    <td>{{ paste.created }}</td>
-                    <td>TODO</td>
-                    <td>{{ paste.category }}</td>
-                    <td>TODO</td>
-                    <td>TODO</td>
-                    <td>TODO</td>
-                </tr>
-                {% endfor %}
+                        <th>Название</th>
+                        <th>Создан</th>
+                        <th>Истекает</th>
+                        <th>Категория</th>
+                        <th>Просмотры</th>
+                        <th>Комментарии</th>
+                        <th>Syntax</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            </tbody>
-        </table>
+                    {% for paste in pastes %}
+                        <tr>
+                        <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
+                        <td>{{ paste.created }}</td>
+                        <td>TODO</td>
+                        <td>{{ paste.category }}</td>
+                        <td>TODO</td>
+                        <td>TODO</td>
+                        <td>TODO</td>
+                    </tr>
+                    {% endfor %}
 
+                </tbody>
+            </table>
+        {% else %}
+        <div class="container d-flex justify-content-center mt-5">
+            <h5>У {{user.username}} ничего не найдено...😞</h5>
+        </div>
+        {% endif %}
     </div>
 {% endblock %}

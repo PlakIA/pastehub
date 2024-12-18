@@ -52,15 +52,8 @@ def export_json(request, short_link, version):
 def export_markdown(request, short_link, version):
     paste = get_object_or_404(Paste, short_link=short_link)
     paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
-    markdown_content = (
-        f"# Заметка с Pastehub: {paste.title}\n"
-        f"### Категория: {paste.category}\n"
-        f"### Автор: {paste.author}\n"
-        f"### Создана: {paste.created}\n"
-        f"#### Содержимое:\n{paste_text}"
-    )
 
-    response = HttpResponse(markdown_content, content_type="text/markdown")
+    response = HttpResponse(paste_text, content_type="text/markdown")
     response["Content-Disposition"] = (
         f"attachment; filename={short_link}_{version}.md"
     )
