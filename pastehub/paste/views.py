@@ -1,7 +1,7 @@
 from django.core.files.storage import default_storage
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 
 from core.crypto import AESEncryption
@@ -102,6 +102,12 @@ def edit(request, short_link):
 
 def detail(request, short_link, version=None):
     paste = get_object_or_404(Paste, short_link=short_link)
+
+    if paste.is_expired():
+        delete_from_storage(f"pastes/{paste.id}")
+        paste.delete()
+        return HttpResponseNotFound()
+
     content = get_from_storage(f"pastes/{paste.id}")
     selected_version = (
         PasteVersion.objects.filter(paste=paste).order_by("-updated").first()
@@ -205,6 +211,12 @@ def create_protected(request):
 
 def detail_protected(request, short_link):
     paste = get_object_or_404(ProtectedPaste, short_link=short_link)
+
+    if paste.is_expired():
+        delete_from_storage(f"pastes/{paste.id}")
+        paste.delete()
+        return HttpResponseNotFound()
+
     encrypted_content = get_from_storage(f"pastes/{paste.id}")
 
     form = GetPasswordForm(request.POST or None)
