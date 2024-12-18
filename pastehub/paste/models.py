@@ -99,6 +99,10 @@ class BasePasteModel(models.Model):
         auto_now_add=True,
         verbose_name=_("создана"),
     )
+    updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_("обновлено"),
+    )
 
     class Meta:
         abstract = True
@@ -120,7 +124,7 @@ class BasePasteModel(models.Model):
         if not self.expired_duration:
             return False
 
-        return self.created + self.expired_duration <= timezone.now()
+        return self.updated + self.expired_duration <= timezone.now()
 
 
 class Paste(BasePasteModel):
