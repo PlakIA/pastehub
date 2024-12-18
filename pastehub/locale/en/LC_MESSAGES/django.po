@@ -1,0 +1,680 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-19 01:31+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\export\apps.py:7 .\templates\paste\detail.html:95
+msgid "Экспорт"
+msgstr "Export"
+
+#: .\paste\apps.py:8
+msgid "Пасты"
+msgstr "Pastes"
+
+#: .\paste\forms.py:11 .\paste\forms.py:41
+msgid "Содержимое"
+msgstr "Content"
+
+#: .\paste\forms.py:12 .\paste\forms.py:42
+msgid "Максимальный объём текста 5 МБ"
+msgstr "Maximum text size 5 MB"
+
+#: .\paste\forms.py:47
+msgid "Ключ шифрования"
+msgstr "Encryption key"
+
+#: .\paste\forms.py:70
+msgid "Ключ"
+msgstr "Key"
+
+#: .\paste\models.py:49 .\paste\models.py:54 .\paste\models.py:136
+msgid "категория"
+msgstr "category"
+
+#: .\paste\models.py:50 .\paste\models.py:77 .\paste\models.py:181
+msgid "Максимальная длинна 150 символов"
+msgstr "Maximum length 150 characters"
+
+#: .\paste\models.py:55
+msgid "категории"
+msgstr "categories"
+
+#: .\paste\models.py:63
+msgid "Бессрочно"
+msgstr "Never"
+
+#: .\paste\models.py:64
+msgid "10 секунд"
+msgstr "10 seconds"
+
+#: .\paste\models.py:65
+msgid "10 минут"
+msgstr "10 minutes"
+
+#: .\paste\models.py:66
+msgid "1 час"
+msgstr "1 hour"
+
+#: .\paste\models.py:67
+msgid "1 день"
+msgstr "1 day"
+
+#: .\paste\models.py:68
+msgid "5 дней"
+msgstr "5 day"
+
+#: .\paste\models.py:69
+msgid "10 дней"
+msgstr "10 days"
+
+#: .\paste\models.py:70
+msgid "30 дней"
+msgstr "30 days"
+
+#: .\paste\models.py:76 .\paste\models.py:180
+msgid "заголовок"
+msgstr "title"
+
+#: .\paste\models.py:82 .\paste\models.py:186
+msgid "короткая ссылка"
+msgstr "short link"
+
+#: .\paste\models.py:85
+msgid "язык для подсветки"
+msgstr "language highlighting"
+
+#: .\paste\models.py:86
+msgid "Выберите язык для подсветки"
+msgstr "Select language highlighting"
+
+#: .\paste\models.py:96
+msgid "срок существования пасты"
+msgstr "lifespan of the paste"
+
+#: .\paste\models.py:100
+msgid "создана"
+msgstr "created"
+
+#: .\paste\models.py:104
+msgid "обновлено"
+msgstr "updated"
+
+#: .\paste\models.py:146
+msgid "автор"
+msgstr "author"
+
+#: .\paste\models.py:150
+msgid "опубликовать"
+msgstr "publish"
+
+#: .\paste\models.py:154
+msgid "заблокировать"
+msgstr "blocked"
+
+#: .\paste\models.py:156 .\paste\models.py:188
+msgid "обновлён"
+msgstr "updated"
+
+#: .\paste\models.py:159 .\paste\models.py:173 .\report\models.py:42
+#: .\report\models.py:88
+msgid "паста"
+msgstr "paste"
+
+#: .\paste\models.py:160
+msgid "пасты"
+msgstr "pastes"
+
+#: .\paste\models.py:177
+msgid "номер версии"
+msgstr "version"
+
+#: .\paste\models.py:191
+msgid "версия пасты"
+msgstr "paste version"
+
+#: .\paste\models.py:192
+msgid "версии паст"
+msgstr "paste versions"
+
+#: .\paste\models.py:201
+msgid "ключ шифрования"
+msgstr "encryption key"
+
+#: .\paste\models.py:203
+msgid "соль"
+msgstr "salt"
+
+#: .\paste\models.py:204
+msgid "nonce"
+msgstr ""
+
+#: .\paste\models.py:207
+msgid "зашифрованная паста"
+msgstr "encrypted paste"
+
+#: .\paste\models.py:208
+msgid "зашифрованные пасты"
+msgstr "encrypted pastes"
+
+#: .\pastehub\settings.py:119
+msgid "Английский"
+msgstr "English"
+
+#: .\pastehub\settings.py:120
+msgid "Русский"
+msgstr "Russian"
+
+#: .\qr_code\apps.py:8
+msgid "QR Код"
+msgstr "QR Code"
+
+#: .\report\apps.py:8
+msgid "Нарушения"
+msgstr "Reports"
+
+#: .\report\models.py:13
+msgid "имя"
+msgstr "name"
+
+#: .\report\models.py:14
+msgid "Как к вам обращаться?"
+msgstr "How should I contact you?"
+
+#: .\report\models.py:17
+msgid "почта"
+msgstr "email"
+
+#: .\report\models.py:18
+msgid "Адрес электронной почты для обратной связи"
+msgstr "Email address for feedback"
+
+#: .\report\models.py:22 .\report\models.py:23
+msgid "персональные данные"
+msgstr "personals"
+
+#: .\report\models.py:31 .\report\models.py:72
+msgid "Получено"
+msgstr "Received"
+
+#: .\report\models.py:32 .\report\models.py:73
+msgid "В работе"
+msgstr "Work in process"
+
+#: .\report\models.py:33 .\report\models.py:74
+msgid "Принято"
+msgstr "Answered"
+
+#: .\report\models.py:34 .\report\models.py:75
+msgid "Отклонено"
+msgstr "Rejected"
+
+#: .\report\models.py:48
+msgid "отправитель"
+msgstr "reporter"
+
+#: .\report\models.py:54 .\report\models.py:94
+msgid "статус"
+msgstr "status"
+
+#: .\report\models.py:57
+msgid "текст жалобы"
+msgstr "report"
+
+#: .\report\models.py:58
+msgid "Опишите нарушение"
+msgstr "Describe the violation"
+
+#: .\report\models.py:63
+msgid "нарушение"
+msgstr "report"
+
+#: .\report\models.py:64
+msgid "нарушения"
+msgstr "reports"
+
+#: .\report\models.py:82
+msgid "автор пасты"
+msgstr "paste author"
+
+#: .\report\models.py:99
+msgid "пересмотр нарушения"
+msgstr "block review"
+
+#: .\report\models.py:100
+msgid "пересмотры нарушений"
+msgstr "block reviews"
+
+#: .\report\views.py:38
+msgid "Жалоба успешно отправлена"
+msgstr "Report sent successfully"
+
+#: .\report\views.py:56
+msgid "Запрос на пересмотр успешно отправлен"
+msgstr "Review request sent successfully"
+
+#: .\templates\404.html:13
+msgid "Ничего не найдено"
+msgstr "Oops! Something went wrong..."
+
+#: .\templates\404.html:14
+msgid "Страница, которую вы ищете, не найдена"
+msgstr "The page you're looking for doesn't exist"
+
+#: .\templates\404.html:15 .\templates\paste\blocked.html:17
+msgid "Вернуться на главную"
+msgstr "Return to homepage"
+
+#: .\templates\auth\activation_expired.html:5
+#: .\templates\auth\activation_expired.html:13
+msgid "Срок действия ссылки истек"
+msgstr "Link has expired"
+
+#: .\templates\auth\activation_expired.html:14
+msgid "К сожалению, срок действия ссылки активации аккаунта истек"
+msgstr "Sorry, your account activation link has expired"
+
+#: .\templates\auth\activation_expired.html:15
+msgid "Пожалуйста, обратитесь в поддержку"
+msgstr "Please contact support"
+
+#: .\templates\auth\activation_expired.html:18
+#: .\templates\auth\activation_sent.html:11
+#: .\templates\paste\get_password.html:21
+msgid "На главную"
+msgstr "Homepage"
+
+#: .\templates\auth\activation_sent.html:8
+msgid "Ссылка активации отправлена"
+msgstr "Activation link sent"
+
+#: .\templates\auth\activation_sent.html:9
+msgid "Ссылка активации аккаунта была отправлена на электронную почту"
+msgstr "The account activation link was sent by email"
+
+#: .\templates\auth\activation_sent.html:10
+msgid "Проверьте папку спам"
+msgstr "Check your spam folder"
+
+#: .\templates\auth\activation_success.html:5
+#: .\templates\auth\activation_success.html:13
+msgid "Аккаунт успешно активирован"
+msgstr "Account activated successfully"
+
+#: .\templates\auth\activation_success.html:14
+msgid ""
+"Ваш аккаунт успешно активирован. Теперь вы можете пользоваться всеми "
+"функциями нашего сайта."
+msgstr ""
+"Your account has been successfully activated. Now you can use everything "
+"functions of our website."
+
+#: .\templates\auth\activation_success.html:15 .\templates\auth\login.html:13
+#: .\templates\auth\login.html:17
+#: .\templates\auth\password_reset_complete.html:8
+#: .\templates\includes\header.html:100
+msgid "Войти"
+msgstr "Login"
+
+#: .\templates\auth\login.html:19
+msgid "Забыли пароль?"
+msgstr "Forgot your password?"
+
+#: .\templates\auth\login.html:20
+msgid "Нет аккаунта?"
+msgstr "Don't have an account?"
+
+#: .\templates\auth\login.html:20 .\templates\auth\signup.html:13
+#: .\templates\includes\header.html:101
+msgid "Зарегистрироваться"
+msgstr "Sign up"
+
+#: .\templates\auth\logout.html:7
+msgid "Вы вышли из системы"
+msgstr "You are logged out"
+
+#: .\templates\auth\logout.html:8
+msgid "Войти снова"
+msgstr "Login again"
+
+#: .\templates\auth\password_change.html:10
+msgid "Сменить пароль"
+msgstr "Change password"
+
+#: .\templates\auth\password_change_done.html:7
+msgid "Пароль успешно изменен."
+msgstr "The password has been successfully changed."
+
+#: .\templates\auth\password_reset.html:7
+msgid "Сброс пароля"
+msgstr "Password reset"
+
+#: .\templates\auth\password_reset.html:11
+msgid "Отправить ссылку для сброса пароля"
+msgstr "Send password reset link"
+
+#: .\templates\auth\password_reset_complete.html:7
+msgid "Ваш пароль успешно сброшен. Вы можете войти с новым паролем."
+msgstr ""
+"Your password has been successfully reset. You can log in with a new "
+"password."
+
+#: .\templates\auth\password_reset_confirm.html:7
+msgid "Введите новый пароль"
+msgstr "Enter new password"
+
+#: .\templates\auth\password_reset_confirm.html:11
+msgid "Сбросить пароль"
+msgstr "Reset password"
+
+#: .\templates\auth\password_reset_done.html:7
+msgid "Ссылка для сброса пароля была успешно отправлена на ваш email."
+msgstr "The password reset link has been successfully sent to your email."
+
+#: .\templates\auth\signup.html:9
+msgid "Создание нового аккаунта"
+msgstr "Create a new account"
+
+#: .\templates\includes\header.html:15
+msgid "Создать заметку"
+msgstr "Create paste"
+
+#: .\templates\includes\header.html:20
+msgid "Создать защищенную заметку"
+msgstr "Create protected paste"
+
+#: .\templates\includes\header.html:23
+msgid "API"
+msgstr ""
+
+#: .\templates\includes\header.html:24
+msgid "Ответы на вопросы"
+msgstr "FAQ"
+
+#: .\templates\includes\header.html:30
+msgid "Поиск..."
+msgstr "Search..."
+
+#: .\templates\includes\header.html:59
+msgid "Мои пасты"
+msgstr "Pastes"
+
+#: .\templates\includes\header.html:66
+msgid "Мои комментарии"
+msgstr "Comments"
+
+#: .\templates\includes\header.html:72
+msgid "Профиль"
+msgstr "Profile"
+
+#: .\templates\includes\header.html:83
+msgid "Админ-панель"
+msgstr "Admin-panel"
+
+#: .\templates\includes\header.html:94
+msgid "Выйти"
+msgstr "Log out"
+
+#: .\templates\paste\blocked.html:5 .\templates\paste\detail.html:15
+msgid "Заблокировано"
+msgstr "Blocked"
+
+#: .\templates\paste\blocked.html:15
+msgid "Эта паста заблокирована"
+msgstr "This paste is blocked"
+
+#: .\templates\paste\blocked.html:16
+msgid ""
+"Вы не можете просмотреть содержимое этой пасты, так как оно нарушает правила "
+"сервиса"
+msgstr ""
+"You cannot view the contents of this paste because it violates the service "
+"rules"
+
+#: .\templates\paste\create.html:7
+msgid "Редактирование пасты"
+msgstr "Paste editing"
+
+#: .\templates\paste\create.html:9
+msgid "Создание пасты"
+msgstr "Paste crate"
+
+#: .\templates\paste\create.html:18
+msgid "Редактировать пасту"
+msgstr "Paste edit"
+
+#: .\templates\paste\create.html:20
+msgid "Создать пасту"
+msgstr "Create paste"
+
+#: .\templates\paste\create.html:25 .\templates\users\profile.html:30
+msgid "Сохранить"
+msgstr "Submit"
+
+#: .\templates\paste\create_protected.html:5
+msgid "Создание защищённой пасты"
+msgstr "Create protected paste"
+
+#: .\templates\paste\create_protected.html:10
+msgid "Создать защищённую пасту"
+msgstr "Create protected paste"
+
+#: .\templates\paste\create_protected.html:14
+msgid "Создать"
+msgstr "Submit"
+
+#: .\templates\paste\detail.html:19
+msgid "Исторический режим"
+msgstr "Historical mode"
+
+#: .\templates\paste\detail.html:20
+msgid "Версия"
+msgstr "Version"
+
+#: .\templates\paste\detail.html:30
+msgid "Автор"
+msgstr "Author"
+
+#: .\templates\paste\detail.html:31 .\templates\paste\detail_protected.html:19
+#: .\templates\paste\search_results.html:22
+#: .\templates\users\user_detail.html:39
+msgid "Стиль"
+msgstr "Style"
+
+#: .\templates\paste\detail.html:32 .\templates\paste\detail_protected.html:20
+msgid "Дата создания"
+msgstr "Created"
+
+#: .\templates\paste\detail.html:33
+msgid "Дата обновления"
+msgstr "Updated"
+
+#: .\templates\paste\detail.html:35 .\templates\paste\detail_protected.html:22
+msgid "Срок существования"
+msgstr "Lifespan"
+
+#: .\templates\paste\detail.html:50
+msgid "Пересмотр блокировки"
+msgstr "Block review"
+
+#: .\templates\paste\detail.html:58
+msgid "Нарушение"
+msgstr "Report"
+
+#: .\templates\paste\detail.html:68
+msgid "Редактировать"
+msgstr "Edit"
+
+#: .\templates\paste\detail.html:78
+msgid "История изменений"
+msgstr "History of changes"
+
+#: .\templates\paste\detail.html:83
+msgid "Последняя"
+msgstr "Latest"
+
+#: .\templates\paste\detail.html:99
+msgid "Исходный формат"
+msgstr "Source format"
+
+#: .\templates\paste\detail.html:102
+msgid "JSON"
+msgstr ""
+
+#: .\templates\paste\detail.html:105
+msgid "Markdown"
+msgstr ""
+
+#: .\templates\paste\detail.html:116 .\templates\paste\detail.html:170
+#: .\templates\paste\detail_protected.html:34
+#: .\templates\paste\detail_protected.html:72
+msgid "Удалить"
+msgstr "Delete"
+
+#: .\templates\paste\detail.html:125 .\templates\paste\detail_protected.html:38
+msgid "Короткая ссылка"
+msgstr "Short link"
+
+#: .\templates\paste\detail.html:133 .\templates\paste\detail_protected.html:46
+msgid "Скопировать"
+msgstr "Copy"
+
+#: .\templates\paste\detail.html:139 .\templates\paste\detail.html:201
+#: .\templates\paste\detail_protected.html:52
+#: .\templates\paste\detail_protected.html:82
+msgid "QR-код"
+msgstr "QR-code"
+
+#: .\templates\paste\detail.html:163 .\templates\paste\detail_protected.html:64
+msgid "Подтверждение удаления"
+msgstr "Deletion confirmation"
+
+#: .\templates\paste\detail.html:167 .\templates\paste\detail_protected.html:68
+msgid "Вы уверены, что хотите удалить эту пасту?"
+msgstr "Are you sure you want to remove this paste?"
+
+#: .\templates\paste\detail.html:169 .\templates\paste\detail.html:189
+#: .\templates\paste\detail_protected.html:71
+msgid "Отмена"
+msgstr "Cancel"
+
+#: .\templates\paste\detail.html:182
+msgid "Подтверждение отправки"
+msgstr "Send confirmation"
+
+#: .\templates\paste\detail.html:186
+msgid "Проверьте содержимое пасты"
+msgstr "Check the contents of the paste"
+
+#: .\templates\paste\detail.html:186
+msgid "перед отправкой запроса на пересмотр решения о блокировке"
+msgstr "before submitting a request to review a blocking decision"
+
+#: .\templates\paste\detail.html:190
+msgid "Отправить запрос"
+msgstr "Send request"
+
+#: .\templates\paste\detail.html:218 .\templates\paste\detail_protected.html:99
+msgid "Скачать"
+msgstr "Download"
+
+#: .\templates\paste\detail_protected.html:14
+msgid "Защищено"
+msgstr "Protected"
+
+#: .\templates\paste\detail_protected.html:125
+#: .\templates\paste\detail_protected.html:129
+msgid "Скопировано!"
+msgstr "Copied!"
+
+#: .\templates\paste\get_password.html:5
+msgid "Эта паста защищена"
+msgstr "This paste is protected"
+
+#: .\templates\paste\get_password.html:13
+msgid "Эта паста зашифрована"
+msgstr "This paste is encrypted"
+
+#: .\templates\paste\get_password.html:18
+msgid "Расшифровать"
+msgstr "Decrypt"
+
+#: .\templates\paste\search_results.html:8
+msgid "Результаты поиска"
+msgstr "Search results"
+
+#: .\templates\paste\search_results.html:16
+#: .\templates\users\user_detail.html:33
+msgid "Название"
+msgstr "Title"
+
+#: .\templates\paste\search_results.html:17
+#: .\templates\users\user_detail.html:34
+msgid "Создан"
+msgstr "Created"
+
+#: .\templates\paste\search_results.html:18
+#: .\templates\users\user_detail.html:35
+msgid "Истекает"
+msgstr "Expired"
+
+#: .\templates\paste\search_results.html:19
+#: .\templates\users\user_detail.html:36
+msgid "Категория"
+msgstr "Category"
+
+#: .\templates\paste\search_results.html:20
+#: .\templates\users\user_detail.html:37
+msgid "Просмотры"
+msgstr "Просмотры"
+
+#: .\templates\paste\search_results.html:21
+#: .\templates\users\user_detail.html:38
+msgid "Комментарии"
+msgstr "Comments"
+
+#: .\templates\paste\search_results.html:42
+msgid "Ничего не найдено..."
+msgstr "Nothing found..."
+
+#: .\templates\paste\search_results.html:51
+msgid "Предыдущая"
+msgstr "Previous"
+
+#: .\templates\report\create.html:5
+msgid "Жалоба"
+msgstr "Report"
+
+#: .\templates\report\create.html:10
+msgid "Сообщить о нарушении"
+msgstr "Report"
+
+#: .\templates\report\create.html:11
+msgid "Нарушение в пасте"
+msgstr "Report to paste"
+
+#: .\templates\report\create.html:21
+msgid "Отправить"
+msgstr "Send"
+
+#: .\templates\users\profile.html:23
+msgid "Редактирование профиля"
+msgstr "Profile edit"
+
+#: .\templates\users\user_detail.html:26
+msgid "Список паст пользователя"
+msgstr "List of user pastes"

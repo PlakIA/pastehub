@@ -1,10 +1,13 @@
+boto3==1.35.83
 Django==4.2.*
 django-cleanup==9.0.0
-django-tinymce==4.1.0
 django-environ==0.11.2
+django-storages==1.14.4
+django-tinymce==4.1.0
+gunicorn==23.0.0
 pillow==11.0.0
 PyCryptodome==3.21.0
 python-dotenv==1.0.1
 qrcode==8.0
-sorl-thumbnail==12.11.0 
+sorl-thumbnail==12.11.0
 transliterate==1.10.2

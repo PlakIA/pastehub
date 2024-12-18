@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.utils.translation import gettext_lazy as _
 import environ
 
 env = environ.Env()
@@ -41,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 if DEBUG:
@@ -112,6 +114,15 @@ DEFAULT_USER_IS_ACTIVE = env.bool(
 )
 
 LANGUAGE_CODE = "ru-ru"
+
+LANGUAGES = [
+    ("en", _("Английский")),
+    ("ru", _("Русский")),
+]
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale",
+]
 
 TIME_ZONE = "UTC"
 

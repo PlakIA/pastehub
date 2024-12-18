@@ -5,9 +5,9 @@ from django.conf import settings
 from django.contrib.auth.hashers import check_password, make_password
 from django.db import models
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from core.utils import generate_short_link
-
 
 LANGUAGE_CHOICES = [
     ("markup", "Markup"),
@@ -39,19 +39,20 @@ LANGUAGE_CHOICES = [
     ("elixir", "Elixir"),
     ("text", "Plain Text"),
 ]
+LANGUAGE_CHOICES.sort(key=lambda x: x[1])
 
 
 class Category(models.Model):
     name = models.CharField(
         max_length=150,
         unique=True,
-        verbose_name="категория",
-        help_text="Максимальная длинна 150 символов",
+        verbose_name=_("категория"),
+        help_text=_("Максимальная длинна 150 символов"),
     )
 
     class Meta:
-        verbose_name = "категория"
-        verbose_name_plural = "категории"
+        verbose_name = _("категория")
+        verbose_name_plural = _("категории")
 
     def __str__(self):
         return self.name
@@ -59,29 +60,30 @@ class Category(models.Model):
 
 class BasePasteModel(models.Model):
     EXPIRED_LIMIT = [
-        (None, "Бессрочно"),
-        (timedelta(minutes=10), "10 минут"),
-        (timedelta(hours=1), "1 час"),
-        (timedelta(days=1), "1 день"),
-        (timedelta(days=5), "5 дней"),
-        (timedelta(days=10), "10 дней"),
-        (timedelta(days=30), "30 дней"),
+        (None, _("Бессрочно")),
+        (timedelta(seconds=10), _("10 секунд")),
+        (timedelta(minutes=10), _("10 минут")),
+        (timedelta(hours=1), _("1 час")),
+        (timedelta(days=1), _("1 день")),
+        (timedelta(days=5), _("5 дней")),
+        (timedelta(days=10), _("10 дней")),
+        (timedelta(days=30), _("30 дней")),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(
         max_length=150,
-        verbose_name="заголовок",
-        help_text="Максимальная длинна 150 символов",
+        verbose_name=_("заголовок"),
+        help_text=_("Максимальная длинна 150 символов"),
     )
     short_link = models.CharField(
         max_length=10,
         unique=True,
-        verbose_name="короткая ссылка",
+        verbose_name=_("короткая ссылка"),
     )
     language = models.CharField(
-        verbose_name="язык для подсветки",
-        help_text="Выберите язык для подсветки",
+        verbose_name=_("язык для подсветки"),
+        help_text=_("Выберите язык для подсветки"),
         max_length=50,
         choices=LANGUAGE_CHOICES,
         default="text",
@@ -91,14 +93,16 @@ class BasePasteModel(models.Model):
         default=None,
         null=True,
         blank=True,
-        verbose_name="срок существования пасты",
+        verbose_name=_("срок существования пасты"),
     )
-    expired_date = models.DateTimeField(
-        null=True,
-        blank=True,
-        verbose_name="дата уничтожения пасты",
+    created = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name=_("создана"),
     )
-    created = models.DateTimeField(auto_now_add=True, verbose_name="создана")
+    updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name=_("обновлено"),
+    )
 
     class Meta:
         abstract = True
@@ -108,12 +112,19 @@ class BasePasteModel(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.short_link:
-            self.short_link = generate_short_link()
-
-        if self.expired_duration:
-            self.expired_date = timezone.now() + self.expired_duration
+            while True:
+                short_link = generate_short_link()
+                if not Paste.objects.filter(short_link=short_link).exists():
+                    self.short_link = short_link
+                    break
 
         super().save(*args, **kwargs)
+
+    def is_expired(self):
+        if not self.expired_duration:
+            return False
+
+        return self.updated + self.expired_duration <= timezone.now()
 
 
 class Paste(BasePasteModel):
@@ -122,7 +133,7 @@ class Paste(BasePasteModel):
         on_delete=models.CASCADE,
         related_name="pastes",
         related_query_name="paste",
-        verbose_name="категория",
+        verbose_name=_("категория"),
         null=True,
     )
     author = models.ForeignKey(
@@ -132,21 +143,21 @@ class Paste(BasePasteModel):
         blank=True,
         related_name="pastes",
         related_query_name="paste",
-        verbose_name="автор",
+        verbose_name=_("автор"),
     )
     is_published = models.BooleanField(
         default=True,
-        verbose_name="опубликовать",
+        verbose_name=_("опубликовать"),
     )
     is_blocked = models.BooleanField(
         default=False,
-        verbose_name="заблокировать",
+        verbose_name=_("заблокировать"),
     )
-    updated = models.DateTimeField(auto_now=True, verbose_name="обновлён")
+    updated = models.DateTimeField(auto_now=True, verbose_name=_("обновлён"))
 
     class Meta:
-        verbose_name = "паста"
-        verbose_name_plural = "пасты"
+        verbose_name = _("паста")
+        verbose_name_plural = _("пасты")
 
     def save(self, *args, **kwargs):
         if not self.short_link:
@@ -159,39 +170,42 @@ class PasteVersion(models.Model):
     paste = models.ForeignKey(
         Paste,
         on_delete=models.CASCADE,
-        verbose_name="паста",
+        verbose_name=_("паста"),
         related_name="versions",
         related_query_name="version",
     )
-    version = models.IntegerField(verbose_name="номер версии")
+    version = models.IntegerField(verbose_name=_("номер версии"))
     title = models.CharField(
         max_length=150,
-        verbose_name="заголовок",
-        help_text="Максимальная длинна 150 символов",
+        verbose_name=_("заголовок"),
+        help_text=_("Максимальная длинна 150 символов"),
     )
     short_link = models.CharField(
         max_length=10,
         unique=False,
-        verbose_name="короткая ссылка",
+        verbose_name=_("короткая ссылка"),
     )
-    updated = models.DateTimeField(auto_now=True, verbose_name="обновлён")
+    updated = models.DateTimeField(auto_now=True, verbose_name=_("обновлён"))
 
     class Meta:
-        verbose_name = "версия пасты"
-        verbose_name_plural = "версии паст"
+        verbose_name = _("версия пасты")
+        verbose_name_plural = _("версии паст")
 
     def __str__(self):
-        return f"{self.paste.title} - Версия {self.version}"
+        return f"{self.paste.title} v{self.version}"
 
 
 class ProtectedPaste(BasePasteModel):
-    password = models.CharField(max_length=255, verbose_name="ключ шифрования")
-    salt = models.BinaryField(verbose_name="соль")
-    nonce = models.BinaryField(verbose_name="nonce")
+    password = models.CharField(
+        max_length=255,
+        verbose_name=_("ключ шифрования"),
+    )
+    salt = models.BinaryField(verbose_name=_("соль"))
+    nonce = models.BinaryField(verbose_name=_("nonce"))
 
     class Meta:
-        verbose_name = "зашифрованная паста"
-        verbose_name_plural = "зашифрованные пасты"
+        verbose_name = _("зашифрованная паста")
+        verbose_name_plural = _("зашифрованные пасты")
 
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
