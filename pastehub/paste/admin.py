@@ -1,7 +1,15 @@
 from django.contrib import admin
 
 from core.storage import delete_from_storage
-from paste.models import Category, Paste, ProtectedPaste
+from paste.models import Category, Paste, PasteVersion, ProtectedPaste
+
+
+class VersionsInline(admin.TabularInline):
+    model = PasteVersion
+    extra = 0
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Paste)
@@ -21,6 +29,8 @@ class PasteAdmin(admin.ModelAdmin):
     readonly_fields = [
         Paste.author.field.name,
     ]
+
+    inlines = [VersionsInline]
 
     def delete_model(self, request, obj):
         delete_from_storage(f"pastes/{obj.pk}")
@@ -48,7 +58,6 @@ class ProtectedPasteAdmin(admin.ModelAdmin):
         super().delete_model(request, obj)
 
 
-<<<<<<< HEAD
 @admin.register(PasteVersion)
 class PasteVersionAdmin(admin.ModelAdmin):
     list_display = [
@@ -69,8 +78,6 @@ class PasteVersionAdmin(admin.ModelAdmin):
         super().delete_model(request, obj)
 
 
-=======
->>>>>>> feature/api
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     pass

@@ -32,8 +32,6 @@ INSTALLED_APPS = [
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
     "report.apps.ReportConfig",
-    "api.apps.ApiConfig",
-    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -150,7 +148,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SHORT_LINK_LENGTH = 8
 
-MAIL = env.str("DJANGO_MAIL", default="default@yandex.ru")
+DEFAULT_FROM_EMAIL = env.str(
+    "DJANGO_DEFAULT_FROM_EMAIL",
+    default="default@test.py",
+)
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 

@@ -159,7 +159,6 @@ class Paste(BasePasteModel):
         verbose_name = _("паста")
         verbose_name_plural = _("пасты")
 
-<<<<<<< HEAD
     def save(self, *args, **kwargs):
         if not self.short_link:
             self.short_link = generate_short_link()
@@ -195,8 +194,6 @@ class PasteVersion(models.Model):
     def __str__(self):
         return f"{self.paste.title} v{self.version}"
 
-=======
->>>>>>> feature/api
 
 class ProtectedPaste(BasePasteModel):
     password = models.CharField(
@@ -217,4 +214,4 @@ class ProtectedPaste(BasePasteModel):
         return check_password(raw_password, self.password)
 
 
-__all__ = ["Category", "Paste", "ProtectedPaste"]
+__all__ = ["Category", "Paste", "ProtectedPaste", "PasteVersion"]

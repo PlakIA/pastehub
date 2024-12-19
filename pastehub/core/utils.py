@@ -1,3 +1,4 @@
+import mmap
 import random
 import string
 
