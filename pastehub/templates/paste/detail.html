@@ -27,7 +27,7 @@
 
       <div>
         <small class="text-muted">
-          {% translate 'Автор' %}: <strong><a href={% url "users:user-detail" paste.author.username %}?page=1>{{ paste.author.username }}</a></strong> |
+          {% translate 'Автор' %}: {% if paste.author.username %}<strong><a href={% url "users:user-detail" paste.author.username %}?page=1>{{ paste.author.username }}</a></strong>{% endif %} |
           {% translate 'Стиль' %}: <strong>{{ paste.language }}</strong>
           <br>{% translate 'Дата создания' %}: <strong>{{ paste.created }}</strong> |
           {% translate 'Дата обновления' %}: <strong>{{ paste.updated }}</strong>
