@@ -180,11 +180,7 @@ class PasteVersion(models.Model):
         verbose_name=_("заголовок"),
         help_text=_("Максимальная длинна 150 символов"),
     )
-    short_link = models.CharField(
-        max_length=10,
-        unique=False,
-        verbose_name=_("короткая ссылка"),
-    )
+
     updated = models.DateTimeField(auto_now=True, verbose_name=_("обновлён"))
 
     class Meta:

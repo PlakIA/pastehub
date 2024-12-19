@@ -35,7 +35,6 @@ def create(request):
                 paste=instance,
                 version=1,
                 title=instance.title,
-                short_link=instance.short_link,
             )
             upload_to_storage(
                 f"pastes/versions/{instance.id}_1",
@@ -78,7 +77,6 @@ def edit(request, short_link):
                 paste=paste,
                 version=new_version,
                 title=form_title,
-                short_link=paste.short_link,
             )
             upload_to_storage(
                 f"pastes/versions/{paste.id}_{new_version}",

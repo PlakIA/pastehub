@@ -53,8 +53,6 @@
                         <th>Создан</th>
                         <th>Истекает</th>
                         <th>Категория</th>
-                        <th>Просмотры</th>
-                        <th>Комментарии</th>
                         <th>Syntax</th>
                     </tr>
                 </thead>
@@ -64,11 +62,9 @@
                         <tr>
                         <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
                         <td>{{ paste.created }}</td>
-                        <td>TODO</td>
+                        <td>{{ paste.created|add:paste.expired_duration }}</td>
                         <td>{{ paste.category }}</td>
-                        <td>TODO</td>
-                        <td>TODO</td>
-                        <td>TODO</td>
+                        <td>{{ paste.language }}</td>
                     </tr>
                     {% endfor %}
 
@@ -79,36 +75,7 @@
             <h5>У {{user.username}} ничего не найдено...😞</h5>
         </div>
         {% endif %}
-    </div>
-
-    <table class="table table-bordered table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th>{% translate 'Название' %}</th>
-          <th>{% translate 'Создан' %}</th>
-          <th>{% translate 'Истекает' %}</th>
-          <th>{% translate 'Категория' %}</th>
-          <th>{% translate 'Просмотры' %}</th>
-          <th>{% translate 'Комментарии' %}</th>
-          <th>{% translate 'Стиль' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        {% for paste in pastes %}
-          <tr>
-            <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
-            <td>{{ paste.created }}</td>
-            <td>TODO</td>
-            <td>{{ paste.category }}</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-          </tr>
-        {% endfor %}
-
-      </tbody>
-    </table>
+    </div>  
 
   </div>
 {% endblock %}
