@@ -14,7 +14,7 @@ urlpatterns = [
         name="signup",
     ),
     path(
-        "activate/<uidb64>/<token>/",
+        "activate/<str:username>/",
         users.views.activate,
         name="activate",
     ),

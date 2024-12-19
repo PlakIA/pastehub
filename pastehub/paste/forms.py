@@ -21,10 +21,6 @@ class PasteForm(BootstrapFormMixin, forms.ModelForm):
             model.is_published.field.name,
         ]
 
-        widgets = {
-            "is_published": forms.CheckboxInput(attrs={"checked": "checked"}),
-        }
-
     def clean_content(self):
         content = self.cleaned_data.get("content")
         if content and len(content.encode("utf-8")) > 5 * 1024 * 1024:
@@ -69,4 +65,4 @@ class GetPasswordForm(forms.Form):
     )
 
 
-__all__ = ["GetPasswordForm", "PasteForm", "ProtectedPasteForm"]
+__all__ = ["GetPasswordForm", "PasteForm"]

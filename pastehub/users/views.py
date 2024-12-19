@@ -5,11 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
 from django.utils import timezone
-from django.utils.crypto import get_random_string
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from paste.models import Paste
 import users.forms
@@ -25,24 +21,14 @@ def signup(request):
         user.save()
 
         if not user.is_active:
-            token = get_random_string(length=32)
-
-            user.confirmation_token = token
-            user.save()
-
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-
-            activate_url = request.build_absolute_uri(
-                reverse(
-                    "auth:activate",
-                    kwargs={"uidb64": uid, "token": token},
-                ),
+            activation_link = (
+                f"http://127.0.0.1:8000/auth/activate/{user.username}/"
             )
 
             send_mail(
                 subject="Активация",
-                message=activate_url,
-                from_email=django.conf.settings.DEFAULT_FROM_EMAIL,
+                message=activation_link,
+                from_email=django.conf.settings.MAIL,
                 recipient_list=[user.email],
                 fail_silently=True,
             )
@@ -56,14 +42,10 @@ def signup(request):
     return render(request, "auth/signup.html", {"form": form})
 
 
-def activate(request, uidb64, token):
-    uid = force_str(urlsafe_base64_decode(uidb64))
-    user = get_object_or_404(users.models.CustomUser, pk=uid)
+def activate(request, username):
+    user = users.models.CustomUser.objects.get(username=username)
 
-    if (
-        user.confirmation_token == token
-        and user.date_joined + timedelta(hours=12) > timezone.now()
-    ):
+    if user.date_joined + timedelta(hours=12) > timezone.now():
         user.is_active = True
         user.save()
 

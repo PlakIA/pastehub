@@ -6,9 +6,9 @@ from core.storage import get_from_storage
 from paste.models import Paste
 
 
-def export_source(request, short_link, version):
+def export_source(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
-    paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
+    paste_text = get_from_storage(f"pastes/{paste.id}")
 
     response = FileResponse(
         paste_text,
@@ -23,11 +23,11 @@ def export_source(request, short_link, version):
     return response
 
 
-def export_json(request, short_link, version):
+def export_json(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
 
     data = {
-        "content": get_from_storage(f"pastes/versions/{paste.id}_{version}"),
+        "content": get_from_storage(f"pastes/{paste.id}"),
         "title": paste.title,
         "author": str(paste.author),
         "category": str(paste.category),
@@ -52,9 +52,9 @@ def export_json(request, short_link, version):
     return response
 
 
-def export_docx(request, short_link, version):
+def export_docx(request, short_link):
     paste = get_object_or_404(Paste, short_link=short_link)
-    paste_text = get_from_storage(f"pastes/versions/{paste.id}_{version}")
+    paste_text = get_from_storage(f"pastes/{paste.id}")
 
     document = Document()
     document.add_heading(paste.title, level=1)
