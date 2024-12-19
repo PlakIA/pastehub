@@ -38,7 +38,7 @@ class UserPasteListTest(TestCase):
         self.assertEqual(len(response.context["page_obj"]), len(self.pastes))
 
     def test_user_not_found(self):
-        response = Client().get("/users/unknown_user/")
+        response = Client().get("/users/unknown_user/?page=1")
         self.assertEqual(response.status_code, 404)
 
     @classmethod

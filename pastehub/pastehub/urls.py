@@ -15,6 +15,8 @@ urlpatterns = [
     path("qr_code/", include("qr_code.urls")),
     path("report/", include("report.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("api/v1/", include("api.urls")),
+    path("api-auth/", include("rest_framework.urls")),
 ]
 
 if settings.DEBUG:

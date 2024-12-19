@@ -20,7 +20,7 @@
               {% translate 'Создать защищенную заметку' %}
               </a>
             </li>
-            <li><a href="#" class="nav-link px-2 link-body-emphasis">{% translate 'API' %}</a></li>
+            <li><a href="{% url 'api:root' %}" class="nav-link px-2 link-body-emphasis">{% translate 'API' %}</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">{% translate 'Ответы на вопросы' %}</a></li>
           </ul>
         {% endwith %}
