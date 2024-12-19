@@ -7,6 +7,7 @@ handler404 = "pastehub.views.handler404"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/v1/", include("api.urls")),
     path("", include("paste.urls")),
     path("users/", include("users.urls_users")),
     path("auth/", include("users.urls_auth")),
@@ -14,7 +15,11 @@ urlpatterns = [
     path("export/", include("export.urls")),
     path("qr_code/", include("qr_code.urls")),
     path("report/", include("report.urls")),
+<<<<<<< HEAD
     path("i18n/", include("django.conf.urls.i18n")),
+=======
+    path("api-auth/", include("rest_framework.urls")),
+>>>>>>> feature/api
 ]
 
 if settings.DEBUG:

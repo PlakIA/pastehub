@@ -12,8 +12,6 @@ class CustomUser(AbstractUser):
         blank=True,
     )
 
-    confirmation_token = models.CharField(max_length=32, blank=True, null=True)
-
     def _get_avatar(self, geometry):
         return get_thumbnail(
             self.image,
