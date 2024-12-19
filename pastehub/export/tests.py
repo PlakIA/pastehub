@@ -27,7 +27,6 @@ class TestViews(TestCase):
             paste=self.test_paste,
             version=1,
             title=self.test_paste.title,
-            short_link=self.test_paste.short_link,
         )
         upload_to_storage(
             f"pastes/versions/{self.test_paste.id}_1",

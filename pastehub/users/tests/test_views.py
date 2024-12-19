@@ -28,14 +28,14 @@ class UserPasteListTest(TestCase):
             )
 
     def test_correct_item_list(self):
-        response = Client().get("/users/test_user/")
-        self.assertIn("pastes", response.context)
+        response = Client().get("/users/test_user/?page=1")
+        self.assertIn("page_obj", response.context)
 
         for test_paste in self.pastes:
-            self.assertIn(test_paste, response.context["pastes"])
+            self.assertIn(test_paste, response.context["page_obj"])
             self.assertEqual(test_paste.author, self.author)
 
-        self.assertEqual(len(response.context["pastes"]), len(self.pastes))
+        self.assertEqual(len(response.context["page_obj"]), len(self.pastes))
 
     def test_user_not_found(self):
         response = Client().get("/users/unknown_user/")
