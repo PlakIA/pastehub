@@ -401,10 +401,6 @@ msgstr "Create protected paste"
 msgid "API"
 msgstr ""
 
-#: .\templates\includes\header.html:24
-msgid "Ответы на вопросы"
-msgstr "FAQ"
-
 #: .\templates\includes\header.html:30
 msgid "Поиск..."
 msgstr "Search..."
@@ -618,34 +614,29 @@ msgid "Результаты поиска"
 msgstr "Search results"
 
 #: .\templates\paste\search_results.html:16
-#: .\templates\users\user_detail.html:33
+#: .\templates\users\user_detail.html:52
 msgid "Название"
 msgstr "Title"
 
 #: .\templates\paste\search_results.html:17
-#: .\templates\users\user_detail.html:34
+#: .\templates\users\user_detail.html:53
 msgid "Создан"
 msgstr "Created"
 
 #: .\templates\paste\search_results.html:18
-#: .\templates\users\user_detail.html:35
+#: .\templates\users\user_detail.html:54
 msgid "Истекает"
 msgstr "Expired"
 
 #: .\templates\paste\search_results.html:19
-#: .\templates\users\user_detail.html:36
+#: .\templates\users\user_detail.html:55
 msgid "Категория"
 msgstr "Category"
 
-#: .\templates\paste\search_results.html:20
-#: .\templates\users\user_detail.html:37
-msgid "Просмотры"
-msgstr "Просмотры"
-
-#: .\templates\paste\search_results.html:21
-#: .\templates\users\user_detail.html:38
-msgid "Комментарии"
-msgstr "Comments"
+#: .\templates\paste\search_results.html:28
+#: .\templates\users\user_detail.html:65
+msgid "Бессрочно"
+msgstr "Indefinitely"
 
 #: .\templates\paste\search_results.html:42
 msgid "Ничего не найдено..."

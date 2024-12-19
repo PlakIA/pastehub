@@ -49,11 +49,11 @@
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Название</th>
-                        <th>Создан</th>
-                        <th>Истекает</th>
-                        <th>Категория</th>
-                        <th>Syntax</th>
+                        <th>{% translate 'Название' %}</th>
+                        <th>{% translate 'Создан' %}</th>
+                        <th>{% translate 'Истекает' %}</th>
+                        <th>{% translate 'Категория' %}</th>
+                        <th>{% trans 'Стиль' %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@
                         <tr>
                         <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
                         <td>{{ paste.created }}</td>
-                        <td>{{ paste.created|add:paste.expired_duration }}</td>
+                        <td>{% if paste.created|add:paste.expired_duration %}{{ paste.created|add:paste.expired_duration }}{% else %}{% translate 'Бессрочно' %}{% endif %}</td>
                         <td>{{ paste.category }}</td>
                         <td>{{ paste.language }}</td>
                     </tr>
