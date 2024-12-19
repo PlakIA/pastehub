@@ -7,8 +7,12 @@ import django.conf
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.http import HttpResponse, HttpResponseNotAllowed
-from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
+from django.http import (HttpResponse,
+                         HttpResponseBadRequest,
+                         HttpResponseNotAllowed,
+                         )
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -88,7 +92,6 @@ def activate(request, uidb64, token):
 
 def user_detail(request, username):
     user = get_object_or_404(users.models.CustomUser, username=username)
-
     user_pastes = (
         user.pastes.select_related("category")
         .only(
@@ -97,13 +100,23 @@ def user_detail(request, username):
             Paste.category.field.name,
             Paste.author.field.name,
         )
-        .all()
+        .order_by(Paste.created.field.name)
     )
+    page = request.GET.get("page")
+    if not str(page).isdigit():
+        return HttpResponseBadRequest("Page is not integer")
+    page = int(page)
 
+    paginator = Paginator(user_pastes, 25)
+    page_obj = paginator.get_page(page)
     return render(
         request,
         "users/user_detail.html",
-        {"pastes": user_pastes, "user": user},
+        {
+            "page_obj": page_obj,
+            "list_pages": list(paginator.page_range),
+            "user": user,
+        },
     )
 
 
