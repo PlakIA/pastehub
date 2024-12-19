@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+  <div class="w-25 p-3 mx-auto">
+    <h2>{% translate 'Вы вышли из системы' %}</h2>
+    <a class="btn btn-primary" href="{% url 'auth:login' %}">{% translate 'Войти снова' %}</a>
+  </div>
+{% endblock %}

@@ -1,24 +1,29 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
+{% block title %}
+  {% if is_edit_page %}
+    {% translate 'Редактирование пасты' %}
+  {% else %}
+    {% translate 'Создание пасты' %}
+  {% endif %}
+{% endblock %}
+
+
 {% block content %}
-  <div class="container d-flex align-items-center justify-content-center min-vh-100">
-    <div class="card p-4 shadow-lg" style="width: 100%; max-width: 400px;">
-      <h3 class="text-center mb-4">Создать пасту</h3>
+  <div class="container d-flex justify-content-center">
+    <div class="pt-4 w-50">
+      {% if is_edit_page %}
+        <h3 class="text-center mb-4">{% translate 'Редактировать пасту' %}</h3>
+      {% else %}
+        <h3 class="text-center mb-4">{% translate 'Создать пасту' %}</h3>
+      {% endif %}
       <form method="post">
         {% csrf_token %}
         {% include "includes/form.html" %}
-        <button type="submit" class="btn btn-primary w-100">Создать</button>
+        <button type="submit" class="btn btn-primary w-100">{% translate 'Сохранить' %}</button>
       </form>
-
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-success mt-3" role="alert">
-            <h4 class="alert-heading">Паста создана</h4>
-            <input type="text" id="linkInput" class="form-control" value="{{ message }}" readonly>
-          </div>
-        {% endfor %}
-      {% endif %}
-
     </div>
   </div>
 {% endblock %}
