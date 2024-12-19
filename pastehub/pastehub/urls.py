@@ -3,7 +3,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+handler401 = "pastehub.views.handler401"
 handler404 = "pastehub.views.handler404"
+handler405 = "pastehub.views.handler405"
+handler500 = "pastehub.views.handler500"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
