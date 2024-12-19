@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% translate 'Аккаунт успешно активирован' %}{% endblock %}
+
+{% block clean_content %}
+  <body>
+    <main>
+      <div class="container text-center my-5 min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="p-4">
+          <div class="card-body">
+            <h1 class="display-4 text-success mb-3">{% translate 'Аккаунт успешно активирован' %}</h1>
+            <p class="lead mb-4">{% translate 'Ваш аккаунт успешно активирован. Теперь вы можете пользоваться всеми функциями нашего сайта.' %}</p>
+            <a href="{% url 'auth:login' %}" class="btn btn-lg btn-outline-secondary mt-2">{% translate 'Войти' %}</a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+{% endblock %}
