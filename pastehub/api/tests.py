@@ -22,3 +22,6 @@ class TestApi(TestCase):
 
         self.assertEqual(paste_count + 1, Paste.objects.count())
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+__all__ = ()
