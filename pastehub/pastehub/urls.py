@@ -14,6 +14,7 @@ urlpatterns = [
     path("export/", include("export.urls")),
     path("qr_code/", include("qr_code.urls")),
     path("report/", include("report.urls")),
+    path("api-auth/", include("rest_framework.urls")),
 ]
 
 if settings.DEBUG:

@@ -21,7 +21,9 @@ def signup(request):
         user.save()
 
         if not user.is_active:
-            activation_link = f"http://127.0.0.1:8000/auth/activate/{user.username}/"
+            activation_link = (
+                f"http://127.0.0.1:8000/auth/activate/{user.username}/"
+            )
 
             send_mail(
                 subject="Активация",
