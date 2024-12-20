@@ -32,6 +32,9 @@ INSTALLED_APPS = [
     "paste.apps.PasteConfig",
     "users.apps.UsersConfig",
     "report.apps.ReportConfig",
+    "api.apps.ApiConfig",
+    "rest_framework",
+    "drf_yasg",
 ]
 
 MIDDLEWARE = [

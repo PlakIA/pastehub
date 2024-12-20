@@ -1,9 +1,18 @@
 from datetime import timedelta
+import io
+import json
+import zipfile
 
 import django.conf
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.core.paginator import Paginator
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseNotAllowed,
+)
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.utils import timezone
@@ -11,6 +20,7 @@ from django.utils.crypto import get_random_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
+from core.storage import get_from_storage
 from paste.models import Paste
 import users.forms
 import users.models
@@ -83,7 +93,6 @@ def activate(request, uidb64, token):
 
 def user_detail(request, username):
     user = get_object_or_404(users.models.CustomUser, username=username)
-
     user_pastes = (
         user.pastes.select_related("category")
         .only(
@@ -92,13 +101,24 @@ def user_detail(request, username):
             Paste.category.field.name,
             Paste.author.field.name,
         )
-        .all()
+        .order_by(Paste.created.field.name)
     )
+    page = request.GET.get("page")
+    if not str(page).isdigit():
+        return HttpResponseBadRequest("Page is not integer")
 
+    page = int(page)
+
+    paginator = Paginator(user_pastes, 25)
+    page_obj = paginator.get_page(page)
     return render(
         request,
         "users/user_detail.html",
-        {"pastes": user_pastes, "user": user},
+        {
+            "page_obj": page_obj,
+            "list_pages": list(paginator.page_range),
+            "user": user,
+        },
     )
 
 
@@ -120,6 +140,65 @@ def profile_edit(request):
         "users/profile.html",
         {"form": profile_form, "user": user},
     )
+
+
+def backup_pastes(request, username, format_file):
+    if (
+        format_file in ("source", "json", "md")
+        and request.user.username == username
+    ):
+        buffer = io.BytesIO()
+        zip_file = zipfile.ZipFile(buffer, "w")
+        user = get_object_or_404(users.models.CustomUser, username=username)
+        user_pastes = (
+            user.pastes.select_related("category")
+            .only(
+                Paste.title.field.name,
+                Paste.created.field.name,
+                Paste.category.field.name,
+                Paste.author.field.name,
+            )
+            .all()
+        )
+        if format_file in "source":
+            for paste in user_pastes:
+                zip_file.writestr(
+                    f"{paste.short_link}.txt",
+                    get_from_storage(f"pastes/{paste.id}"),
+                )
+        elif format_file == "json":
+            for paste in user_pastes:
+                paste_dict = {
+                    "content": get_from_storage(f"pastes/{paste.id}"),
+                    "title": paste.title,
+                    "author": str(paste.author),
+                    "category": str(paste.category),
+                    "created": str(paste.created),
+                    "short_link": paste.short_link,
+                }
+                zip_file.writestr(
+                    f"{paste.short_link}.json",
+                    json.dumps(paste_dict).encode("utf-8"),
+                )
+        else:
+            for paste in user_pastes:
+                paste_text = get_from_storage(f"pastes/{paste.id}")
+                zip_file.writestr(f"{paste.short_link}.md", paste_text)
+
+        zip_file.close()
+
+        response = HttpResponse(
+            buffer.getvalue(),
+            content_type="application/zip",
+        )
+        response["Content-Disposition"] = (
+            f"attachment; filename=pastehub_{username}_"
+            f"backup_{format_file}.zip"
+        )
+
+        return response
+
+    return HttpResponseNotAllowed("Нельзя сделать backup чужих заметок")
 
 
 __all__ = ()

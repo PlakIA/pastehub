@@ -11,4 +11,9 @@ urlpatterns = [
         name="user-detail",
     ),
     path("profile/edit/", users.views.profile_edit, name="profile-edit"),
+    path(
+        "backup/<str:username>/<str:format_file>/",
+        users.views.backup_pastes,
+        name="backup",
+    ),
 ]

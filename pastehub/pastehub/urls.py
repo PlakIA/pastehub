@@ -3,7 +3,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+handler401 = "pastehub.views.handler401"
 handler404 = "pastehub.views.handler404"
+handler405 = "pastehub.views.handler405"
+handler500 = "pastehub.views.handler500"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -15,6 +18,8 @@ urlpatterns = [
     path("qr_code/", include("qr_code.urls")),
     path("report/", include("report.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
+    path("api/v1/", include("api.urls")),
+    path("api-auth/", include("rest_framework.urls")),
 ]
 
 if settings.DEBUG:

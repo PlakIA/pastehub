@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-19 01:31+0300\n"
+"POT-Creation-Date: 2024-12-20 02:05+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,7 +90,7 @@ msgstr "30 days"
 msgid "заголовок"
 msgstr "title"
 
-#: .\paste\models.py:82 .\paste\models.py:186
+#: .\paste\models.py:82
 msgid "короткая ссылка"
 msgstr "short link"
 
@@ -126,7 +126,7 @@ msgstr "publish"
 msgid "заблокировать"
 msgstr "blocked"
 
-#: .\paste\models.py:156 .\paste\models.py:188
+#: .\paste\models.py:156 .\paste\models.py:184
 msgid "обновлён"
 msgstr "updated"
 
@@ -143,39 +143,39 @@ msgstr "pastes"
 msgid "номер версии"
 msgstr "version"
 
-#: .\paste\models.py:191
+#: .\paste\models.py:187
 msgid "версия пасты"
 msgstr "paste version"
 
-#: .\paste\models.py:192
+#: .\paste\models.py:188
 msgid "версии паст"
 msgstr "paste versions"
 
-#: .\paste\models.py:201
+#: .\paste\models.py:197
 msgid "ключ шифрования"
 msgstr "encryption key"
 
-#: .\paste\models.py:203
+#: .\paste\models.py:199
 msgid "соль"
 msgstr "salt"
 
-#: .\paste\models.py:204
+#: .\paste\models.py:200
 msgid "nonce"
 msgstr ""
 
-#: .\paste\models.py:207
+#: .\paste\models.py:203
 msgid "зашифрованная паста"
 msgstr "encrypted paste"
 
-#: .\paste\models.py:208
+#: .\paste\models.py:204
 msgid "зашифрованные пасты"
 msgstr "encrypted pastes"
 
-#: .\pastehub\settings.py:119
+#: .\pastehub\settings.py:122
 msgid "Английский"
 msgstr "English"
 
-#: .\pastehub\settings.py:120
+#: .\pastehub\settings.py:123
 msgid "Русский"
 msgstr "Russian"
 
@@ -266,18 +266,6 @@ msgstr "Report sent successfully"
 #: .\report\views.py:56
 msgid "Запрос на пересмотр успешно отправлен"
 msgstr "Review request sent successfully"
-
-#: .\templates\404.html:13
-msgid "Ничего не найдено"
-msgstr "Oops! Something went wrong..."
-
-#: .\templates\404.html:14
-msgid "Страница, которую вы ищете, не найдена"
-msgstr "The page you're looking for doesn't exist"
-
-#: .\templates\404.html:15 .\templates\paste\blocked.html:17
-msgid "Вернуться на главную"
-msgstr "Return to homepage"
 
 #: .\templates\auth\activation_expired.html:5
 #: .\templates\auth\activation_expired.html:13
@@ -389,6 +377,43 @@ msgstr "The password reset link has been successfully sent to your email."
 msgid "Создание нового аккаунта"
 msgstr "Create a new account"
 
+#: .\templates\errors\401.html:13
+msgid "Не авторизован"
+msgstr "Not Authorized"
+
+#: .\templates\errors\401.html:14
+msgid "У вас недостаточно прав для доступа к этой странице"
+msgstr "You do not have sufficient rights to access this page"
+
+#: .\templates\errors\401.html:15 .\templates\errors\404.html:15
+#: .\templates\errors\405.html:15 .\templates\paste\blocked.html:17
+msgid "Вернуться на главную"
+msgstr "Return to homepage"
+
+#: .\templates\errors\404.html:13
+msgid "Ничего не найдено"
+msgstr "Oops! Something went wrong..."
+
+#: .\templates\errors\404.html:14
+msgid "Страница, которую вы ищете, не найдена"
+msgstr "The page you're looking for doesn't exist"
+
+#: .\templates\errors\405.html:13
+msgid "Метод не поддерживается"
+msgstr "Method Not Allowed"
+
+#: .\templates\errors\405.html:14
+msgid "К сожалению, вы использовали неподдерживаемый метод запроса"
+msgstr "Sorry, you used an unsupported request method"
+
+#: .\templates\errors\500.html:12
+msgid "Внутренняя ошибка сервера"
+msgstr "Internal Server Error"
+
+#: .\templates\errors\500.html:13
+msgid "Что-то пошло не так..."
+msgstr "Something went wrong..."
+
 #: .\templates\includes\header.html:15
 msgid "Создать заметку"
 msgstr "Create paste"
@@ -491,7 +516,6 @@ msgstr "Author"
 
 #: .\templates\paste\detail.html:31 .\templates\paste\detail_protected.html:19
 #: .\templates\paste\search_results.html:22
-#: .\templates\users\user_detail.html:39
 msgid "Стиль"
 msgstr "Style"
 
@@ -618,32 +642,26 @@ msgid "Результаты поиска"
 msgstr "Search results"
 
 #: .\templates\paste\search_results.html:16
-#: .\templates\users\user_detail.html:33
 msgid "Название"
 msgstr "Title"
 
 #: .\templates\paste\search_results.html:17
-#: .\templates\users\user_detail.html:34
 msgid "Создан"
 msgstr "Created"
 
 #: .\templates\paste\search_results.html:18
-#: .\templates\users\user_detail.html:35
 msgid "Истекает"
 msgstr "Expired"
 
 #: .\templates\paste\search_results.html:19
-#: .\templates\users\user_detail.html:36
 msgid "Категория"
 msgstr "Category"
 
 #: .\templates\paste\search_results.html:20
-#: .\templates\users\user_detail.html:37
 msgid "Просмотры"
 msgstr "Просмотры"
 
 #: .\templates\paste\search_results.html:21
-#: .\templates\users\user_detail.html:38
 msgid "Комментарии"
 msgstr "Comments"
 
@@ -652,8 +670,13 @@ msgid "Ничего не найдено..."
 msgstr "Nothing found..."
 
 #: .\templates\paste\search_results.html:51
+#: .\templates\users\user_detail.html:85
 msgid "Предыдущая"
 msgstr "Previous"
+
+#: .\templates\paste\search_results.html:60
+msgid "Следующая"
+msgstr "Next"
 
 #: .\templates\report\create.html:5
 msgid "Жалоба"

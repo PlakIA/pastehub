@@ -24,7 +24,6 @@ class TestViews(TestCase):
             paste=self.test_paste,
             version=1,
             title=self.test_paste.title,
-            short_link=self.test_paste.short_link,
         )
 
         self.category = Category.objects.create(name="Aboba")

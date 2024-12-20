@@ -27,7 +27,6 @@ class TestViews(TestCase):
             paste=self.test_paste,
             version=1,
             title=self.test_paste.title,
-            short_link=self.test_paste.short_link,
         )
         upload_to_storage(
             f"pastes/versions/{self.test_paste.id}_1",
@@ -141,11 +140,7 @@ class TestViews(TestCase):
         )
         self.assertEqual(
             response.content.decode("utf-8"),
-            f"# Заметка с Pastehub: {self.test_paste.title}\n"
-            f"### Категория: {self.test_paste.category}\n"
-            f"### Автор: {self.test_paste.author}\n"
-            f"### Создана: {self.test_paste.created}\n"
-            f"#### Содержимое:\nLorem ipsum dolor sit amet...",
+            "Lorem ipsum dolor sit amet...",
         )
         self.assertEqual(
             response.get("content-type"),

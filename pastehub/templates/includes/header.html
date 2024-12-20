@@ -20,7 +20,7 @@
               {% translate 'Создать защищенную заметку' %}
               </a>
             </li>
-            <li><a href="#" class="nav-link px-2 link-body-emphasis">{% translate 'API' %}</a></li>
+            <li><a href="{% url 'api:root' %}" class="nav-link px-2 link-body-emphasis">{% translate 'API' %}</a></li>
             <li><a href="#" class="nav-link px-2 link-body-emphasis">{% translate 'Ответы на вопросы' %}</a></li>
           </ul>
         {% endwith %}
@@ -51,8 +51,8 @@
               <img src="{% if request.user.image %}{{ request.user.image.url }}{% else %}{% static 'img/anonymous-user.jpg' %}{% endif %}" alt="" width="32" height="32" class="rounded-circle">
               {{ request.user.username }}
             </a>
-            <ul class="dropdown-menu text-small" style="">
-              <li><a class="dropdown-item" href="{% url 'users:user-detail' request.user.username %}">
+            <ul class="dropdown-menu text-small">
+              <li><a class="dropdown-item" href="{% url 'users:user-detail' request.user.username %}?page=1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
                 </svg>
