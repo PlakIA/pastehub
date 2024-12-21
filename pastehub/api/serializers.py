@@ -1,18 +1,10 @@
 from rest_framework import serializers
 
-from core.storage import get_from_storage
 from paste.models import Category, Paste
 from users.models import CustomUser
 
 
 class PasteSerializer(serializers.ModelSerializer):
-    def get_content(self, obj):
-        return get_from_storage(f"pastes/{obj.id}")
-
-    def create(self, validated_data):
-        validated_data.pop("content", None)
-
-        return super().create(validated_data)
 
     class Meta:
         model = Paste

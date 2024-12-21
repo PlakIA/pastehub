@@ -11,9 +11,8 @@ from django.core.paginator import Paginator
 from django.http import (
     HttpResponse,
     HttpResponseBadRequest,
-    HttpResponseNotAllowed,
 )
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -178,7 +177,11 @@ def backup_pastes(request, username, format_file):
                 }
                 zip_file.writestr(
                     f"{paste.short_link}.json",
-                    json.dumps(paste_dict).encode("utf-8"),
+                    json.dumps(
+                        paste_dict,
+                        ensure_ascii=False,
+                        indent=4,
+                    ).encode("utf-8"),
                 )
         else:
             for paste in user_pastes:
@@ -195,10 +198,13 @@ def backup_pastes(request, username, format_file):
             f"attachment; filename=pastehub_{username}_"
             f"backup_{format_file}.zip"
         )
+        response["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response["Pragma"] = "no-cache"
+        response["Expires"] = "0"
 
         return response
 
-    return HttpResponseNotAllowed("Нельзя сделать backup чужих заметок")
+    return redirect("paste:create")
 
 
 __all__ = ()

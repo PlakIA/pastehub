@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-20 02:05+0300\n"
+"POT-Creation-Date: 2024-12-21 10:31+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,7 +54,8 @@ msgstr "Maximum length 150 characters"
 msgid "категории"
 msgstr "categories"
 
-#: .\paste\models.py:63
+#: .\paste\models.py:63 .\templates\paste\search_results.html:28
+#: .\templates\users\user_detail.html:68
 msgid "Бессрочно"
 msgstr "Never"
 
@@ -314,7 +315,7 @@ msgstr ""
 #: .\templates\auth\activation_success.html:15 .\templates\auth\login.html:13
 #: .\templates\auth\login.html:17
 #: .\templates\auth\password_reset_complete.html:8
-#: .\templates\includes\header.html:100
+#: .\templates\includes\header.html:99
 msgid "Войти"
 msgstr "Login"
 
@@ -327,7 +328,7 @@ msgid "Нет аккаунта?"
 msgstr "Don't have an account?"
 
 #: .\templates\auth\login.html:20 .\templates\auth\signup.html:13
-#: .\templates\includes\header.html:101
+#: .\templates\includes\header.html:100
 msgid "Зарегистрироваться"
 msgstr "Sign up"
 
@@ -426,31 +427,27 @@ msgstr "Create protected paste"
 msgid "API"
 msgstr ""
 
-#: .\templates\includes\header.html:24
-msgid "Ответы на вопросы"
-msgstr "FAQ"
-
-#: .\templates\includes\header.html:30
+#: .\templates\includes\header.html:29
 msgid "Поиск..."
 msgstr "Search..."
 
-#: .\templates\includes\header.html:59
+#: .\templates\includes\header.html:58
 msgid "Мои пасты"
 msgstr "Pastes"
 
-#: .\templates\includes\header.html:66
+#: .\templates\includes\header.html:65
 msgid "Мои комментарии"
 msgstr "Comments"
 
-#: .\templates\includes\header.html:72
+#: .\templates\includes\header.html:71
 msgid "Профиль"
 msgstr "Profile"
 
-#: .\templates\includes\header.html:83
+#: .\templates\includes\header.html:82
 msgid "Админ-панель"
 msgstr "Admin-panel"
 
-#: .\templates\includes\header.html:94
+#: .\templates\includes\header.html:93
 msgid "Выйти"
 msgstr "Log out"
 
@@ -515,7 +512,8 @@ msgid "Автор"
 msgstr "Author"
 
 #: .\templates\paste\detail.html:31 .\templates\paste\detail_protected.html:19
-#: .\templates\paste\search_results.html:22
+#: .\templates\paste\search_results.html:20
+#: .\templates\users\user_detail.html:58
 msgid "Стиль"
 msgstr "Style"
 
@@ -642,39 +640,35 @@ msgid "Результаты поиска"
 msgstr "Search results"
 
 #: .\templates\paste\search_results.html:16
+#: .\templates\users\user_detail.html:54
 msgid "Название"
 msgstr "Title"
 
 #: .\templates\paste\search_results.html:17
+#: .\templates\users\user_detail.html:55
 msgid "Создан"
 msgstr "Created"
 
 #: .\templates\paste\search_results.html:18
+#: .\templates\users\user_detail.html:56
 msgid "Истекает"
 msgstr "Expired"
 
 #: .\templates\paste\search_results.html:19
+#: .\templates\users\user_detail.html:57
 msgid "Категория"
 msgstr "Category"
 
-#: .\templates\paste\search_results.html:20
-msgid "Просмотры"
-msgstr "Просмотры"
-
-#: .\templates\paste\search_results.html:21
-msgid "Комментарии"
-msgstr "Comments"
-
-#: .\templates\paste\search_results.html:42
+#: .\templates\paste\search_results.html:38
 msgid "Ничего не найдено..."
 msgstr "Nothing found..."
 
-#: .\templates\paste\search_results.html:51
-#: .\templates\users\user_detail.html:85
+#: .\templates\paste\search_results.html:47
+#: .\templates\users\user_detail.html:88
 msgid "Предыдущая"
 msgstr "Previous"
 
-#: .\templates\paste\search_results.html:60
+#: .\templates\paste\search_results.html:56
 msgid "Следующая"
 msgstr "Next"
 
@@ -698,6 +692,16 @@ msgstr "Send"
 msgid "Редактирование профиля"
 msgstr "Profile edit"
 
-#: .\templates\users\user_detail.html:26
+#: .\templates\users\user_detail.html:27
 msgid "Список паст пользователя"
 msgstr "List of user pastes"
+
+#: .\templates\users\user_detail.html:37
+msgid "Backup заметок"
+msgstr "Pastes backup"
+
+#~ msgid "Просмотры"
+#~ msgstr "Просмотры"
+
+#~ msgid "Комментарии"
+#~ msgstr "Comments"

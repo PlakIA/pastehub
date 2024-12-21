@@ -4,98 +4,101 @@
 {% load static %}
 
 {% block content %}
-    <style>
-        .profile-card {
-            padding: 20px; /* Отступы внутри карточки */
-            margin-bottom: 20px;
-            text-align: center; /* Выравнивание текста по центру */
-            background-color: #ffffff; /* Цвет фона */
-        }
+  <style>
+      .profile-card {
+          padding: 20px; /* Отступы внутри карточки */
+          margin-bottom: 20px;
+          text-align: center; /* Выравнивание текста по центру */
+          background-color: #ffffff; /* Цвет фона */
+      }
 
-        .profile-avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%; /* Круглая аватарка */
-            margin-bottom: 15px; /* Отступ под аватаркой */
-        }
-    </style>
-    <div class="container p-3">
-        <div class="container mt-5">
-            <div class="profile-card">
-                <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'img/anonymous-user.jpg' %}{% endif %}" alt="" class="profile-avatar">
-                <h3>{% translate 'Список паст пользователя' %} {{ user.username }}</h3>
-            </div>
-        </div>
-        {% if page_obj %}
-        {%if user == request.user %}
-        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save-fill" viewBox="0 0 16 16">
-                <path d="M8.5 1.5A1.5 1.5 0 0 1 10 0h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h6c-.314.418-.5.937-.5 1.5v7.793L4.854 6.646a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293z"/>
-            </svg>
-            Создать backup своих заметок
+      .profile-avatar {
+          width: 100px;
+          height: 100px;
+          border-radius: 50%; /* Круглая аватарка */
+          margin-bottom: 15px; /* Отступ под аватаркой */
+      }
+  </style>
+  <div class="container p-3">
+    <div class="container mt-5">
+      <div class="profile-card">
+        <img src="
+            {% if user.image %}{{ user.image.url }}{% else %}{% static 'img/anonymous-user.jpg' %}{% endif %}" alt="" class="profile-avatar">
+        <h3>{% translate 'Список паст пользователя' %} {{ user.username }}</h3>
+      </div>
+    </div>
+    {% if page_obj %}
+      {% if user == request.user %}
+        <button class="btn btn-sm btn-secondary dropdown-toggle mb-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/>
+          </svg>
+          {% translate 'Backup заметок' %}
         </button>
         <ul class="dropdown-menu">
-            <a class="dropdown-item" href="{% url 'users:backup' user.username "source" %}" download role="button">
-                Исходный формат
-            </a>
-            <a class="dropdown-item" href="{% url 'users:backup' user.username "json" %}" download role="button">
-                JSON
-            </a>
-            <a class="dropdown-item" href="{% url 'users:backup' user.username "md" %}" download role="button">
-                Markdown
-            </a>
+          <a class="dropdown-item" href="{% url 'users:backup' user.username "source" %}" download role="button">
+            TXT
+          </a>
+          <a class="dropdown-item" href="{% url 'users:backup' user.username "json" %}" download role="button">
+            JSON
+          </a>
+          <a class="dropdown-item" href="{% url 'users:backup' user.username "md" %}" download role="button">
+            Markdown
+          </a>
         </ul>
-        {% endif %}
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Название</th>
-                        <th>Создан</th>
-                        <th>Истекает</th>
-                        <th>Категория</th>
-                        <th>Syntax</th>
-                    </tr>
-                </thead>
-                <tbody>
+      {% endif %}
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>{% translate 'Название' %}</th>
+            <th>{% translate 'Создан' %}</th>
+            <th>{% translate 'Истекает' %}</th>
+            <th>{% translate 'Категория' %}</th>
+            <th>{% trans 'Стиль' %}</th>
+          </tr>
+        </thead>
+        <tbody>
 
-                    {% for paste in page_obj %}
-                        <tr>
-                        <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
-                        <td>{{ paste.created }}</td>
-                        <td>{{ paste.created|add:paste.expired_duration }}</td>
-                        <td>{{ paste.category }}</td>
-                        <td>{{ paste.language }}</td>
-                    </tr>
-                    {% endfor %}
+          {% for paste in page_obj %}
+            <tr>
+              <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
+              <td>{{ paste.created }}</td>
+              <td>{% if paste.created|add:paste.expired_duration %}
+                {{ paste.created|add:paste.expired_duration }}{% else %}{% translate 'Бессрочно' %}{% endif %}</td>
+              <td>{{ paste.category }}</td>
+              <td>{{ paste.language }}</td>
+            </tr>
+          {% endfor %}
 
-                </tbody>
-            </table>
-        {% else %}
-        <div class="container d-flex justify-content-center mt-5">
-            <h5>У {{user.username}} ничего не найдено...😞</h5>
-        </div>
-        {% endif %}
-    </div>
-    {% if page_obj.has_other_pages %}
-        <div class="container d-flex justify-content-center mt-5">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-            {% if page_obj.has_previous %}
-                <li class="page-item">
-                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% translate 'Предыдущая' %}</a>
-                </li>
-            {% endif %}
-            {% for index_page in list_pages %}
-                <li class={% if index_page == page_obj.number %}"page-item active" aria-current="page"{% else %}"page-item"
-                {% endif %}><a class="page-link" href="?page={{ index_page }}">{{ index_page }}</a></li>
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
-                </li>
-            {% endif %}
-            </ul>
-        </nav>
-        </div>
+        </tbody>
+      </table>
+    {% else %}
+      <div class="container d-flex justify-content-center mt-5">
+        <h5>У {{ user.username }} ничего не найдено...😞</h5>
+      </div>
     {% endif %}
+  </div>
+  {% if page_obj.has_other_pages %}
+    <div class="container d-flex justify-content-center mt-5">
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% translate 'Предыдущая' %}</a>
+            </li>
+          {% endif %}
+          {% for index_page in list_pages %}
+            <li class={% if index_page == page_obj.number %}"page-item active" aria-current="page"{% else %}"page-item"
+            {% endif %}><a class="page-link" href="?page={{ index_page }}">{{ index_page }}</a></li>
+          {% endfor %}
+          {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующая</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  {% endif %}
   </div>
 {% endblock %}

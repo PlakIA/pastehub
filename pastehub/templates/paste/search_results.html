@@ -17,8 +17,6 @@
             <th>{% translate 'Создан' %}</th>
             <th>{% translate 'Истекает' %}</th>
             <th>{% translate 'Категория' %}</th>
-            <th>{% translate 'Просмотры' %}</th>
-            <th>{% translate 'Комментарии' %}</th>
             <th>{% trans 'Стиль' %}</th>
           </tr>
         </thead>
@@ -27,11 +25,9 @@
             <tr>
               <td><a href="{% url 'paste:detail' paste.short_link %}">{{ paste.title }}</a></td>
               <td>{{ paste.created }}</td>
-              <td>TODO</td>
+              <td>{% if paste.created|add:paste.expired_duration %}{{ paste.created|add:paste.expired_duration }}{% else %}{% translate 'Бессрочно' %}{% endif %}</td>
               <td>{{ paste.category }}</td>
-              <td>TODO</td>
-              <td>TODO</td>
-              <td>TODO</td>
+              <td>{{ paste.language }}</td>
             </tr>
           {% endfor %}
         </tbody>

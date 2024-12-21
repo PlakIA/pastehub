@@ -9,7 +9,7 @@ class AESEncryption:
     @staticmethod
     def encrypt(password, text):
         salt = get_random_bytes(16)
-        key = PBKDF2(password, salt, dkLen=32)
+        key = PBKDF2(password.encode("utf-8"), salt, dkLen=32)
         cipher = AES.new(key, AES.MODE_GCM)
         ciphertext, tag = cipher.encrypt_and_digest(text.encode())
 
@@ -21,7 +21,7 @@ class AESEncryption:
     def decrypt(password, salt, nonce, ciphertext):
         ciphertext = b64decode(ciphertext.encode("utf-8"))
 
-        key = PBKDF2(password, salt, dkLen=32)
+        key = PBKDF2(password.encode("utf-8"), salt, dkLen=32)
         cipher = AES.new(key, AES.MODE_GCM, nonce=nonce)
         return cipher.decrypt(ciphertext).decode()
 
