@@ -1,6 +1,5 @@
 from rest_framework import generics
 from rest_framework import permissions
-from rest_framework import renderers
 from rest_framework import views
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -42,7 +41,11 @@ class PasteList(generics.ListCreateAPIView):
                 else None
             ),
         )
-        upload_to_storage(f"pastes/{paste.id}", self.request.data["content"])
+        if "content" in self.request.data:
+            upload_to_storage(
+                f"pastes/{paste.id}",
+                self.request.data["content"],
+            )
 
 
 class PasteDetail(generics.RetrieveDestroyAPIView):
@@ -56,15 +59,16 @@ class PasteDetail(generics.RetrieveDestroyAPIView):
 
 class PasteHighlight(generics.GenericAPIView):
     queryset = Paste.objects.all()
-    renderer_classes = [renderers.TemplateHTMLRenderer]
     lookup_field = Paste.short_link.field.name
 
     def get(self, request, *args, **kwargs):
         paste = self.get_object()
-        return Response(
-            {"content": get_from_storage(f"pastes/{paste.id}")},
-            template_name="api/simple_highlight.html",
-        )
+        try:
+            content = get_from_storage(f"pastes/{paste.id}")
+        except FileNotFoundError:
+            content = "no content specified"
+
+        return Response(content)
 
 
 class UserList(generics.ListAPIView):
