@@ -60,7 +60,6 @@ class Category(models.Model):
 
 class BasePasteModel(models.Model):
     EXPIRED_LIMIT = [
-        (None, _("Бессрочно")),
         (timedelta(seconds=10), _("10 секунд")),
         (timedelta(minutes=10), _("10 минут")),
         (timedelta(hours=1), _("1 час")),
@@ -68,6 +67,7 @@ class BasePasteModel(models.Model):
         (timedelta(days=5), _("5 дней")),
         (timedelta(days=10), _("10 дней")),
         (timedelta(days=30), _("30 дней")),
+        (None, _("Бессрочно")),
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -192,6 +192,22 @@ class PasteVersion(models.Model):
 
 
 class ProtectedPaste(BasePasteModel):
+    EXPIRED_LIMIT = [
+        (timedelta(seconds=10), _("10 секунд")),
+        (timedelta(minutes=10), _("10 минут")),
+        (timedelta(hours=1), _("1 час")),
+        (timedelta(days=1), _("1 день")),
+        (timedelta(days=5), _("5 дней")),
+        (timedelta(days=10), _("10 дней")),
+        (timedelta(days=30), _("30 дней")),
+    ]
+    expired_duration = models.DurationField(
+        choices=EXPIRED_LIMIT,
+        default=EXPIRED_LIMIT[2],
+        null=True,
+        blank=True,
+        verbose_name=_("срок существования пасты"),
+    )
     password = models.CharField(
         max_length=255,
         verbose_name=_("ключ шифрования"),
