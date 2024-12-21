@@ -2,11 +2,11 @@
 
 set -e
 
-echo "Applying Migrations..."
-python manage.py migrate --noinput
+#echo "Applying Migrations..."
+#python manage.py migrate --noinput
 
-echo "Static Collecting..."
-python manage.py collectstatic --noinput
+#echo "Static Collecting..."
+#python manage.py collectstatic --noinput
 
 echo "Messages Compiling..."
 python manage.py compilemessages
