@@ -90,7 +90,7 @@ class BasePasteModel(models.Model):
     )
     expired_duration = models.DurationField(
         choices=EXPIRED_LIMIT,
-        default=None,
+        default=EXPIRED_LIMIT[2],
         null=True,
         blank=True,
         verbose_name=_("срок существования пасты"),
