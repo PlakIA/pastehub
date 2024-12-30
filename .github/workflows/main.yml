@@ -1,0 +1,54 @@
+name: Python package
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies for linting
+        run: pip install -r requirements/test.txt
+      - name: Run flake8
+        uses: docker://registry.gitlab.com/pipeline-components/flake8:latest
+        with:
+          args: flake8 --verbose .
+      - name: Run black
+        uses: docker://registry.gitlab.com/pipeline-components/black:latest
+        with:
+          args: black --check --verbose --line-length 79 .
+
+  django-test:
+    runs-on: ubuntu-latest
+    needs: linting
+    env:
+      DJANGO_DEBUG: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.12
+      - name: Install dependencies
+        run: pip install -r requirements/test.txt
+      - name: Run Django migrations
+        run: |
+          cd pastehub
+          python manage.py migrate
+      - name: Run Django tests
+        run: |
+          cd pastehub
+          python manage.py test
